@@ -1,8 +1,8 @@
 ﻿// ==UserScript==
-// @nameBsWatch style for series-alphabet
+// @name		BsWatch style for series-alphabet
 // @namespace   http://www.greasespot.net/
 // @include     https://bs.to/serie-alphabet
-// @version    	1
+// @version    	2
 // @description	Attatch new styles to series-alphabet
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 //Some Global variables
-var cssLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/bsStyle.css';
+var cssLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/bsStyle.css';
 var lastFocus = 1;
 
 //Black page over original

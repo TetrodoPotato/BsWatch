@@ -3,7 +3,7 @@
 // @namespace   http://www.greasespot.net/
 // @include     https://bs.to/?next
 // @include     https://bs.to/?error
-// @version    	1
+// @version    	2
 // @description	Redirect to next episode or the last season.
 // @author     	Kartoffeleintopf
 // @run-at 		document-start

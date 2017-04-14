@@ -7,7 +7,7 @@
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/unwatch\:all$/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/watch\:all$/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+$/
-// @version    	1
+// @version    	2
 // @description	Redirect checks for next play and starts next episode.
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -18,7 +18,7 @@
 // ==/UserScript==
 
 //Some Global variables
-var cssLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/bsStyle.css';
+var cssLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/bsStyle.css';
 var watchedIcon = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/pageImg/unwatch.png';
 var unwatchedIcon = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/pageImg/watch.png';
 var lastFocus = 1;

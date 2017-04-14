@@ -5,7 +5,7 @@
 // @include     https://bs.to/
 // @include     https://bs.to/home
 // @include     https://bs.to/home/
-// @version    	1
+// @version    	2
 // @description	Redirect for bs home.
 // @author     	Kartoffeleintopf
 // @run-at 		document-start

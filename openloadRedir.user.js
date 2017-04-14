@@ -2,7 +2,7 @@
 // @name        BsWatch get OpenLoad mp4
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/openload\.co\/embed\/.+$/
-// @version    	1
+// @version    	2
 // @description	Get the redirect to the OpenLoad mp4 file.
 // @author     	Kartoffeleintopf
 // @run-at 		document-start

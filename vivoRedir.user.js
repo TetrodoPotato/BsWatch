@@ -2,7 +2,7 @@
 // @name        BsWatch get vivo mp4
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/vivo\.sx\/.+$/
-// @version    	1
+// @version    	2
 // @description	Get the redirect to the vivo mp4 file.
 // @author     	Kartoffeleintopf
 // @run-at 		document-start

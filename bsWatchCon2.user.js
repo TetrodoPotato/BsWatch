@@ -2,7 +2,7 @@
 // @name        BsWatch hoster redirect
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/[^\/\:]+$/
-// @version    	1
+// @version    	2
 // @description	Redirect for bs Episode to the bs hoster.
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 //Some Global variables
-var cssLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/bsStyle.css';
+var cssLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/bsStyle.css';
 var lastFocus = 1;
 
 //Black page over original page

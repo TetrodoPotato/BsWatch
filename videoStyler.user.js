@@ -3,7 +3,7 @@
 // @namespace   http://www.greasespot.net/
 // @include     *oloadcdn.net*
 // @include     /^https:\/\/delivery\-\-.+$/
-// @version    	1
+// @version    	2
 // @description	Style the basic video player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 //Global vars
-var cssLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/playerStyle.css';
+var cssLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/playerStyle.css';
 var closeLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/close.png';
 var pauseLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/pause.png';
 var playLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/play.png';
