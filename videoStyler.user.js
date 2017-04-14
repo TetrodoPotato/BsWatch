@@ -3,11 +3,12 @@
 // @namespace   http://www.greasespot.net/
 // @include     *oloadcdn.net*
 // @include     /^https:\/\/delivery\-\-.+$/
-// @version    	2
+// @version    	1
 // @description	Style the basic video player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
 // @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
+// @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/videoStyler.user.js
 // ==/UserScript==
 
 //Global vars

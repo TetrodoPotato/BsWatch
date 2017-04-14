@@ -7,7 +7,7 @@
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/unwatch\:all$/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/watch\:all$/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+$/
-// @version    	2
+// @version    	1
 // @description	Redirect checks for next play and starts next episode.
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -15,6 +15,7 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/cookiecontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/favoritecontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/menucontroll.js
+// @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/bsWatchCon5.user.js
 // ==/UserScript==
 
 //Some Global variables

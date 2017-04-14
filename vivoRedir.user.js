@@ -2,11 +2,12 @@
 // @name        BsWatch get vivo mp4
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/vivo\.sx\/.+$/
-// @version    	2
+// @version    	1
 // @description	Get the redirect to the vivo mp4 file.
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
 // @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
+// @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/vivoRedir.user.js
 // ==/UserScript==
 
 //Black page over original

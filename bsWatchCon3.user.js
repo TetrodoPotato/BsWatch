@@ -2,7 +2,7 @@
 // @name        BsWatch hoster to video redirect
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/[^\/]+\/.+$/
-// @version    	2
+// @version    	1
 // @description	Redirect for bs Hoster to the hosterwebsite.
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -10,6 +10,7 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/cookiecontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/favoritecontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/menucontroll.js
+// @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/bsWatchCon3.user.js
 // ==/UserScript==
 
 //Some Global variables

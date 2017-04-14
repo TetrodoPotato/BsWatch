@@ -5,10 +5,11 @@
 // @include     https://bs.to/
 // @include     https://bs.to/home
 // @include     https://bs.to/home/
-// @version    	2
+// @version    	1
 // @description	Redirect for bs home.
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
+// @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/bsWatchCon1.user.js
 // ==/UserScript==
 
 window.location = 'https://bs.to/serie-alphabet';
