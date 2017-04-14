@@ -11,15 +11,15 @@
 // ==/UserScript==
 
 //Global vars
-var cssLink = 'https://dl.dropbox.com/s/wove4f8v3jgb4na/playerStyle.css';
-var closeLink = 'https://dl.dropbox.com/s/gi4dhqhmnhyym5m/close.png';
-var pauseLink = 'https://dl.dropbox.com/s/51bpsgt2m8d33yx/pause.png';
-var playLink = 'https://dl.dropbox.com/s/zpoeqbqdukf5soa/play.png';
+var cssLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/playerStyle.css';
+var closeLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/close.png';
+var pauseLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/pause.png';
+var playLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/play.png';
 
-var muteLink0 = 'https://dl.dropbox.com/s/x90tw3k6s4kz21a/unmute0.png';
-var muteLink1 = 'https://dl.dropbox.com/s/thq94l7b0t9tryv/unmute1.png';
-var muteLink2 = 'https://dl.dropbox.com/s/uwdrmsy1kg0ak71/unmute2.png';
-var muteLink3 = 'https://dl.dropbox.com/s/amukp87uldtaj00/unmute3.png';
+var muteLink0 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute0.png';
+var muteLink1 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute1.png';
+var muteLink2 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute2.png';
+var muteLink3 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute3.png';
 
 //Black page over original
 var blackP = document.createElement('div');
