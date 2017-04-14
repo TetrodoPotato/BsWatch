@@ -1,0 +1,597 @@
+* {
+	margin:0;
+	padding:0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:16px;
+}
+
+body {
+	background:#161616;
+}
+
+tr {
+	cursor:pointer;
+}
+
+#baseCon {
+	width:100%;
+	position:fixed;
+	top:0;
+	left:0;
+}
+
+#menuCon {
+	max-width:1052px;
+	min-width:760px;
+	height:50px;
+	background-color:rgba(0,0,0,0.5);
+	margin:0 auto;
+}
+
+#leftCon{
+	width:350px;
+	height:50px;
+	float:left;
+}
+
+#search {
+	border:none;
+	background-color:#252525;
+	color:#FFF;
+	position:relative;
+	top:-20px;
+	left:5px;
+	width:150px;
+}
+
+#autolabel {
+	margin: 10px;
+	padding: 5px;
+	color:red;
+	font-weight:bold;
+	cursor:pointer;
+	
+	-webkit-touch-callout: none; 
+    -webkit-user-select: none;
+    -khtml-user-select: none; 
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+
+}
+
+#auto {
+	display:none;
+}
+
+#autolabel {
+	position:relative;
+	top:-20px;
+	left:5px;
+	cursor:pointer;
+}
+
+#auto:active  + #autolabel {
+	color:#ee4d2e;
+}
+
+#auto:checked + #autolabel {
+	color:green;
+}
+
+#auto:active:checked + #autolabel {
+	color:#ee4d2e;
+}
+
+#leftCon button {
+	height:50px;
+	width:50px;
+	border:none;
+	background:rgba(0,0,0,0);
+	cursor:pointer;
+}
+
+#welcome {
+	position:relative;
+	line-height:50px;
+	display:inline-block;
+	height:50px;
+	text-align:center;
+	top:-20px;
+	margin-right:20px;
+}
+
+#rightCon div strong{
+	margin:0 5px 0 5px;
+	color:#ee4d2e !important;
+}
+
+#rightCon{
+	width:auto;
+	height:50px;
+	float:right;
+	
+	
+	
+	color:#DDD;
+	text-align:right;
+}
+
+#login input[type="submit"]{
+	background:#202020;
+	color:#ee4d2e;
+	font-weight:bold;
+	cursor:pointer;
+	height:42px;
+	float:left;
+	position:relative;
+	top:-20px;
+	margin-left:4px;
+}
+
+#login input[type="submit"]:hover{
+	color:#404040;
+}
+
+#login input[type="submit"]:active{
+	color:#FFF;
+}
+
+#login {
+	display:inline-block;
+	height:50px;
+	width:250px;
+}
+
+
+#login label {
+	display:none;
+}
+
+#login input {
+	border:none;
+	background-color:#252525;
+	color:#FFF;
+}
+
+#login input:nth-child(1) {
+	display:block;
+	height:20px;
+	float:left;
+	margin-top:4px;
+}
+
+#login input:nth-child(2) {
+	display:inline-block;
+	height:20px;
+	float:left;
+	margin-top:2px;
+}
+
+#login a, #login a:link , #login a:visited , #login a:hover  {
+	display:none;
+}
+
+h2 {
+	display:block;
+	margin:0 auto;
+	margin-top:70px;
+	width:100%;
+	max-width: 1052px;
+	color:#CCC;
+	font-size:40px;
+	font-weight:bold;
+}
+
+h2 small {
+	font-size:20px;
+}
+
+#titleGerman {
+	display:inline;
+	margin:0;
+	width:auto;
+	font-size:20px;
+	color:#ee4d2e;
+}
+
+#titleGerman::before {
+    content: ":";
+}
+
+#titleGerman small{
+	font-size:10px;
+	font-style:italic;
+	color:#ee4d2e;
+}
+
+#seriesTable {
+	margin:0 auto;
+	margin-top:70px;
+	width:100%;
+	max-width: 1052px;
+	overflow:hidden;
+	border-collapse:separate; 
+  border-spacing:0 5px;
+}
+
+#seriesTable tr {
+	width:100%;
+}
+
+#seriesTable tr:focus td:first-child {
+	background:#ee4d2e !important;
+}
+
+#seriesTable tr:focus td:nth-child(2) {
+	color:#ee4d2e !important;
+	background:#121212;
+}
+
+#seriesTable tr td:first-child{
+	background:#000;
+	width:1%;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+  vertical-align:middle;
+	padding:5px 15px;
+	border:none;
+	border-radius: 5px 0 0 5px;	
+}
+
+#seriesTable tr td:nth-child(2){
+	background:#111;
+	width:99%;
+	color:#FFF;
+	font-weight: bold;
+	padding:5px 15px;
+	border:none;
+	border-radius: 0 5px 5px 0;	
+}
+
+#seasonTable {
+	margin:0 auto;
+	margin-top:20px;
+	width:100%;
+	max-width: 1052px;
+	overflow:hidden;
+	border-collapse:separate; 
+	border-spacing:5px 0;
+}
+
+#seasonTable tr {
+	width:100%;
+}
+
+#seasonTable td {
+	background:#000;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:5px 0px;
+	border:none;
+	border-radius: 5px 5px 5px 5px;	
+	width:1%;
+}
+
+#seasonTable .watched {
+	background:#ee4d2e;
+}
+
+#seasonTable .onSeason {
+	background:#0A7191;
+}
+
+#seasonTable td:focus {
+	background:#a0260d !important;
+}
+
+#seasonTable .watched:focus {
+	background:#a0260d!important;
+}
+
+#seasonTable .onSeason:focus {
+	background:#003d7a !important;
+}
+
+#episodeTable {
+	margin:0 auto;
+	margin-top:20px;
+	width:100%;
+	max-width: 1052px;
+	overflow:hidden;
+	border-collapse:separate; 
+	border-spacing:0 5px;
+}
+
+#episodeTable tr {
+	width:100%;
+}
+
+#episodeTable tr td strong{
+	margin-right:10px;
+}
+
+#episodeTable tr:focus td:first-child {
+	background:#ee4d2e !important;
+}
+
+#episodeTable tr:focus td:nth-child(2) {
+	color:#ee4d2e !important;
+	background:#121212;
+}
+
+#episodeTable tr td:first-child{
+	background:#000;
+	width:1%;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+  vertical-align:middle;
+	padding:5px 15px;
+	border:none;
+	border-radius: 5px 0 0 5px;	
+}
+
+#episodeTable tr td:nth-child(2){
+	background:#111;
+	width:99%;
+	color:#FFF;
+	font-weight: bold;
+	padding:5px 15px;
+	border:none;
+}
+
+#episodeTable .watched td:nth-child(2){
+	background:#ee4d2e;
+}
+
+#episodeTable .watched:focus td:nth-child(2){
+	background:#a0260d;
+	color:#FFF !important;
+}
+
+#episodeTable tr td:nth-child(3){
+	background:#000;
+	width:1%;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:0 5px;;
+	border:none;
+	border-radius:0 5px 5px 0;	
+}
+
+#episodeTable tr td:nth-child(3):hover{
+	background:#ee4d2e;
+	
+}
+
+#episodeTable tr td:last-child{
+	border-radius:0 5px 5px 0;
+}
+
+#allWatchTable {
+	margin:20px auto 20px auto;
+	width:100%;
+	max-width: 1052px;
+	overflow:hidden;
+	border-collapse:separate; 
+	border-spacing:0;
+}
+
+#allWatchTable tr {
+	width:100%;
+}
+
+#allWatchTable td {
+	background:#000;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:5px 0px;
+	border:none;
+	width:1%;
+}
+#allWatchTable td:first-child {
+	border-radius: 5px 0 0 5px;	
+}
+#allWatchTable td:nth-child(2) {
+	border-radius: 0 5px 5px 0;	
+}
+
+#allWatchTable td:first-child:hover {
+	background:#ee4d2e;
+}
+#allWatchTable td:nth-child(2):hover {
+	background:#ee4d2e;	
+}
+
+#functionTable {
+	margin:20px auto 20px auto;
+	width:100%;
+	max-width: 1052px;
+	overflow:hidden;
+	border-collapse:separate; 
+	border-spacing:0;
+}
+
+#functionTable tr {
+	width:100%;
+}
+
+#functionTable td {
+	background:#000;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:5px 0px;
+	border:none;
+	width:1%;
+}
+#functionTable td:first-child {
+	border-radius: 5px 0 0 5px;	
+}
+#functionTable td:nth-child(2) {
+	border-radius: 0 5px 5px 0;	
+}
+
+#functionTable td:first-child:hover {
+	background:#ee4d2e;
+}
+#functionTable td:nth-child(2):hover {
+	background:#ee4d2e;	
+}
+
+#hosterTable {
+	margin:0 auto;
+	margin-top:20px;
+	width:100%;
+	max-width: 1052px;
+	overflow:hidden;
+	border-collapse:separate; 
+	border-spacing:0 5px;
+}
+
+#hosterTable tr {
+	width:100%;
+}
+
+#hosterTable tr:focus td {
+	background:#ee4d2e;
+}
+
+#hosterTable tr td{
+	background:#111;
+	width:99%;
+	color:#FFF;
+	font-weight: bold;
+	padding:5px 15px;
+	border:none;
+	border-radius: 5px 5px 5px 5px;	
+	text-align:center; 
+	vertical-align:middle;
+}
+
+#hosterTable .playHosterTr #playHosterTd {
+	padding:0 !important;
+	background:#a0260d;
+}
+
+#hosterTable .playHosterTr:focus #playHosterTd {
+	background:#ee4d2e !important;
+}
+
+.playHosterTr td a {
+	height:100px;
+	width:100%;
+	display:block;
+	text-align:center; 
+	vertical-align:middle;
+	line-height: 100px;
+	color:#FFF;
+	text-decoration:none;
+}
+
+.playHosterTr td a:link, .playHosterTr a:visited, .playHosterTr a:hover, .playHosterTr a:active, {
+	color:#FFF !important;
+}
+
+#favCon {
+	position:absolute;
+	top:50px;
+	
+	left: -moz-calc(100% - 200px);
+	/* WebKit */
+	left: -webkit-calc(100% - 200px);
+	/* Opera */
+	left: -o-calc(100% - 200px);
+	/* Standard */
+	left: calc(100% - 200px);
+	
+	width:200px;
+	height:50px;
+	
+	background-color:#101010;
+}
+
+#favButton{
+	position: relative;
+    display: inline-block;
+	
+	height:50px;
+	width:50px;
+}
+
+#favButton:hover #favCon{
+	display:block;
+	transition: max-height 0.25s ease-in;
+	max-height: 1080px;
+}
+
+#favCon {
+    position: absolute;
+    background-color: #000;
+    width: 400px;
+	height:auto;
+    z-index: 999999;
+	left:-350px;
+	transition: max-height 1s ease-out;
+	max-height: 0;
+	overflow:hidden;
+}
+
+#favCon table {
+	font-weight:bold;
+	color:#FFF;
+	width:100%;
+	border-collapse:separate; 
+	border-spacing:0 5px;
+}
+
+#favCon table tr td:first-child{
+	background:#ee4d2e;
+	padding:0 15px 0 15px;
+	text-align:center;
+	width:1%;
+}
+
+#favCon table tr td:nth-child(2){
+	text-align:left;
+	width:100%;
+	padding-left:5px;
+}
+
+#favCon table tr td:nth-child(3){
+	width:0.1%;
+	padding:5px 15px 0 15px;
+}
+
+#favCon table tr td:nth-child(3):hover{
+	background-color:#a0260d;
+}
+
+#favCon table tr:hover td:nth-child(2){
+	color:#ee4d2e;
+	background-color:#181818;
+}
+
+#favCon table tr:hover td:nth-child(1){
+	background-color:#a0260d;
+}
+
+#addButton td{
+	color:#FFF;
+	background:#ee4d2e;
+	height:50px;
+	cursor:pointer;
+}
+#addButton:hover td{
+	background:#a0260d !important;
+}
+

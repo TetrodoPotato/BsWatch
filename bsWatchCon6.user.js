@@ -1,5 +1,5 @@
 ﻿// ==UserScript==
-// @name        BsWatch style for series-alphabet
+// @nameBsWatch style for series-alphabet
 // @namespace   http://www.greasespot.net/
 // @include     https://bs.to/serie-alphabet
 // @version    	1
@@ -742,3 +742,7 @@ $(window).keydown(function (e) {
 
 	}
 });
+
+//Cookie controll
+
+
