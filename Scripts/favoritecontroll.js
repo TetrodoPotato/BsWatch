@@ -43,15 +43,22 @@ function removeFavorite(name) {
 	//Get all favorites
 	var favsSolo = getFavs();
 
+	console.log(favsSolo);
+	
 	//Check if the favorite is there
 	var nameIndex = $.inArray(name, favsSolo);
+	console.log(nameIndex);
 	if (nameIndex == -1) {
 		return;
 	}
 
+	console.log('Weiter');
+	
 	//Remove that thing ...
 	favsSolo = removeIndex(favsSolo, nameIndex);
 
+	console.log(favsSolo);
+	
 	//Add all other favorites
 	for (i = 0; i < favsSolo.length; i++) {
 		addFavorite(favsSolo[i]);
@@ -104,6 +111,9 @@ function updateFavorites() {
 
 		//Remove the favorite and update the table on click
 		td3.addEventListener('click', function () {
+			
+			console.log('NR 1');
+			
 			var val = this.getAttribute('val');
 			removeFavorite(val);
 			updateFavorites();
