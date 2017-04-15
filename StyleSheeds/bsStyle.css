@@ -34,15 +34,15 @@ tr {
 	float:left;
 }
 
-#leftCon button srg polygon {
+#leftCon button svg polygon {
 	fill:#ee4d2e:
 }
 
-#leftCon button:active srg polygon {
+#leftCon button:active svg polygon {
 	fill:#111;
 }
 
-#leftCon button:hover srg polygon {
+#leftCon button:hover svg polygon {
 	fill:#a0260d:
 }
 
