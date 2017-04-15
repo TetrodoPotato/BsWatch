@@ -16,6 +16,7 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/favoritecontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/menucontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/keycontroll.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/bsWatchCon5.user.js
 // ==/UserScript==
 
@@ -25,16 +26,7 @@ var unwatchedIcon = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/
 var lastFocus = 1;
 
 //Black page over original
-var blackP = document.createElement('div');
-var blackPStyle = 'width:100%; height:100%; position:fixed; top:0; left:0; background:#000; z-index:99';
-blackP.setAttribute('style', blackPStyle);
-blackP.setAttribute('id', 'blackP');
-
-//Attach blackPage
-document.documentElement.appendChild(blackP);
-
-//disable scrollbars .. for ... reasons
-document.documentElement.style.overflow = 'hidden'; // firefox, chrome
+makeBlackPage();
 
 //Name of this series
 var thisSeries = window.location.pathname.split('/')[2];
@@ -72,8 +64,6 @@ $(document).ready(function () {
 
 	makeThePage();
 	updateFavorites();
-	
-
 });
 
 function makeThePage() {
@@ -277,15 +267,9 @@ function makeThePage() {
 	//Set the Checkbox to the current autoplay state
 	document.getElementById('auto').checked = getCookie('autoplay');
 
-	//Activate scrollbars when no autoplay
-	var autoTimer = document.getElementById('plane');
-	if (autoTimer == null) {
-		document.documentElement.style.overflow = 'auto'; // firefox, chrome
-	}
-
 	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 	$(window).bind("load", function () {
-		$('#blackP').remove();
+		removeBlackPage();
 	});
 
 }
@@ -450,254 +434,6 @@ function openNextSeasonUser(seasonAmount) {
 
 	return hasNext;
 }
-
-//Some shit for keyboard controll
-/////////////////////////////////
-
-function focusNext(value) {
-	var lastFoc = document.activeElement.getAttribute('id');
-	lastFoc = parseInt(lastFoc);
-	if (isNaN(lastFoc)) {
-		var elem;
-		if (lastFocus != 0) {
-			elem = document.getElementById('' + lastFocus);
-			lastFoc = lastFocus;
-		} else {
-			elem = document.getElementById('1');
-			lastFocus = 1;
-			lastFoc = 1;
-		}
-
-		if (elem != null) {
-			while (getStyle(elem, "display") == "none") {
-				lastFoc++;
-				elem = document.getElementById('' + lastFoc);
-				if (elem === null) {
-					break;
-				}
-			}
-		}
-
-		if (elem != null) {
-			elem.focus();
-		}
-	} else {
-		lastFoc += value;
-		var elem = document.getElementById('' + lastFoc);
-
-		if (elem != null) {
-			while (getStyle(elem, "display") == "none") {
-				lastFoc++;
-				elem = document.getElementById('' + lastFoc);
-				if (elem === null) {
-					break;
-				}
-			}
-		}
-
-		if (elem != null) {
-			document.getElementById('' + lastFoc).focus();
-			lastFocus = lastFoc;
-		} else {
-			var elems = document.getElementById('episodeTable').getElementsByTagName('tr');
-
-			if (elems[elems.length - 1] === document.activeElement) {
-				openNextSeasonUser(1);
-			}
-
-			elems[elems.length - 1].focus();
-			lastFocus = elems.length;
-		}
-	}
-	scrollToFocus();
-}
-
-function focusPrevious(value) {
-	var lastFoc = document.activeElement.getAttribute('id');
-	lastFoc = parseInt(lastFoc);
-	if (isNaN(lastFoc)) {
-		var elem;
-		if (lastFocus != 0) {
-			elem = document.getElementById('' + lastFocus);
-			lastFoc = lastFocus;
-		} else {
-			elem = document.getElementById('1');
-			lastFocus = 1;
-			lastFoc = 1;
-		}
-
-		if (elem != null) {
-			while (getStyle(elem, "display") == "none") {
-				lastFoc++;
-				elem = document.getElementById('' + lastFoc);
-				if (elem === null) {
-					break;
-				}
-			}
-		}
-
-		if (elem != null) {
-			elem.focus();
-		}
-	} else {
-		lastFoc -= value;
-		var elem = document.getElementById('' + lastFoc);
-
-		if (elem != null) {
-			while (getStyle(elem, "display") == "none") {
-				lastFoc--;
-				elem = document.getElementById('' + lastFoc);
-				if (elem === null) {
-					break;
-				}
-			}
-		}
-
-		if (elem !== null) {
-			document.getElementById('' + lastFoc).focus();
-			lastFocus = lastFoc;
-		} else {
-			var elems = document.getElementById('episodeTable').getElementsByTagName('tr');
-
-			if (elems[0] === document.activeElement) {
-				openNextSeasonUser(-1);
-			}
-
-			elems[0].focus();
-			lastFocus = 0;
-		}
-	}
-	scrollToFocus();
-}
-
-function getStyle(el, styleProp) {
-	var value,
-	defaultView = (el.ownerDocument || document).defaultView;
-	// W3C standard way:
-	if (defaultView && defaultView.getComputedStyle) {
-		// sanitize property name to css notation
-		// (hypen separated words eg. font-Size)
-		styleProp = styleProp.replace(/([A-Z])/g, "-$1").toLowerCase();
-		return defaultView.getComputedStyle(el, null).getPropertyValue(styleProp);
-	} else if (el.currentStyle) { // IE
-		// sanitize property name to camelCase
-		styleProp = styleProp.replace(/\-(\w)/g, function (str, letter) {
-				return letter.toUpperCase();
-			});
-		value = el.currentStyle[styleProp];
-		// convert other units to pixels on IE
-		if (/^\d+(em|pt|%|ex)?$/i.test(value)) {
-			return (function (value) {
-				var oldLeft = el.style.left,
-				oldRsLeft = el.runtimeStyle.left;
-				el.runtimeStyle.left = el.currentStyle.left;
-				el.style.left = value || 0;
-				value = el.style.pixelLeft + "px";
-				el.style.left = oldLeft;
-				el.runtimeStyle.left = oldRsLeft;
-				return value;
-			})(value);
-		}
-		return value;
-	}
-}
-
-function scrollToFocus() {
-	window.scroll(0, findPos(document.activeElement) - 120);
-}
-
-//Finds y value of given object
-function findPos(obj) {
-	var curtop = 0;
-	if (obj.offsetParent) {
-		do {
-			curtop += obj.offsetTop;
-		} while (obj = obj.offsetParent);
-		return [curtop];
-	}
-}
-
-$(window).keydown(function (e) {
-
-	var nextButton = document.getElementById('nextButton');
-	if (nextButton != null) {
-		if (e.keyCode === 27) { //ESC
-			e.preventDefault();
-			setNextBreak();
-		}
-	} else if (document.getElementById('search') === document.activeElement) {
-		if (e.keyCode === 27 || e.keyCode === 13) { //Esc /Enter
-			e.preventDefault();
-			focusNext(1);
-		}
-
-	} else if (document.activeElement.tagName.toLowerCase() != "input") {
-		if (e.keyCode === 75) { //K
-			e.preventDefault();
-			document.getElementById('search').focus();
-		} else if (e.keyCode === 38) { //Arr-up
-			e.preventDefault();
-			focusPrevious(1);
-		} else if (e.keyCode === 40) { //Arr-down
-			e.preventDefault();
-			focusNext(1);
-		} else if (e.keyCode === 13) { //Enter
-			e.preventDefault();
-			if (document.getElementById('episodeTable').contains(document.activeElement)) {
-				document.activeElement.getElementsByTagName('td')[0].click();
-			}
-		} else if (e.keyCode === 8 || e.keyCode == 78) { //return /H
-			e.preventDefault();
-			window.location = 'https://bs.to/serie-alphabet';
-		} else if (e.keyCode === 37) { //Arr-left
-			e.preventDefault();
-			openNextSeasonUser(-1);
-		} else if (e.keyCode === 39) { //Arr-right
-			e.preventDefault();
-			openNextSeasonUser(1);
-		} else if (e.keyCode === 65) { //A
-			e.preventDefault();
-			document.getElementById('auto').checked = !document.getElementById('auto').checked;
-
-			var auto = document.getElementById('auto');
-			setCookie('autoplay', auto.checked, false);
-
-			if (!getCookie('autoplay')) {
-				setCookie('autoplay', false, false);
-
-				removeCookie('lastSeries');
-				removeCookie('lastSeason');
-				removeCookie('lastEpisode');
-			}
-
-		} else if (e.keyCode === 79) { //O
-			e.preventDefault();
-			var allWatch = document.getElementById('allWatchTable');
-			if (allWatch !== null) {
-				allWatch.getElementsByTagName('td')[0].click();
-			}
-		} else if (e.keyCode === 80) { //P
-			e.preventDefault();
-			var allWatch = document.getElementById('allWatchTable');
-			if (allWatch !== null) {
-				allWatch.getElementsByTagName('td')[1].click();
-			}
-		} else if (e.keyCode === 70) { //F
-			addThisFav();
-		} else if (e.keyCode === 68) { //D
-			removeThisFav();
-		} else if (e.keyCode === 87) { //W
-			e.preventDefault();
-			if (isLoggedin) {
-				if (document.getElementById('episodeTable').contains(document.activeElement)) {
-					document.activeElement.getElementsByTagName('td')[2].click();
-				}
-			}
-
-		}
-
-	}
-});
 
 //Massive shit for autoplay interrupt
 var nextTime = 0;
