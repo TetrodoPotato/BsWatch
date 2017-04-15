@@ -200,7 +200,7 @@ $(window).keydown(function (e) {
 			if (path.length > 4) {
 				if (path[4].indexOf('watch') == 0) {
 					watchedLink = true;
-				} else if (path[4].indexOf('watch') == 0) {
+				} else if (path[4].indexOf('unwatch') == 0) {
 					watchedLink = true;
 				}
 			}
