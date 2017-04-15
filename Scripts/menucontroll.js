@@ -61,12 +61,7 @@ function createMenubar() {
 	var linkTo = 'window.location = \'https://bs.to/serie-alphabet\'';
 	backButton.setAttribute('onclick', linkTo);
 
-	backButton.innerHTML = '<svg height="50" width="50">' +
-		'<polygon points="13,38 20,38 20,26 13,26" />' +
-		'<polygon points="29,38 36,38 36,26 29,26" />' +
-		'<polygon points="13,28 36,28 36,25 13,25" />' +
-		'<polygon points="40,25 25,11 24,11 9,25" />' +
-		'</svg>';
+	backButton.appendChild(getHome());
 
 	//Create the search input
 	var searchInput = document.createElement('input');
