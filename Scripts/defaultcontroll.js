@@ -16,7 +16,7 @@ function getStar(){
 	svg.appendChild(pol2);
 	
 	var pol3 = document.createElement('polygon');
-	pol3.setAttribute('33,39 30,27 19,27');
+	pol3.setAttribute('points','33,39 30,27 19,27');
 	svg.appendChild(pol3);
 	
 	return svg;

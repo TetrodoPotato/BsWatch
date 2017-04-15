@@ -43,12 +43,8 @@ function createMenubar() {
 
 	var favButton = document.createElement('div');
 	favButton.setAttribute('id', 'favButton');
-	var confImage = document.createElement('img');
-	confImage.setAttribute('src', confLink);
-	confImage.setAttribute('width', '50');
-	confImage.setAttribute('height', '50');
 
-	favButton.appendChild(confImage);
+	favButton.appendChild(getStar());
 
 	//Add a Favorite table
 	var favCon = document.createElement('div');
