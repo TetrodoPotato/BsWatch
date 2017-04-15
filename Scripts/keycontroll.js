@@ -193,7 +193,7 @@ $(window).keydown(function (e) {
 				window.location = backFunction;
 			}
 		} else {
-			var path = window.location.href;
+			var path = window.location.pathname;
 			path = path.split('/');
 
 			var watchedLink = false;
