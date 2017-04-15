@@ -1,5 +1,5 @@
 
-//name .. 
+//name ..
 function addFavorite(series) {
 	//Get all favorites
 	var favsSolo = getFavs();
@@ -17,7 +17,7 @@ function addFavorite(series) {
 	//and at least add the new favorite
 	newCookie += series;
 
-	//Update the cookie ... hmmm yaa ... 
+	//Update the cookie ... hmmm yaa ...
 	//to the new favorite string
 	setCookie('favorites', newCookie, true);
 }
@@ -25,7 +25,7 @@ function addFavorite(series) {
 function getFavs() {
 	//Get the cookie-string
 	var favs = getCookie('favorites');
-	
+
 	//Check if the cookie is not added or empty
 	if (favs == undefined) {
 		return [];
@@ -48,7 +48,7 @@ function removeFavorite(name) {
 	if (nameIndex == -1) {
 		return;
 	}
-	
+
 	//Remove that thing ...
 	favsSolo = removeIndex(favsSolo, nameIndex);
 
@@ -88,23 +88,14 @@ function updateFavorites() {
 		td2.setAttribute('val', favs[i]);
 		//Remove icon
 
-		//Svg image
-		var svg = document.createElement('svg');
-		svg.setAttribute('height','30');
-		svg.setAttribute('width','30');
-		//Create poligon 1
-		var poligon1 = document.createElement('polygon');
-		poligon1.setAttribute('points', '5,0 0,5 25,30 30,25');
-		//Create poligon 2
-		var poligon2 = document.createElement('polygon');
-		poligon2.setAttribute('points', '0,25 5,30 30,5 25,0');
-		svg.appendChild(poligon1);
-		svg.appendChild(poligon2);
-		
-		td3.appendChild(svg);
-		td3.setAttribute('val', favs[i]);
+		//Svg image in button
+		td3.innerHTML = '<svg height="30" width="30">' +
+			'<polygon points="5,0 0,5 25,30 30,25"></polygon>' +
+			'<polygon points="0,25 5,30 30,5 25,0"></polygon>' +
+			'</svg>'
+			td3.setAttribute('val', favs[i]);
 
-		//Change location to the favorite series on click 
+		//Change location to the favorite series on click
 		td1.addEventListener('click', function () {
 			var val = this.getAttribute('val');
 			window.location = 'https://bs.to/serie/' + val;
@@ -113,7 +104,7 @@ function updateFavorites() {
 			var val = this.getAttribute('val');
 			window.location = 'https://bs.to/serie/' + val;
 		});
-		
+
 		//Remove the favorite and update the table on click
 		td3.addEventListener('click', function () {
 			var val = this.getAttribute('val');
@@ -132,13 +123,13 @@ function updateFavorites() {
 
 	//get the current url path
 	var path = window.location.pathname;
-	
+
 	//check if the user is on a series
 	if (path.split('/').length > 2) {
 		//create the add button
 		var addButton = document.createElement('tr');
 		addButton.setAttribute('id', 'addButton');
-		
+
 		//Fill the add button with elements
 		var addButtonTd = document.createElement('td');
 		addButtonTd.setAttribute('colspan', '3');
