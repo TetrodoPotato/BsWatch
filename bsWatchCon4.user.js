@@ -11,20 +11,37 @@
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/bsWatchCon4.user.js
 // ==/UserScript==
 
-var series = getCookie('lastSeries');
-var season = getCookie('lastSeason');
-var episode = getCookie('lastEpisode');
+//Get the current lastplayed episode
+var series = getCookie('lastSeries'),
+season = getCookie('lastSeason'),
+episode = getCookie('lastEpisode');
 
+//Check error on cookies and fuck you
+if (series == undefined ||
+	season == undefined ||
+	episode == undefined) {
+		
+	alert('Enable cookies!!!');
+	window.location = 'https://bs.to/';
+}
+
+//Check if this is a errorlink
 if (window.location.href == 'https://bs.to/?error') {
+	//if the error code isn't set.. set it.
 	if (getCookie('errorCode') == undefined) {
-		setCookie('errorCode',0,false);
+		setCookie('errorCode', 0, false);
 	}
-	setCookie('errorCode',getCookie('errorCode')+1,false);
+	//Update the current errorcode to the next hoster
+	setCookie('errorCode', getCookie('errorCode') + 1, false);
+
+	//And try it again
 	var next = 'https://bs.to/serie/' + series + '/' + season + '/' + episode;
 	window.location = next;
 } else {
-	//Error reset
-	setCookie('errorCode',0,false);
+	//Errorcode reset
+	setCookie('errorCode', 0, false);
+
+	//Open the last season for next episode
 	window.location = 'https://bs.to/serie/' + series + '/' + season;
 
 }

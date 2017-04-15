@@ -572,11 +572,20 @@ h2 small {
 	padding:5px 15px 0 15px;
 }
 
-#favCon table tr td:nth-child(3):hover{
-	background-color:#a0260d;
+#favCon table tr td:nth-child(3) svg polygon{
+	fill:#ee4d2e;
+}
+
+#favCon table tr td:nth-child(3):hover svg polygon{
+	fill:#a0260d;
 }
 
 #favCon table tr:hover td:nth-child(2){
+	color:#ee4d2e;
+	background-color:#181818;
+}
+
+#favCon table tr:hover td:nth-child(3){
 	color:#ee4d2e;
 	background-color:#181818;
 }

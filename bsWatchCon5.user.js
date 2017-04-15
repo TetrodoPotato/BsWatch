@@ -748,7 +748,7 @@ function nextWindow(time) {
 
 	texts.setAttribute('id', 'texts');
 
-	texts.innerHTML = 'Nexte Folge in ' + time + 's';
+	texts.innerHTML = 'Nächste Folge in ' + time + 's';
 
 	butto.setAttribute("id", "nextButton");
 
@@ -787,7 +787,7 @@ function checkTimeNextWindow() {
 
 	var texts = document.getElementById('texts');
 	if (texts !== null) {
-		texts.innerHTML = "Nexte Folge in " + nextTime + "s";
+		texts.innerHTML = "Nächste Folge in " + nextTime + "s";
 	}
 
 	if (nextTime < 0 && !nextBreak) {
