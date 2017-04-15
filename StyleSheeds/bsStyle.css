@@ -39,7 +39,7 @@ tr {
 }
 
 #leftCon button:active svg polygon {
-	fill:#111;
+	fill:#333;
 }
 
 #leftCon button:hover svg polygon {

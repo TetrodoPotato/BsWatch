@@ -89,10 +89,7 @@ function updateFavorites() {
 		//Remove icon
 
 		//Svg image in button
-		td3.innerHTML = '<svg height="30" width="30">' +
-			'<polygon points="5,0 0,5 25,30 30,25"></polygon>' +
-			'<polygon points="0,25 5,30 30,5 25,0"></polygon>' +
-			'</svg>'
+		td3.appendChild(getStar());
 			td3.setAttribute('val', favs[i]);
 
 		//Change location to the favorite series on click
