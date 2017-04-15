@@ -2,62 +2,76 @@
 var cssLink = 'https://dl.dropbox.com/s/rf3rzlzsa3lg3to/bsStyle.css';
 var cssVidLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/playerStyle.css';
 
-function getStar(){
+function getStar() {
 	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-	svg.setAttribute('height','50');
-	svg.setAttribute('width','50');
-	
+	svg.setAttribute('height', '50');
+	svg.setAttribute('width', '50');
+
 	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol1.setAttribute('points','24,10 16,39 30,27 25,10');
+	pol1.setAttribute('points', '24,10 16,39 30,27 25,10');
 	svg.appendChild(pol1);
-	
+
 	var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol2.setAttribute('points','10,21 24,32 25,32 39,21');
+	pol2.setAttribute('points', '10,21 24,32 25,32 39,21');
 	svg.appendChild(pol2);
-	
+
 	var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol3.setAttribute('points','33,39 30,27 19,27');
+	pol3.setAttribute('points', '33,39 30,27 19,27');
 	svg.appendChild(pol3);
-	
+
 	return svg;
 }
 
-function getHome(){
+function getHome() {
 	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-	svg.setAttribute('height','50');
-	svg.setAttribute('width','50');
-	
+	svg.setAttribute('height', '50');
+	svg.setAttribute('width', '50');
+
 	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol1.setAttribute('points','13,38 20,38 20,26 13,26');
+	pol1.setAttribute('points', '13,38 20,38 20,26 13,26');
 	svg.appendChild(pol1);
-	
+
 	var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol2.setAttribute('points','29,38 36,38 36,26 29,26');
+	pol2.setAttribute('points', '29,38 36,38 36,26 29,26');
 	svg.appendChild(pol2);
-	
+
 	var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol3.setAttribute('points','13,28 36,28 36,25 13,25');
+	pol3.setAttribute('points', '13,28 36,28 36,25 13,25');
 	svg.appendChild(pol3);
-	
+
 	var pol4 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol4.setAttribute('points','40,25 25,11 24,11 9,25');
+	pol4.setAttribute('points', '40,25 25,11 24,11 9,25');
 	svg.appendChild(pol4);
-	
+
 	return svg;
 }
 
-function getCross(){			
+function getCross() {
 	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-	svg.setAttribute('height','30');
-	svg.setAttribute('width','30');
-	
+	svg.setAttribute('height', '30');
+	svg.setAttribute('width', '30');
+
 	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol1.setAttribute('points','5,0 0,5 25,30 30,25');
+	pol1.setAttribute('points', '5,0 0,5 25,30 30,25');
 	svg.appendChild(pol1);
-	
+
 	var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol2.setAttribute('points','0,25 5,30 30,5 25,0');
+	pol2.setAttribute('points', '0,25 5,30 30,5 25,0');
 	svg.appendChild(pol2);
-	
+
 	return svg;
+}
+
+function makeBlackPage() {
+	//Black page over original
+	var blackP = document.createElement('div');
+	var blackPStyle = 'width:100%; height:100%; position:fixed; top:0; left:0; background:#000; z-index:99';
+	blackP.setAttribute('style', blackPStyle);
+	blackP.setAttribute('id', 'blackP');
+	document.documentElement.appendChild(blackP);
+	document.documentElement.style.overflow = 'hidden'; // firefox, chrome
+}
+
+function removeBlackPage(){
+	document.getElementById('blackP').outerHTML = '';
 }

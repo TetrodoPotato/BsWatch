@@ -136,29 +136,6 @@ $(document).ready(function () {
 	});
 });
 
-function createHead() {
-	//Construct the head
-	var headNode = document.createElement('head');
-	var titleNode = document.getElementsByTagName('title')[0];
-	var baseNode = document.getElementsByTagName('base')[0];
-	var charsetNode = document.getElementsByTagName('meta')[0];
-	var favNode = document.getElementsByTagName('link')[0];
-
-	//Add styleSheet
-	var styles = "@import url('" + cssLink + "');";
-	var styleNode = document.createElement('link');
-	styleNode.rel = 'stylesheet';
-	styleNode.href = 'data:text/css,' + escape(styles);
-
-	headNode.appendChild(charsetNode);
-	headNode.appendChild(baseNode);
-	headNode.appendChild(favNode);
-	headNode.appendChild(titleNode);
-	headNode.appendChild(styleNode);
-
-	return headNode;
-}
-
 function createNode(index, nameDE, linkTo) {
 	//Make a table row that links to the Series
 	var tableRow = document.createElement('tr');

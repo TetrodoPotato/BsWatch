@@ -44,7 +44,7 @@ $(document).ready(function () {
 
 	//Clear body
 	document.body.innerHTML = '';
-	document.head.innerHTML = makeHead().innerHTML;
+	document.head.innerHTML = makeVidHead().innerHTML;
 	constructPlayer(window.location.href);
 
 	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
@@ -210,7 +210,7 @@ function offset(elem) {
 	};
 }
 
-function makeHead() {
+function makeVidHead() {
 	var head = document.createElement('head');
 	var title = document.createElement('title');
 	title.innerHTML = 'BsWatch Video';

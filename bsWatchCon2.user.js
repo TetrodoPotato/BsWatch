@@ -18,16 +18,7 @@
 var lastFocus = 1;
 
 //Black page over original page
-var blackP = document.createElement('div');
-var blackPStyle = 'width:100%; height:100%; position:fixed; top:0; left:0; background:#000; z-index:999';
-blackP.setAttribute('style', blackPStyle);
-blackP.setAttribute('id', 'blackP');
-
-//Attach blackPage
-document.documentElement.appendChild(blackP);
-
-//disable scrollbars .. for ... reasons
-document.documentElement.style.overflow = 'hidden'; // firefox, chrome
+makeBlackPage();
 
 //When document loaded
 $(document).ready(function () {
@@ -81,10 +72,7 @@ $(document).ready(function () {
 
 		//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 		$(window).bind("load", function () {
-			$('#blackP').remove();
-
-			//Activate scrollbars
-			document.documentElement.style.overflow = 'auto'; // firefox, chrome
+			removeBlackPage();
 
 		});
 
@@ -219,29 +207,6 @@ function setGlobalVars() {
 	setCookie('lastSeries', urlSrc.split('/')[2], false);
 	setCookie('lastSeason', urlSrc.split('/')[3], false);
 	setCookie('lastEpisode', urlSrc.split('/')[4], false);
-}
-
-function createHead() {
-	//Construct the head
-	var headNode = document.createElement('head');
-	var titleNode = document.getElementsByTagName('title')[0];
-	var baseNode = document.getElementsByTagName('base')[0];
-	var charsetNode = document.getElementsByTagName('meta')[0];
-	var favNode = document.getElementsByTagName('link')[0];
-
-	//Add styleSheet
-	var styles = "@import url('" + cssLink + "');";
-	var styleNode = document.createElement('link');
-	styleNode.rel = 'stylesheet';
-	styleNode.href = 'data:text/css,' + escape(styles);
-
-	headNode.appendChild(charsetNode);
-	headNode.appendChild(baseNode);
-	headNode.appendChild(favNode);
-	headNode.appendChild(titleNode);
-	headNode.appendChild(styleNode);
-
-	return headNode;
 }
 
 //Some shit for keyboard controll
