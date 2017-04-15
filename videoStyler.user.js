@@ -8,11 +8,11 @@
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
 // @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/videoStyler.user.js
 // ==/UserScript==
 
 //Global vars
-var cssLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/playerStyle.css';
 var closeLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/close.png';
 var pauseLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/pause.png';
 var playLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/play.png';
@@ -218,7 +218,7 @@ function makeHead() {
 	head.appendChild(title);
 
 	//Add styleSheet in head
-	var styles = "@import url('" + cssLink + "');";
+	var styles = "@import url('" + cssVidLink + "');";
 	var styleNode = document.createElement('link');
 	styleNode.rel = 'stylesheet';
 	styleNode.href = 'data:text/css,' + escape(styles);
