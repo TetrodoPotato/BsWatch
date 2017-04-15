@@ -61,6 +61,7 @@ function removeFavorite(name) {
 	
 	//Add all other favorites
 	for (i = 0; i < favsSolo.length; i++) {
+		removeCookie('favorites')
 		addFavorite(favsSolo[i]);
 	}
 }
