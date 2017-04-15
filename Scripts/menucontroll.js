@@ -1,6 +1,6 @@
 var homeLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/pageImg/home.png';
 var confLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/pageImg/conf.png'
-var isLoggedin = false;
+	var isLoggedin = false;
 
 function createMenubar() {
 	//Base containers
@@ -65,13 +65,12 @@ function createMenubar() {
 	var linkTo = 'window.location = \'https://bs.to/serie-alphabet\'';
 	backButton.setAttribute('onclick', linkTo);
 
-	//The button image
-	var buttonImage = document.createElement('img');
-	buttonImage.setAttribute('src', homeLink);
-	buttonImage.setAttribute('width', '50');
-	buttonImage.setAttribute('height', '50');
-
-	backButton.appendChild(buttonImage);
+	backButton.innerHTML = '<svg height="50" width="50">' +
+		'<polygon points="13,38 20,38 20,26 13,26" />' +
+		'<polygon points="29,38 36,38 36,26 29,26" />' +
+		'<polygon points="13,28 36,28 36,25 13,25" />' +
+		'<polygon points="40,25 25,11 24,11 9,25" />' +
+		'</svg>';
 
 	//Create the search input
 	var searchInput = document.createElement('input');

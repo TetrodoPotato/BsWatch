@@ -34,6 +34,18 @@ tr {
 	float:left;
 }
 
+#leftCon button srg polygon {
+	fill:#ee4d2e:
+}
+
+#leftCon button:active srg polygon {
+	fill:#111;
+}
+
+#leftCon button:hover srg polygon {
+	fill:#a0260d:
+}
+
 #search {
 	border:none;
 	background-color:#252525;
