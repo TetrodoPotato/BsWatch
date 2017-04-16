@@ -26,7 +26,7 @@ document.documentElement.style.overflow = 'hidden'; // firefox, chrome
 $(document).ready(function () {
 	//Get the api ticket of the mp4 file
 	var elem = document.getElementById('streamurl');
-	if (elem !==  = null) {
+	if (elem !== null) {
 		var vidLink = elem.innerHTML;
 		//Costruct the mp4 file path
 		vidLink = 'https://openload.co/stream/' + vidLink + '?mime=true';

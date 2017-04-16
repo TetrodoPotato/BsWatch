@@ -15,21 +15,30 @@
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/bsWatchCon6.user.js
 // ==/UserScript==
 
-//Scroll to top
-window.scroll(0, 0);
-
 //Black page over original
 makeBlackPage();
 
-//Reset last connection
-setCookie('autoplay', false, false);
-removeCookie('lastSeries');
-removeCookie('lastSeason');
-removeCookie('lastEpisode');
-
 //When document loaded
 $(document).ready(function () {
+	//Scroll to top
+	window.scroll(0, 0);
 
+	//Reset last connection
+	setCookie('autoplay', false, false);
+	removeCookie('lastSeries');
+	removeCookie('lastSeason');
+	removeCookie('lastEpisode');
+
+	makePage();
+	updateFavorites();
+
+	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
+	$(window).bind("load", function () {
+		removeBlackPage();
+	});
+});
+
+function makePage() {
 	//container with all series names
 	var seriesContainer = document.getElementById('seriesContainer');
 
@@ -62,29 +71,10 @@ $(document).ready(function () {
 	bodyObject.appendChild(menuobject);
 	bodyObject.appendChild(table);
 
-	//Attach blackPage
-	document.documentElement.appendChild(blackP);
-
 	//Add content
 	document.head.innerHTML = headObject.innerHTML;
 	document.body = bodyObject;
-
-	//Focus object when mouse hover
-	$("#seriesTable").on("mouseover", "tr", function () {
-		var searchElem = document.getElementById('search');
-
-		if (searchElem !== document.activeElement) {
-			this.focus();
-		}
-	});
-
-	updateFavorites();
-
-	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
-	$(window).bind("load", function () {
-		removeBlackPage();
-	});
-});
+}
 
 function createNode(index, nameDE, linkTo) {
 	//Make a table row that links to the Series
@@ -111,6 +101,15 @@ function createNode(index, nameDE, linkTo) {
 	tableRow.appendChild(indexNode);
 	tableRow.appendChild(nameNode);
 
-	return tableRow;
+	//Focus object when mouse hover
+	tableRow.addEventListener("mouseover", function () {
+		var searchElem = document.getElementById('search');
 
+		//Prevent focus when search-textarea has it
+		if (searchElem !== document.activeElement) {
+			this.focus();
+		}
+	});
+
+	return tableRow;
 }

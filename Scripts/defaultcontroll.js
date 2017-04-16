@@ -74,4 +74,5 @@ function makeBlackPage() {
 
 function removeBlackPage(){
 	document.getElementById('blackP').outerHTML = '';
+	document.documentElement.style.overflow = 'auto'; // firefox, chrome
 }
