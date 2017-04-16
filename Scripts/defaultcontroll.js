@@ -62,6 +62,18 @@ function getCross() {
 	return svg;
 }
 
+function getArrow() {
+	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	svg.setAttribute('height', '50');
+	svg.setAttribute('width', '30');
+
+	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol1.setAttribute('points', '5,15 25,25 5,35');
+	svg.appendChild(pol1);
+
+	return svg;
+}
+
 function makeBlackPage() {
 	//Black page over original
 	var blackP = document.createElement('div');
@@ -72,7 +84,7 @@ function makeBlackPage() {
 	document.documentElement.style.overflow = 'hidden'; // firefox, chrome
 }
 
-function removeBlackPage(){
+function removeBlackPage() {
 	document.getElementById('blackP').outerHTML = '';
 	document.documentElement.style.overflow = 'auto'; // firefox, chrome
 }

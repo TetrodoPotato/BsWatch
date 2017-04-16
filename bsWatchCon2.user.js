@@ -71,7 +71,6 @@ $(document).ready(function () {
 			removeBlackPage();
 
 		});
-
 	}
 });
 
@@ -170,4 +169,8 @@ function setGlobalVars() {
 	setCookie('lastSeries', urlSrc.split('/')[2], false);
 	setCookie('lastSeason', urlSrc.split('/')[3], false);
 	setCookie('lastEpisode', urlSrc.split('/')[4], false);
+	
+	setCookie('lastSeriesPerm', urlSrc.split('/')[2], true);
+	setCookie('lastSeasonPerm', urlSrc.split('/')[3], true);
+	setCookie('lastEpisodePerm', urlSrc.split('/')[4], true);
 }

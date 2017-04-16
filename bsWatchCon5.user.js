@@ -35,6 +35,9 @@ $(document).ready(function () {
 	//Scroll to top ... reasons
 	$(this).scrollTop(0);
 
+	makeThePage();
+	updateFavorites();
+	
 	//Check if there was a last episode
 	if (typeof getCookie('lastEpisode') == 'string') {
 		//Check if this is the same series
@@ -60,9 +63,6 @@ $(document).ready(function () {
 			removeCookie('lastEpisode');
 		}
 	}
-
-	makeThePage();
-	updateFavorites();
 
 	//Play the next episode instant on season change
 	if (getCookie('lastEpisode') == 'next0x000001') {
@@ -219,15 +219,6 @@ function makeThePage() {
 	document.body = bodyObject;
 
 	//Focus object when mouse hover
-	$("#episodeTable").on("mouseover", "tr", function () {
-		var searchElem = document.getElementById('search');
-
-		if (searchElem !== document.activeElement) {
-			this.focus();
-		}
-	});
-
-	//Focus object when mouse hover
 	$("#seasonTable").on("mouseover", "td", function () {
 		var searchElem = document.getElementById('search');
 
@@ -290,6 +281,15 @@ function createNode(index, nameDE, nameOr, linkTo, watched, linkWatched) {
 		tableRow.appendChild(watchUnwatch);
 	}
 
+	//Focus object when mouse hover
+	tableRow.addEventListener("mouseover", "tr", function () {
+		var searchElem = document.getElementById('search');
+
+		if (searchElem !== document.activeElement) {
+			this.focus();
+		}
+	});
+	
 	return tableRow;
 
 }
@@ -312,6 +312,15 @@ function createSeasonNode(index, linkTo, onSeason) {
 		tdNode.setAttribute('class', 'watched');
 	}
 
+	//Focus object when mouse hover
+	tdNode.addEventListener("mouseover", "td", function () {
+		var searchElem = document.getElementById('search');
+
+		if (searchElem !== document.activeElement) {
+			this.focus();
+		}
+	});
+	
 	return tdNode;
 }
 
@@ -343,11 +352,6 @@ function playNextEpisode() {
 		linkArr[linkArr.length] = linkFunction;
 	}
 
-	//If the Series before was finished
-	if (getCookie('lastEpisode') == 'next0x000001') {
-		window.location = 'https://bs.to/' + linkArr[0];
-	}
-
 	//Find next episode
 	for (i = 0; i < linkArr.length; i++) {
 		var linkEpisode = linkArr[i].split('/')[3];
@@ -356,6 +360,7 @@ function playNextEpisode() {
 			//The next index of the episode "i + 1"
 			if ((i + 1) < linkArr.length) {
 				window.location = 'https://bs.to/' + linkArr[i + 1];
+				return true;
 			} else {
 				//When the next episode is not in this season
 				setCookie('lastEpisode', 'next0x000001', false);
@@ -365,7 +370,9 @@ function playNextEpisode() {
 					removeCookie('lastSeries');
 					removeCookie('lastSeason');
 					removeCookie('lastEpisode');
+					return true;
 				}
+				return false;
 			}
 		}
 	}

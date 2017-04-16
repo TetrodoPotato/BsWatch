@@ -65,10 +65,6 @@ $(document).ready(function () {
 
 });
 
-function openInNewTab(url) {
-	var win = window.open(url, '_blank');
-}
-
 function makePage(hoster, bsout) {
 	var lastSeries = getCookie('lastSeries');
 	var lastSeason = getCookie('lastSeason');

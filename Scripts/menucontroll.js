@@ -24,7 +24,7 @@ function createMenubar() {
 		//Always log in with 'Angemeldet bleiben'
 		var isLogg = loginForm.getElementsByTagName('label')[0];
 		isLogg = isLogg.getElementsByTagName('input');
-		
+
 		if (isLogg.length != 0) {
 			isLogg[0].checked = true;
 		}
@@ -156,6 +156,41 @@ function createMenubar() {
 		setCookie('autoplay', auto.checked, false);
 	});
 
+	//Make a start last episode banner
+	var nextDiv = document.createElement('div');
+	nextDiv.setAttribute('id', 'nextDiv');
+
+	//Left Element
+	var nextButton1 = document.createElement('div');
+	nextButton1.innerHTML = 'Weiter schauen';
+
+	var nextButton2 = document.createElement('div');
+	nextButton2.appendChild(getArrow());
+
+	nextDiv.appendChild(nextButton1);
+	nextDiv.appendChild(nextButton2);
+
+	nextDiv.addEventListener('mouseover', function () {
+		this.focus();
+	});
+
+	nextDiv.addEventListener('click', function () {
+		var lastSeriesPerm = getCookie('lastSeriesPerm');
+		var lastSeasonPerm = getCookie('lastSeasonPerm');
+		var lastEpisodePerm = getCookie('lastEpisodePerm');
+
+		if (lastSeriesPerm != undefined &&
+			lastSeasonPerm != undefined &&
+			lastEpisodePerm != undefined) {
+
+			var loc = 'https://bs.to/serie/' + lastSeriesPerm + '/' +
+				lastSeasonPerm + '/' + lastEpisodePerm;
+			window.location = loc;
+		}
+	});
+
+	baseCon.appendChild(nextDiv);
+	
 	return baseCon;
 }
 
