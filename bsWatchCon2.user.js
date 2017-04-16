@@ -36,6 +36,7 @@ $(document).ready(function () {
 		}
 	}
 
+	//Set the errorcode if it wasn't
 	var errorCode = getCookie('errorCode');
 	if (errorCode == undefined) {
 		setCookie('errorCode', 0, false);
@@ -44,11 +45,12 @@ $(document).ready(function () {
 		var urlSrc = window.location.pathname;
 		var sameEpisode = urlSrc.split('/')[4];
 		if (sameEpisode != getCookie('lastEpisode')) {
+			//Reset errorcode if it isn't the same episode
 			setCookie('errorCode', 0, false);
 			errorCode = 0;
 		}
 	}
-	
+
 	//Set cookies for next episode
 	setGlobalVars();
 	//Check if hoster-var contains a supportet hoster
@@ -64,7 +66,6 @@ $(document).ready(function () {
 		//Make a hoster page
 		makePage(hoster);
 		updateFavorites();
-		
 
 		//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 		$(window).bind("load", function () {
@@ -77,8 +78,6 @@ $(document).ready(function () {
 function makePage(hoster) {
 	var lastSeries = getCookie('lastSeries');
 	var lastSeason = getCookie('lastSeason');
-
-	var nextFunction = 'window.location = \'https://bs.to/?next\'';
 
 	//Create base
 	var headObject = createHead();
@@ -99,6 +98,7 @@ function makePage(hoster) {
 	hosterTable.setAttribute('id', 'hosterTable');
 	var hosterTbody = document.createElement('tbody');
 
+	//Create table rows
 	for (i = 0; i < hoster.length; i++) {
 		var tr = document.createElement('tr');
 		var td = document.createElement('td');
@@ -112,23 +112,41 @@ function makePage(hoster) {
 		td.innerHTML = hoster[i];
 
 		tr.appendChild(td);
-		hosterTbody.appendChild(tr);
 
+		//On hover set tr focus
+		tr.addEventListener("mouseover", function () {
+			var searchElem = document.getElementById('search');
+
+			if (searchElem !== document.activeElement) {
+				this.focus();
+			}
+		});
+
+		hosterTbody.appendChild(tr);
 	}
 
 	hosterTable.appendChild(hosterTbody);
 
+	//Table for back and next
 	var functionTable = document.createElement('table');
 	functionTable.setAttribute('id', 'functionTable');
 	var functionTbody = document.createElement('tbody');
 	var functionTr = document.createElement('tr');
 
 	var backButton = document.createElement('td');
-	var nextButton = document.createElement('td');
-
 	backButton.innerHTML = 'Zurück';
 	backButton.setAttribute('id', 'backButton');
+	backButton.addEventListener("click", function () {
+		var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
+		setCookie('autoplay', false, false);
+		window.location = backFunction;
+
+	});
+
+	var nextButton = document.createElement('td');
 	nextButton.innerHTML = 'Nexte Episode';
+	
+	var nextFunction = 'window.location = \'https://bs.to/?next\'';
 	nextButton.setAttribute('onclick', nextFunction);
 
 	functionTr.appendChild(backButton);
@@ -145,21 +163,6 @@ function makePage(hoster) {
 	//Add content
 	document.head.innerHTML = headObject.innerHTML;
 	document.body = bodyObject;
-
-	$("#hosterTable").on("mouseover", "tr", function () {
-		var searchElem = document.getElementById('search');
-
-		if (searchElem !== document.activeElement) {
-			this.focus();
-		}
-	});
-
-	$("#backButton").on("click", function () {
-		var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
-		setCookie('autoplay', false, false);
-		window.location = backFunction;
-
-	});
 }
 
 //Set global variables for the browser tab
@@ -169,7 +172,8 @@ function setGlobalVars() {
 	setCookie('lastSeries', urlSrc.split('/')[2], false);
 	setCookie('lastSeason', urlSrc.split('/')[3], false);
 	setCookie('lastEpisode', urlSrc.split('/')[4], false);
-	
+
+	//Perma cookies for 'Weiter schauen' button
 	setCookie('lastSeriesPerm', urlSrc.split('/')[2], true);
 	setCookie('lastSeasonPerm', urlSrc.split('/')[3], true);
 	setCookie('lastEpisodePerm', urlSrc.split('/')[4], true);

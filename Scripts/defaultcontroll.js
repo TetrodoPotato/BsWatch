@@ -126,3 +126,13 @@ function removeBlackPage() {
 	document.getElementById('blackP').outerHTML = '';
 	document.documentElement.style.overflow = 'auto'; // firefox, chrome
 }
+
+
+function makeKeyOnly(){
+	//Black page over original
+	var blackP = document.createElement('div');
+	var blackPStyle = 'width:100%; height:100%; position:fixed; top:0; left:0; background:transparent; z-index:500';
+	blackP.setAttribute('style', blackPStyle);
+	blackP.setAttribute('id', 'keyonly');
+	return blackP;
+}

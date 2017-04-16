@@ -57,7 +57,7 @@ $(document).ready(function () {
 		updateFavorites();
 		
 
-		//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
+		//Delete blackP... because the stylesheed needs to be loaded
 		$(window).bind("load", function () {
 			removeBlackPage();
 		});
