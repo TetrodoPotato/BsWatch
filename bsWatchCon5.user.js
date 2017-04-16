@@ -282,7 +282,7 @@ function createNode(index, nameDE, nameOr, linkTo, watched, linkWatched) {
 	}
 
 	//Focus object when mouse hover
-	tableRow.addEventListener("mouseover", "tr", function () {
+	tableRow.addEventListener("mouseover", function () {
 		var searchElem = document.getElementById('search');
 
 		if (searchElem !== document.activeElement) {
@@ -313,7 +313,7 @@ function createSeasonNode(index, linkTo, onSeason) {
 	}
 
 	//Focus object when mouse hover
-	tdNode.addEventListener("mouseover", "td", function () {
+	tdNode.addEventListener("mouseover", function () {
 		var searchElem = document.getElementById('search');
 
 		if (searchElem !== document.activeElement) {

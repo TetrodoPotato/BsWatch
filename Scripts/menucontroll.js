@@ -183,8 +183,13 @@ function createMenubar() {
 			lastSeasonPerm != undefined &&
 			lastEpisodePerm != undefined) {
 
+			setCookie('lastSeries',lastSeriesPerm,false);
+			setCookie('lastSeason',lastSeasonPerm,false);
+			setCookie('lastEpisode',lastEpisodePerm,false);
+			setCookie('autoplay',true,false);
+			
 			var loc = 'https://bs.to/serie/' + lastSeriesPerm + '/' +
-				lastSeasonPerm + '/' + lastEpisodePerm;
+				lastSeasonPerm;
 			window.location = loc;
 		}
 	});
