@@ -82,7 +82,7 @@ function getUnwatchIcon() {
 	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
 	pol1.setAttribute('cx', '15');
 	pol1.setAttribute('cy', '15');
-	pol1.setAttribute('r', '15');
+	pol1.setAttribute('r', '12');
 	pol1.setAttribute('style', 'stroke-width:5; fill:none;');
 	svg.appendChild(pol1);
 
@@ -97,7 +97,7 @@ function getWatchIcon() {
 	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
 	pol1.setAttribute('cx', '15');
 	pol1.setAttribute('cy', '15');
-	pol1.setAttribute('r', '15');
+	pol1.setAttribute('r', '12');
 	pol1.setAttribute('style', 'stroke-width:5; fill:none;');
 	svg.appendChild(pol1);
 
