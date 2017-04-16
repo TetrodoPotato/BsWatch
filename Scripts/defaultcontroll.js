@@ -64,11 +64,11 @@ function getCross() {
 
 function getArrow() {
 	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-	svg.setAttribute('height', '50');
+	svg.setAttribute('height', '30');
 	svg.setAttribute('width', '30');
 
 	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol1.setAttribute('points', '5,15 25,25 5,35');
+	pol1.setAttribute('points', '5,5 5,25 25,15');
 	svg.appendChild(pol1);
 
 	return svg;

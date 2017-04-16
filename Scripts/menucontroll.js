@@ -170,10 +170,6 @@ function createMenubar() {
 	nextDiv.appendChild(nextButton1);
 	nextDiv.appendChild(nextButton2);
 
-	nextDiv.addEventListener('mouseover', function () {
-		this.focus();
-	});
-
 	nextDiv.addEventListener('click', function () {
 		var lastSeriesPerm = getCookie('lastSeriesPerm');
 		var lastSeasonPerm = getCookie('lastSeasonPerm');
