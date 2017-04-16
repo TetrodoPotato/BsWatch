@@ -22,7 +22,9 @@ function createMenubar() {
 		var loginForm = document.getElementById('login');
 
 		//Always log in with 'Angemeldet bleiben'
-		var isLogg = loginForm.getElementsByName('login[remember]');
+		var isLogg = loginForm.getElementsByTagName('lable')[0];
+		isLogg = isLogg.getElementsByTagName('input');
+		
 		if (isLogg.length != 0) {
 			isLogg[0].checked = true;
 		}
