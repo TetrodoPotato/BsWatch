@@ -21,10 +21,11 @@ function createMenubar() {
 		//Get the bs.to login form
 		var loginForm = document.getElementById('login');
 
-		var logClick = loginForm.getElementsByTagName('input')[3];
-		logClick.addEventListener('click', function () {
-			document.forms[0].submit();
-		});
+		//Always log in with 'Angemeldet bleiben'
+		var isLogg = loginForm.getElementsByName('login[remember]');
+		if (isLogg.length != 0) {
+			isLogg[0].checked = true;
+		}
 
 		rightCon.appendChild(loginForm);
 
@@ -72,6 +73,8 @@ function createMenubar() {
 	autoplayCheckbox.setAttribute('type', 'checkbox');
 	autoplayCheckbox.setAttribute('class', 'vis-hidden');
 	autoplayCheckbox.setAttribute('id', 'auto');
+	//Set the Checkbox to the current autoplay state
+	autoplayCheckbox.checked = getCookie('autoplay');
 
 	var autoplayLabel = document.createElement('label');
 	autoplayLabel.setAttribute('id', "autolabel");
@@ -99,23 +102,22 @@ function createMenubar() {
 
 		var tbodys = document.getElementsByTagName('tbody');
 
+		var seasonTable = document.getElementById('seasonTable');
+		var functionTable = document.getElementById('functionTable');
+		var favTable = document.getElementById('favTable');
+
+		if (seasonTable === null) {
+			seasonTable = document.createElement('div');
+		}
+		if (functionTable === null) {
+			functionTable = document.createElement('div');
+		}
+		if (favTable === null) {
+			favTable = document.createElement('div');
+		}
+
 		var allContent = [];
-
 		for (i = 0; i < tbodys.length; i++) {
-
-			var seasonTable = document.getElementById('seasonTable');
-			var functionTable = document.getElementById('functionTable');
-			var favTable = document.getElementById('favTable');
-
-			if (seasonTable === null) {
-				seasonTable = document.createElement('div');
-			}
-			if (functionTable === null) {
-				functionTable = document.createElement('div');
-			}
-			if (favTable === null) {
-				favTable = document.createElement('div');
-			}
 
 			if (!seasonTable.contains(tbodys[i])) {
 				if (!functionTable.contains(tbodys[i])) {
@@ -146,21 +148,11 @@ function createMenubar() {
 		lastFocus = 0;
 	});
 
-	/*autoplayLabel.addEventListener('click', function () {
-		document.getElementById('auto').checked = !document.getElementById('auto').checked;
-
+	//add events to search and autoplay
+	autoplayCheckbox.addEventListener('change', function () {
 		var auto = document.getElementById('auto');
 		setCookie('autoplay', auto.checked, false);
-
-		if (!getCookie('autoplay')) {
-			setCookie('autoplay', false, false);
-
-			removeCookie('lastSeries');
-			removeCookie('lastSeason');
-			removeCookie('lastEpisode');
-		}
-
-	});*/
+	});
 
 	return baseCon;
 }

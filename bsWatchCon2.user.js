@@ -15,9 +15,6 @@
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/bsWatchCon2.user.js
 // ==/UserScript==
 
-//Some Global variables
-var lastFocus = 1;
-
 //Black page over original page
 makeBlackPage();
 
@@ -51,20 +48,18 @@ $(document).ready(function () {
 			errorCode = 0;
 		}
 	}
-
+	
+	//Set cookies for next episode
+	setGlobalVars();
 	//Check if hoster-var contains a supportet hoster
 	if ($.inArray("Vivo", hoster) != -1 && errorCode < 1) {
-		setGlobalVars();
 		window.location = window.location.href + '/Vivo';
 	} else if ($.inArray("OpenLoadHD", hoster) != -1 && errorCode < 2) {
-		setGlobalVars();
 		window.location = window.location.href + '/OpenLoadHD';
 	} else if ($.inArray("OpenLoad", hoster) != -1 && errorCode < 3) {
-		setGlobalVars();
 		window.location = window.location.href + '/OpenLoad';
 	} else {
 		//Activate everything and go hang yourself
-		setGlobalVars();
 
 		//Make a hoster page
 		makePage(hoster);
@@ -160,45 +155,12 @@ function makePage(hoster) {
 		}
 	});
 
-	$("body").click(function (event) {
-		var searchElem = document.getElementById('search');
-
-		if (searchElem === document.activeElement) {
-			event.preventDefault();
-			this.focus();
-		}
-	});
-
-	//add events to search and autoplay
-	$('#auto').on('change', function () {
-		var auto = document.getElementById('auto');
-		setCookie('autoplay', auto.checked, false);
-
-		if (!getCookie('autoplay')) {
-			setCookie('autoplay', false, false);
-			removeCookie('lastSeries');
-			removeCookie('lastSeason');
-			removeCookie('lastEpisode');
-		}
-	});
-
 	$("#backButton").on("click", function () {
 		var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
 		setCookie('autoplay', false, false);
 		window.location = backFunction;
 
 	});
-
-	document.getElementById('hosterTable').getElementsByTagName('tr')[0].focus();
-
-	//Always log in with 'Angemeldet bleiben'
-	var isLogg = document.getElementsByName('login[remember]');
-	if (isLogg.length != 0) {
-		isLogg[0].checked = true;
-	}
-
-	//Set the Checkbox to the current autoplay state
-	document.getElementById('auto').checked = getCookie('autoplay');
 }
 
 //Set global variables for the browser tab

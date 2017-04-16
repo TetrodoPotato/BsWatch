@@ -15,23 +15,11 @@
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/bsWatchCon6.user.js
 // ==/UserScript==
 
-//Some Global variables
-var lastFocus = 1;
-
-//Black page over original
-var blackP = document.createElement('div');
-var blackPStyle = 'width:100%; height:100%; position:fixed; top:0; left:0; background:#000; z-index:999';
-blackP.setAttribute('style', blackPStyle);
-blackP.setAttribute('id', 'blackP');
-
-//Attach blackPage
-document.documentElement.appendChild(blackP);
-
 //Scroll to top
 window.scroll(0, 0);
 
-//disable scrollbars .. for ... reasons
-document.documentElement.style.overflow = 'hidden'; // firefox, chrome
+//Black page over original
+makeBlackPage();
 
 //Reset last connection
 setCookie('autoplay', false, false);
@@ -74,25 +62,12 @@ $(document).ready(function () {
 	bodyObject.appendChild(menuobject);
 	bodyObject.appendChild(table);
 
-	//delete the original page and fill again
-
-	document.documentElement.innerHTML = "";
-
-	//Black page over original
-	var blackP = document.createElement('div');
-	var blackPStyle = 'width:100%; height:100%; position:fixed; top:0; left:0; background:#000; z-index:999';
-	blackP.setAttribute('style', blackPStyle);
-	blackP.setAttribute('id', 'blackP');
-
 	//Attach blackPage
 	document.documentElement.appendChild(blackP);
 
 	//Add content
 	document.head.innerHTML = headObject.innerHTML;
 	document.body = bodyObject;
-
-	//Activate scrollbars
-	document.documentElement.style.overflow = 'auto'; // firefox, chrome
 
 	//Focus object when mouse hover
 	$("#seriesTable").on("mouseover", "tr", function () {
@@ -103,37 +78,11 @@ $(document).ready(function () {
 		}
 	});
 
-	$("body").click(function (event) {
-		var searchElem = document.getElementById('search');
-
-		if (searchElem !== document.activeElement) {
-			event.preventDefault();
-			this.focus();
-		}
-	});
-
-	document.getElementById('seriesTable').getElementsByTagName('tr')[0].focus();
-
-	//add events to search and autoplay
-	$('#auto').on('change', function () {
-		var auto = document.getElementById('auto');
-		setCookie('autoplay', auto.checked, false);
-		console.log('niho');
-	});
-
-	//Always log in with 'Angemeldet bleiben'
-	var isLogg = document.getElementsByName('login[remember]');
-	if (isLogg.length != 0) {
-		isLogg[0].checked = true;
-	}
-
-	//Set the Checkbox to the current autoplay state
-	document.getElementById('auto').checked = getCookie('autoplay');
 	updateFavorites();
 
 	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 	$(window).bind("load", function () {
-		$('#blackP').remove();
+		removeBlackPage();
 	});
 });
 

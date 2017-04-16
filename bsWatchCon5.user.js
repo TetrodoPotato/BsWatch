@@ -23,7 +23,6 @@
 //Some Global variables
 var watchedIcon = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/pageImg/unwatch.png';
 var unwatchedIcon = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/pageImg/watch.png';
-var lastFocus = 1;
 
 //Black page over original
 makeBlackPage();
@@ -64,6 +63,16 @@ $(document).ready(function () {
 
 	makeThePage();
 	updateFavorites();
+
+	//Play the next episode instant on season change
+	if (getCookie('lastEpisode') == 'next0x000001') {
+		playNextEpisode();
+	}
+	
+	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
+	$(window).bind("load", function () {
+		removeBlackPage();
+	});
 });
 
 function makeThePage() {
@@ -209,12 +218,6 @@ function makeThePage() {
 	document.head.innerHTML = headObject.innerHTML;
 	document.body = bodyObject;
 
-	//Play the next episode as fast as possible
-	//on season change
-	if (getCookie('lastEpisode') == 'next0x000001') {
-		playNextEpisode();
-	}
-
 	//Focus object when mouse hover
 	$("#episodeTable").on("mouseover", "tr", function () {
 		var searchElem = document.getElementById('search');
@@ -224,8 +227,6 @@ function makeThePage() {
 		}
 	});
 
-	document.getElementById('episodeTable').getElementsByTagName('tr')[0].focus();
-
 	//Focus object when mouse hover
 	$("#seasonTable").on("mouseover", "td", function () {
 		var searchElem = document.getElementById('search');
@@ -234,44 +235,6 @@ function makeThePage() {
 			this.focus();
 		}
 	});
-
-	$("body").click(function (event) {
-		var searchElem = document.getElementById('search');
-
-		if (searchElem === document.activeElement) {
-			event.preventDefault();
-			this.focus();
-		}
-	});
-
-	//add events to search and autoplay
-	$('#auto').on('change', function () {
-		var auto = document.getElementById('auto');
-		setCookie('autoplay', auto.checked, false);
-
-		if (!getCookie('autoplay')) {
-			setCookie('autoplay', false, false);
-
-			removeCookie('lastSeries');
-			removeCookie('lastSeason');
-			removeCookie('lastEpisode');
-		}
-	});
-
-	//Always log in with 'Angemeldet bleiben'
-	var isLogg = document.getElementsByName('login[remember]');
-	if (isLogg.length != 0) {
-		isLogg[0].checked = true;
-	}
-
-	//Set the Checkbox to the current autoplay state
-	document.getElementById('auto').checked = getCookie('autoplay');
-
-	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
-	$(window).bind("load", function () {
-		removeBlackPage();
-	});
-
 }
 
 function createNode(index, nameDE, nameOr, linkTo, watched, linkWatched) {

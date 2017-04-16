@@ -1,3 +1,5 @@
+var lastFocus = 0;
+
 function focusNext(value) {
 	var lastFoc = document.activeElement.getAttribute('id');
 	lastFoc = parseInt(lastFoc);
@@ -14,7 +16,7 @@ function focusNext(value) {
 
 		if (elem != null) {
 			while (getStyle(elem, "display") == "none") {
-				lastFoc++;
+				lastFoc += value;
 				elem = document.getElementById('' + lastFoc);
 				if (elem === null) {
 					break;
@@ -31,7 +33,7 @@ function focusNext(value) {
 
 		if (elem != null) {
 			while (getStyle(elem, "display") == "none") {
-				lastFoc++;
+				lastFoc += value;
 				elem = document.getElementById('' + lastFoc);
 				if (elem === null) {
 					break;
@@ -40,55 +42,6 @@ function focusNext(value) {
 		}
 
 		if (elem != null) {
-			document.getElementById('' + lastFoc).focus();
-			lastFocus = lastFoc;
-		}
-	}
-	scrollToFocus();
-}
-
-function focusPrevious(value) {
-	var lastFoc = document.activeElement.getAttribute('id');
-	lastFoc = parseInt(lastFoc);
-	if (isNaN(lastFoc)) {
-		var elem;
-		if (lastFocus != 0) {
-			elem = document.getElementById('' + lastFocus);
-			lastFoc = lastFocus;
-		} else {
-			elem = document.getElementById('1');
-			lastFocus = 1;
-			lastFoc = 1;
-		}
-
-		if (elem != null) {
-			while (getStyle(elem, "display") == "none") {
-				lastFoc++;
-				elem = document.getElementById('' + lastFoc);
-				if (elem === null) {
-					break;
-				}
-			}
-		}
-
-		if (elem != null) {
-			elem.focus();
-		}
-	} else {
-		lastFoc -= value;
-		var elem = document.getElementById('' + lastFoc);
-
-		if (elem != null) {
-			while (getStyle(elem, "display") == "none") {
-				lastFoc--;
-				elem = document.getElementById('' + lastFoc);
-				if (elem === null) {
-					break;
-				}
-			}
-		}
-
-		if (elem !== null) {
 			document.getElementById('' + lastFoc).focus();
 			lastFocus = lastFoc;
 		}
@@ -162,7 +115,7 @@ $(window).keydown(function (e) {
 			document.getElementById('search').focus();
 		} else if (e.keyCode === 38) { //Arr-up
 			e.preventDefault();
-			focusPrevious(1);
+			focusNext(-1);
 		} else if (e.keyCode === 40) { //Arr-down
 			e.preventDefault();
 			focusNext(1);

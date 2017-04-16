@@ -15,9 +15,6 @@
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/bsWatchCon3.user.js
 // ==/UserScript==
 
-//Some Global variables
-var lastFocus = 1;
-
 //Black page over original
 makeBlackPage();
 
@@ -169,44 +166,10 @@ function makePage(hoster, bsout) {
 		}
 	});
 
-	$("body").click(function (event) {
-		var searchElem = document.getElementById('search');
-
-		if (searchElem === document.activeElement) {
-			event.preventDefault();
-			this.focus();
-		}
-	});
-
-	//add events to search and autoplay
-	$('#auto').on('change', function () {
-		var auto = document.getElementById('auto');
-		setCookie('autoplay', auto.checked, false);
-
-		if (!getCookie('autoplay')) {
-			setCookie('autoplay', false, false);
-
-			removeCookie('lastSeries');
-			removeCookie('lastSeason');
-			removeCookie('lastEpisode');
-		}
-	});
-
 	$("#backButton").on("click", function () {
 		var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
 		setCookie('autoplay', false, false);
 		window.location = backFunction;
 
 	});
-
-	document.getElementById('hosterTable').getElementsByTagName('tr')[0].focus();
-
-	//Always log in with 'Angemeldet bleiben'
-	var isLogg = document.getElementsByName('login[remember]');
-	if (isLogg.length != 0) {
-		isLogg[0].checked = true;
-	}
-
-	//Set the Checkbox to the current autoplay state
-	document.getElementById('auto').checked = getCookie('autoplay');
 }
