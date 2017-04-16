@@ -210,7 +210,7 @@ $(window).keydown(function (e) {
 	}
 	
 	if(e.keyCode == 112){
-		keyonly != keyonly;
+		keyonly = !keyonly;
 		setCookie('keyonly',keyonly,false);
 	}
 });
