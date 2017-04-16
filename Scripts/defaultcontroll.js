@@ -82,8 +82,8 @@ function getUnwatchIcon() {
 	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
 	pol1.setAttribute('cx', '15');
 	pol1.setAttribute('cy', '15');
-	pol1.setAttribute('r', '10');
-	pol1.setAttribute('style', 'stroke-width:5; fill:none;');
+	pol1.setAttribute('r', '12');
+	pol1.setAttribute('style', 'stroke-width:3; fill:none;');
 	svg.appendChild(pol1);
 
 	return svg;
@@ -97,16 +97,16 @@ function getWatchIcon() {
 	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
 	pol1.setAttribute('cx', '15');
 	pol1.setAttribute('cy', '15');
-	pol1.setAttribute('r', '10');
-	pol1.setAttribute('style', 'stroke-width:5; fill:none;');
+	pol1.setAttribute('r', '12');
+	pol1.setAttribute('style', 'stroke-width:3; fill:none;');
 	svg.appendChild(pol1);
 
 	var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol2.setAttribute('points', '5,0 0,5 25,30 30,25');
+	pol2.setAttribute('points', '1,26 4,29 29,4 26,1');
 	svg.appendChild(pol2);
 
 	var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol3.setAttribute('points', '0,25 5,30 30,5 25,0');
+	pol3.setAttribute('points', '4,1 1,4 26,29 29,26');
 	svg.appendChild(pol3);
 	
 	return svg;
