@@ -267,14 +267,12 @@ function createNode(index, nameDE, nameOr, linkTo, watched, linkWatched) {
 		var clickFuncWatch = 'window.location = \'' + linkToWatch + '\'';
 		watchUnwatch.setAttribute('onclick', clickFuncWatch);
 
-		var watchIcon = document.createElement('img');
+		var watchIcon;
 		if (watched) {
-			watchIcon.setAttribute('src', watchedIcon);
+			watchIcon = getWatchIcon();
 		} else {
-			watchIcon.setAttribute('src', unwatchedIcon);
+			watchIcon = getUnwatchIcon();
 		}
-		watchIcon.setAttribute('width', '30');
-		watchIcon.setAttribute('height', '30');
 
 		watchUnwatch.appendChild(watchIcon);
 

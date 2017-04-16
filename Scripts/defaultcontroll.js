@@ -74,6 +74,44 @@ function getArrow() {
 	return svg;
 }
 
+function getUnwatchIcon() {
+	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	svg.setAttribute('height', '30');
+	svg.setAttribute('width', '30');
+
+	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+	pol1.setAttribute('cx', '15');
+	pol1.setAttribute('cy', '15');
+	pol1.setAttribute('r', '15');
+	pol1.setAttribute('style', 'stroke-width:5; fill:none;');
+	svg.appendChild(pol1);
+
+	return svg;
+}
+
+function getWatchIcon() {
+	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	svg.setAttribute('height', '30');
+	svg.setAttribute('width', '30');
+
+	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+	pol1.setAttribute('cx', '15');
+	pol1.setAttribute('cy', '15');
+	pol1.setAttribute('r', '15');
+	pol1.setAttribute('style', 'stroke-width:5; fill:none;');
+	svg.appendChild(pol1);
+
+	var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol2.setAttribute('points', '5,0 0,5 25,30 30,25');
+	svg.appendChild(pol2);
+
+	var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol3.setAttribute('points', '0,25 5,30 30,5 25,0');
+	svg.appendChild(pol3);
+	
+	return svg;
+}
+
 function makeBlackPage() {
 	//Black page over original
 	var blackP = document.createElement('div');
