@@ -23,7 +23,7 @@ function createMenubar() {
 
 		//Always log in with 'Angemeldet bleiben'
 		var isLogg = loginForm.getElementsByName('login[remember]');
-
+		
 		if (isLogg.length != 0) {
 			isLogg[0].checked = true;
 		}
