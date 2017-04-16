@@ -146,7 +146,7 @@ function createMenubar() {
 		lastFocus = 0;
 	});
 
-	autoplayLabel.addEventListener('click', function () {
+	/*autoplayLabel.addEventListener('click', function () {
 		document.getElementById('auto').checked = !document.getElementById('auto').checked;
 
 		var auto = document.getElementById('auto');
@@ -160,7 +160,7 @@ function createMenubar() {
 			removeCookie('lastEpisode');
 		}
 
-	});
+	});*/
 
 	return baseCon;
 }

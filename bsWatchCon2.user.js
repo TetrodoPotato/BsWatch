@@ -163,7 +163,7 @@ function makePage(hoster) {
 	$("body").click(function (event) {
 		var searchElem = document.getElementById('search');
 
-		if (searchElem !== document.activeElement) {
+		if (searchElem === document.activeElement) {
 			event.preventDefault();
 			this.focus();
 		}

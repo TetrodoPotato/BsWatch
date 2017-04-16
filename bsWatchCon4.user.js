@@ -20,13 +20,10 @@ episode = getCookie('lastEpisode');
 if (series == undefined ||
 	season == undefined ||
 	episode == undefined) {
-		
+
 	alert('Enable cookies!!!');
 	window.location = 'https://bs.to/';
-}
-
-//Check if this is a errorlink
-if (window.location.href == 'https://bs.to/?error') {
+} else if (window.location.href == 'https://bs.to/?error') {
 	//if the error code isn't set.. set it.
 	if (getCookie('errorCode') == undefined) {
 		setCookie('errorCode', 0, false);
