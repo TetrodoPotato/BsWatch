@@ -140,8 +140,10 @@ function makeKeyOnly() {
 
 	var textKey = document.createElement('span');
 	textKey.innerHTML = 'Keyboard only';
-	var keyStyle = 'position:fixed; color:red; bottom:0; right:0;';
+	var keyStyle = 'position:fixed; color:#ee4d2e; bottom:0; right:0; font-size:20px; font-weight:bold;';
 	textKey.setAttribute('style',keyStyle);
+	
+	blackP.appendChild(textKey);
 	
 	var base = document.getElementById('baseCon');
 	base.appendChild(blackP);
