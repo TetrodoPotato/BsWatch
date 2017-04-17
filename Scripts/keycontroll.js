@@ -5,6 +5,8 @@ var keyonly = false;
 if(getCookie('keyonly') == undefined){
 	keyonly = false;
 	setCookie('keyonly',false,false);
+} else {
+	keyonly = getCookie('keyonly');
 }
 
 function focusNext(value) {
@@ -212,5 +214,11 @@ $(window).keydown(function (e) {
 	if(e.keyCode == 112){
 		keyonly = !keyonly;
 		setCookie('keyonly',keyonly,false);
+		
+		if(keyonly){
+			makeKeyOnly();
+		} else {
+			removeKeyOnly();
+		}
 	}
 });

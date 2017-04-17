@@ -108,7 +108,7 @@ function getWatchIcon() {
 	var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
 	pol3.setAttribute('points', '4,1 1,4 26,29 29,26');
 	svg.appendChild(pol3);
-	
+
 	return svg;
 }
 
@@ -125,14 +125,28 @@ function makeBlackPage() {
 function removeBlackPage() {
 	document.getElementById('blackP').outerHTML = '';
 	document.documentElement.style.overflow = 'auto'; // firefox, chrome
+
+	if (keyonly) {
+		makeKeyOnly();
+	}
 }
 
-
-function makeKeyOnly(){
+function makeKeyOnly() {
 	//Black page over original
 	var blackP = document.createElement('div');
 	var blackPStyle = 'width:100%; height:100%; position:fixed; top:0; left:0; background:transparent; z-index:500';
 	blackP.setAttribute('style', blackPStyle);
 	blackP.setAttribute('id', 'keyonly');
-	return blackP;
+
+	var textKey = document.createElement('span');
+	textKey.innerHTML = 'Keyboard only';
+	var keyStyle = 'position:fixed; color:red; bottom:0; right:0;';
+	textKey.setAttribute('style',keyStyle);
+	
+	var base = document.getElementById('baseCon');
+	base.appendChild(blackP);
+}
+
+function removeKeyOnly() {
+	document.getElementById('keyonly').outerHTML = '';
 }
