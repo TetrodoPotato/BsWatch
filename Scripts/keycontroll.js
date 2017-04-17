@@ -2,9 +2,9 @@ var lastFocus = 0;
 var keyonly = false;
 
 //Inline for keyonly check
-if(getCookie('keyonly') == undefined){
+if (getCookie('keyonly') == undefined) {
 	keyonly = false;
-	setCookie('keyonly',false,false);
+	setCookie('keyonly', false, false);
 } else {
 	keyonly = getCookie('keyonly');
 }
@@ -106,116 +106,113 @@ function findPos(obj) {
 }
 
 $(window).keydown(function (e) {
+	var nextButton = document.getElementById('nextButton');
+	if (nextButton != null) {
+		if (e.keyCode === 27) { //ESC
+			e.preventDefault();
+			setNextBreak();
+		}
+	} else if (document.getElementById('search') === document.activeElement) {
+		if (e.keyCode === 27 || e.keyCode === 13) { //Esc / Enter
+			e.preventDefault();
+			focusNext(1);
+		}
+	} else if (document.activeElement.tagName.toLowerCase() != "input") {
+		if (e.keyCode === 75) { //K
+			e.preventDefault();
+			document.getElementById('search').focus();
+		} else if (e.keyCode === 38) { //Arr-up
+			e.preventDefault();
+			focusNext(-1);
+		} else if (e.keyCode === 40) { //Arr-down
+			e.preventDefault();
+			focusNext(1);
+		} else if (e.keyCode === 13) { //Enter
+			e.preventDefault();
 
-	if (keyonly) {
-		var nextButton = document.getElementById('nextButton');
-		if (nextButton != null) {
-			if (e.keyCode === 27) { //ESC
-				e.preventDefault();
-				setNextBreak();
-			}
-		} else if (document.getElementById('search') === document.activeElement) {
-			if (e.keyCode === 27 || e.keyCode === 13) { //Esc / Enter
-				e.preventDefault();
-				focusNext(1);
-			}
-		} else if (document.activeElement.tagName.toLowerCase() != "input") {
-			if (e.keyCode === 75) { //K
-				e.preventDefault();
-				document.getElementById('search').focus();
-			} else if (e.keyCode === 38) { //Arr-up
-				e.preventDefault();
-				focusNext(-1);
-			} else if (e.keyCode === 40) { //Arr-down
-				e.preventDefault();
-				focusNext(1);
-			} else if (e.keyCode === 13) { //Enter
-				e.preventDefault();
-
-				if (document.activeElement.getElementsByTagName('a').length > 0) {
-					document.activeElement.getElementsByTagName('a')[0].click();
-				} else {
-					document.activeElement.click();
-				}
-
-			} else if (e.keyCode === 65) { //A
-				e.preventDefault();
-				document.getElementById('auto').checked = !document.getElementById('auto').checked;
-				var auto = document.getElementById('auto');
-				setCookie('autoplay', auto.checked, false);
-			} else if (e.keyCode === 72) { //H
-				e.preventDefault();
-				window.location = 'https://bs.to/serie-alphabet';
-			} else if (e.keyCode === 8) { //Backspace
-				e.preventDefault();
-				var lastSeries = getCookie('lastSeries');
-				var lastSeason = getCookie('lastSeason');
-				if (lastSeries != undefined && lastSeason != undefined) {
-					var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
-					setCookie('autoplay', false, false);
-					window.location = backFunction;
-				}
+			if (document.activeElement.getElementsByTagName('a').length > 0) {
+				document.activeElement.getElementsByTagName('a')[0].click();
 			} else {
-				var path = window.location.pathname;
-				path = path.split('/');
+				document.activeElement.click();
+			}
 
-				var watchedLink = false;
-				if (path.length > 4) {
-					if (path[4].indexOf('watch') == 0) {
-						watchedLink = true;
-					} else if (path[4].indexOf('unwatch') == 0) {
-						watchedLink = true;
+		} else if (e.keyCode === 65) { //A
+			e.preventDefault();
+			document.getElementById('auto').checked = !document.getElementById('auto').checked;
+			var auto = document.getElementById('auto');
+			setCookie('autoplay', auto.checked, false);
+		} else if (e.keyCode === 72) { //H
+			e.preventDefault();
+			window.location = 'https://bs.to/serie-alphabet';
+		} else if (e.keyCode === 8) { //Backspace
+			e.preventDefault();
+			var lastSeries = getCookie('lastSeries');
+			var lastSeason = getCookie('lastSeason');
+			if (lastSeries != undefined && lastSeason != undefined) {
+				var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
+				setCookie('autoplay', false, false);
+				window.location = backFunction;
+			}
+		} else {
+			var path = window.location.pathname;
+			path = path.split('/');
+
+			var watchedLink = false;
+			if (path.length > 4) {
+				if (path[4].indexOf('watch') == 0) {
+					watchedLink = true;
+				} else if (path[4].indexOf('unwatch') == 0) {
+					watchedLink = true;
+				}
+			}
+
+			if (path.length == 3 || path.length == 4 || watchedLink) {
+				if (e.keyCode === 37) { //Arr-left
+					e.preventDefault();
+					openNextSeasonUser(-1);
+				} else if (e.keyCode === 39) { //Arr-right
+					e.preventDefault();
+					openNextSeasonUser(1);
+				} else if (e.keyCode === 79) { //O
+					e.preventDefault();
+					var allWatch = document.getElementById('allWatchTable');
+					if (allWatch !== null) {
+						allWatch.getElementsByTagName('td')[0].click();
+					}
+				} else if (e.keyCode === 80) { //P
+					e.preventDefault();
+					var allWatch = document.getElementById('allWatchTable');
+					if (allWatch !== null) {
+						allWatch.getElementsByTagName('td')[1].click();
+					}
+				} else if (e.keyCode === 70) { //F
+					addThisFav();
+				} else if (e.keyCode === 68) { //D
+					removeThisFav();
+				} else if (e.keyCode === 87) { //W
+					e.preventDefault();
+					if (isLoggedin) {
+						if (document.getElementById('episodeTable').contains(document.activeElement)) {
+							document.activeElement.getElementsByTagName('td')[2].click();
+						}
 					}
 				}
-
-				if (path.length == 3 || path.length == 4 || watchedLink) {
-					if (e.keyCode === 37) { //Arr-left
-						e.preventDefault();
-						openNextSeasonUser(-1);
-					} else if (e.keyCode === 39) { //Arr-right
-						e.preventDefault();
-						openNextSeasonUser(1);
-					} else if (e.keyCode === 79) { //O
-						e.preventDefault();
-						var allWatch = document.getElementById('allWatchTable');
-						if (allWatch !== null) {
-							allWatch.getElementsByTagName('td')[0].click();
-						}
-					} else if (e.keyCode === 80) { //P
-						e.preventDefault();
-						var allWatch = document.getElementById('allWatchTable');
-						if (allWatch !== null) {
-							allWatch.getElementsByTagName('td')[1].click();
-						}
-					} else if (e.keyCode === 70) { //F
-						addThisFav();
-					} else if (e.keyCode === 68) { //D
-						removeThisFav();
-					} else if (e.keyCode === 87) { //W
-						e.preventDefault();
-						if (isLoggedin) {
-							if (document.getElementById('episodeTable').contains(document.activeElement)) {
-								document.activeElement.getElementsByTagName('td')[2].click();
-							}
-						}
-					}
-				} else if (path.length > 4) {
-					if (e.keyCode === 78) { //N
-						e.preventDefault();
-						window.location = 'https://bs.to/?next';
-					}
+			} else if (path.length > 4) {
+				if (e.keyCode === 78) { //N
+					e.preventDefault();
+					window.location = 'https://bs.to/?next';
 				}
-
 			}
 
 		}
+
 	}
-	
-	if(e.keyCode == 112){
+
+	if (e.keyCode == 112) {
 		keyonly = !keyonly;
-		setCookie('keyonly',keyonly,false);
-		
-		if(keyonly){
+		setCookie('keyonly', keyonly, false);
+
+		if (keyonly) {
 			makeKeyOnly();
 		} else {
 			removeKeyOnly();
