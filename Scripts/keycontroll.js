@@ -134,6 +134,10 @@ $(window).keydown(function (e) {
 				document.activeElement.getElementsByTagName('a')[0].click();
 			} else {
 				document.activeElement.click();
+				var tds = document.activeElement.getElementsByTagName('td');
+				if(tds.length != 0){
+					tds[0].click();
+				}
 			}
 
 		} else if (e.keyCode === 65) { //A
