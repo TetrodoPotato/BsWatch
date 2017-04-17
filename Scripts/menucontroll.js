@@ -44,6 +44,13 @@ function createMenubar() {
 
 	var favButton = document.createElement('div');
 	favButton.setAttribute('id', 'favButton');
+	favButton.setAttribute('tabindex', -1);
+	favButton.addEventListener('mouseenter',function(){
+		this.focus();
+	});
+	favButton.addEventListener('mouseleave',function(){
+		this.blur();
+	});
 
 	favButton.appendChild(getStar());
 

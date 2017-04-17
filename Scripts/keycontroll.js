@@ -135,7 +135,7 @@ $(window).keydown(function (e) {
 			} else {
 				document.activeElement.click();
 				var tds = document.activeElement.getElementsByTagName('td');
-				if(tds.length != 0){
+				if (tds.length != 0) {
 					tds[0].click();
 				}
 			}
@@ -148,6 +148,25 @@ $(window).keydown(function (e) {
 		} else if (e.keyCode === 72) { //H
 			e.preventDefault();
 			window.location = 'https://bs.to/serie-alphabet';
+		} else if (e.keyCode == 9) { //Tab
+			var lastSeriesPerm = getCookie('lastSeriesPerm');
+			var lastSeasonPerm = getCookie('lastSeasonPerm');
+			var lastEpisodePerm = getCookie('lastEpisodePerm');
+
+			if (lastSeriesPerm != undefined &&
+				lastSeasonPerm != undefined &&
+				lastEpisodePerm != undefined) {
+
+				setCookie('lastSeries', lastSeriesPerm, false);
+				setCookie('lastSeason', lastSeasonPerm, false);
+				setCookie('lastEpisode', lastEpisodePerm, false);
+				setCookie('autoplay', true, false);
+
+				var loc = 'https://bs.to/serie/' + lastSeriesPerm + '/' +
+					lastSeasonPerm;
+				window.location = loc;
+			}
+
 		} else if (e.keyCode === 8) { //Backspace
 			e.preventDefault();
 			var lastSeries = getCookie('lastSeries');
