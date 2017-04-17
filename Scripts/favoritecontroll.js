@@ -75,9 +75,16 @@ function updateFavorites() {
 
 	//Get all favorites and create the rows
 	var favs = getFavs();
-	for (i = 0; i < favs.length; i++) {
+	var i = 0
+	for (; i < favs.length; i++) {
 		//create rows and elements
 		var tr = document.createElement('tr');
+		tr.setAttribute('tabindex',-1);
+		tr.addEventListener('mouseover', function (){
+			this.focus();
+		});
+		tr.setAttribute('class',i+1);
+		
 		var td1 = document.createElement('td');
 		var td2 = document.createElement('td');
 		var td3 = document.createElement('td');
@@ -127,6 +134,7 @@ function updateFavorites() {
 	if (path.split('/').length > 2) {
 		//create the add button
 		var addButton = document.createElement('tr');
+		addButton.setAttribute('class',i+1);
 		addButton.setAttribute('id', 'addButton');
 
 		//Fill the add button with elements
