@@ -140,10 +140,12 @@ function updateFavorites() {
 			this.focus();
 		});
 		addButton.addEventListener('focus', function (){
-			$('#favTable').addClass('favShow');
+			$('#favButton').addClass('favShow');
+			console.log('show');
 		});
 		addButton.addEventListener('blur', function (){
-			$('#favTable').removeClass('favShow');
+			$('#favButton').removeClass('favShow');
+			console.log('show not');
 		});
 		
 
