@@ -136,6 +136,16 @@ function updateFavorites() {
 		var addButton = document.createElement('tr');
 		addButton.setAttribute('class',i+1);
 		addButton.setAttribute('id', 'addButton');
+		addButton.addEventListener('mouseover', function (){
+			this.focus();
+		});
+		addButton.addEventListener('focus', function (){
+			$('.parent').addClass('favShow');
+		});
+		addButton.addEventListener('blur', function (){
+			$('.parent').removeClass('favShow');
+		});
+		
 
 		//Fill the add button with elements
 		var addButtonTd = document.createElement('td');

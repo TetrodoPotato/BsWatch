@@ -1,5 +1,6 @@
 var lastFocus = 0;
 var keyonly = false;
+var favSwitch = false;
 
 //Inline for keyonly check
 if (getCookie('keyonly') == undefined) {
@@ -175,6 +176,16 @@ $(window).keydown(function (e) {
 				var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
 				setCookie('autoplay', false, false);
 				window.location = backFunction;
+			}
+		}  else if (e.keyCode === 77) { //Backspace
+			favSwitch = !favSwitch;
+			if(favSwitch){
+				var favTab = document.getElementsByClassName('1');
+				if(favTab != 0){
+					favTab[0].focus();
+				} else {
+					focusNext(1);
+				}
 			}
 		} else {
 			var path = window.location.pathname;
