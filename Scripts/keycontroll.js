@@ -252,7 +252,7 @@ $(window).keydown(function (e) {
 					addThisFav();
 				} else if (e.keyCode === 68) { //D
 					var favTab = document.getElementById('favTable');
-					if(document.activeElement === favTab){
+					if(favTab.contains(document.activeElement)){
 						var addButton = document.getElementById('addButton');
 						if(addButton !== null){
 							if(addButton != document.activeElement){
