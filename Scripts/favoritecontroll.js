@@ -53,7 +53,7 @@ function removeFavorite(name) {
 	favsSolo = removeIndex(favsSolo, nameIndex);
 
 	setCookie('favorites', '', true);
-	
+
 	//Add all other favorites
 	for (i = 0; i < favsSolo.length; i++) {
 		addFavorite(favsSolo[i]);
@@ -76,87 +76,82 @@ function updateFavorites() {
 	//Get all favorites and create the rows
 	var favs = getFavs();
 	var i = 0
-	for (; i < favs.length; i++) {
-		//create rows and elements
-		var tr = document.createElement('tr');
-		tr.setAttribute('tabindex',-1);
-		tr.addEventListener('mouseover', function (){
-			this.focus();
-		});
-		tr.addEventListener('focus', function (){
-			$('#favButton').addClass('favShow');
-			console.log('show');
-		});
-		tr.addEventListener('blur', function (){
-			$('#favButton').removeClass('favShow');
-			console.log('show not');
-		});
-		tr.setAttribute('class',i+1);
-		
-		var td1 = document.createElement('td');
-		var td2 = document.createElement('td');
-		var td3 = document.createElement('td');
+		for (; i < favs.length; i++) {
+			//create rows and elements
+			var tr = document.createElement('tr');
+			tr.setAttribute('tabindex', -1);
+			tr.addEventListener('mouseover', function () {
+				this.focus();
+			});
+			tr.addEventListener('focus', function () {
+				$('#favButton').addClass('favShow');
+			});
+			tr.addEventListener('blur', function () {
+				$('#favButton').removeClass('favShow');
+			});
+			tr.setAttribute('class', i + 1);
 
-		//Index
-		td1.innerHTML = (i + 1);
-		td1.setAttribute('val', favs[i]);
-		//Name
-		td2.innerHTML = favs[i];
-		td2.setAttribute('val', favs[i]);
-		//Remove icon
+			var td1 = document.createElement('td');
+			var td2 = document.createElement('td');
+			var td3 = document.createElement('td');
 
-		//Svg image in button
-		td3.appendChild(getCross());
-		td3.setAttribute('val', favs[i]);
+			//Index
+			td1.innerHTML = (i + 1);
+			td1.setAttribute('val', favs[i]);
+			//Name
+			td2.innerHTML = favs[i];
+			td2.setAttribute('val', favs[i]);
+			//Remove icon
 
-		//Change location to the favorite series on click
-		td1.addEventListener('click', function () {
-			var val = this.getAttribute('val');
-			window.location = 'https://bs.to/serie/' + val;
-		});
-		td2.addEventListener('click', function () {
-			var val = this.getAttribute('val');
-			window.location = 'https://bs.to/serie/' + val;
-		});
+			//Svg image in button
+			td3.appendChild(getCross());
+			td3.setAttribute('val', favs[i]);
 
-		//Remove the favorite and update the table on click
-		td3.addEventListener('click', function () {
-			var val = this.getAttribute('val');
-			removeFavorite(val);
-			updateFavorites();
-		});
+			//Change location to the favorite series on click
+			td1.addEventListener('click', function () {
+				var val = this.getAttribute('val');
+				window.location = 'https://bs.to/serie/' + val;
+			});
+			td2.addEventListener('click', function () {
+				var val = this.getAttribute('val');
+				window.location = 'https://bs.to/serie/' + val;
+			});
 
-		//add elements to row
-		tr.appendChild(td1);
-		tr.appendChild(td2);
-		tr.appendChild(td3);
+			//Remove the favorite and update the table on click
+			td3.addEventListener('click', function () {
+				var val = this.getAttribute('val');
+				removeFavorite(val);
+				updateFavorites();
+			});
 
-		//add row to the table
-		favTbody.appendChild(tr);
-	}
+			//add elements to row
+			tr.appendChild(td1);
+			tr.appendChild(td2);
+			tr.appendChild(td3);
 
-	//get the current url path
-	var path = window.location.pathname;
+			//add row to the table
+			favTbody.appendChild(tr);
+		}
+
+		//get the current url path
+		var path = window.location.pathname;
 
 	//check if the user is on a series
 	if (path.split('/').length > 2) {
 		//create the add button
 		var addButton = document.createElement('tr');
-		addButton.setAttribute('class',i+1);
+		addButton.setAttribute('class', i + 1);
 		addButton.setAttribute('id', 'addButton');
 		addButton.setAttribute('tabindex', -1);
-		addButton.addEventListener('mouseover', function (){
+		addButton.addEventListener('mouseover', function () {
 			this.focus();
 		});
-		addButton.addEventListener('focus', function (){
+		addButton.addEventListener('focus', function () {
 			$('#favButton').addClass('favShow');
-			console.log('show');
 		});
-		addButton.addEventListener('blur', function (){
+		addButton.addEventListener('blur', function () {
 			$('#favButton').removeClass('favShow');
-			console.log('show not');
 		});
-		
 
 		//Fill the add button with elements
 		var addButtonTd = document.createElement('td');
@@ -181,21 +176,40 @@ function updateFavorites() {
 }
 
 function addThisFav() {
-	//Get the current url path
-	var slicePath = window.location.pathname;
-	slicePath = slicePath.split('/');
-	//Add the current series to favorites
-	addFavorite(slicePath[2]);
-	//Update favorites table
-	updateFavorites();
+	$('#favButton').addClass('favShow');
+
+	window.setTimeout(function () {
+		//Get the current url path
+		var slicePath = window.location.pathname;
+		slicePath = slicePath.split('/');
+		//Add the current series to favorites
+		addFavorite(slicePath[2]);
+		//Update favorites table
+		updateFavorites();
+
+		window.setTimeout(function () {
+			$('#favButton').removeClass('favShow');
+		}, 1000);
+
+	}, 1000);
 }
 
 function removeThisFav() {
-	//Get the current url path
-	var slicePath = window.location.pathname;
-	slicePath = slicePath.split('/');
-	//Remove the current series to favorites
-	removeFavorite(slicePath[2]);
-	//Update favorites table
-	updateFavorites();
+	$('#favButton').addClass('favShow');
+
+	window.setTimeout(function () {
+		//Get the current url path
+		var slicePath = window.location.pathname;
+		slicePath = slicePath.split('/');
+		//Remove the current series to favorites
+		removeFavorite(slicePath[2]);
+		//Update favorites table
+		updateFavorites();
+
+		window.setTimeout(function () {
+			$('#favButton').removeClass('favShow');
+		}, 1000);
+
+	}, 1000);
+
 }

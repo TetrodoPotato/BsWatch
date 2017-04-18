@@ -209,7 +209,7 @@ $(window).keydown(function (e) {
 			favSwitch = !favSwitch;
 			if (favSwitch) {
 				var favTab = document.getElementsByClassName('1');
-				if (favTab != 0) {
+				if (favTab.length != 0) {
 					favTab[0].focus();
 				}
 
@@ -251,7 +251,18 @@ $(window).keydown(function (e) {
 				} else if (e.keyCode === 70) { //F
 					addThisFav();
 				} else if (e.keyCode === 68) { //D
-					removeThisFav();
+					var favTab = document.getElementById('favTable');
+					if(document.activeElement === favTab){
+						var addButton = document.getElementById('addButton');
+						if(addButton !== null){
+							if(addButton != document.activeElement){
+								var act = document.activeElement;
+								act.getElementsByTagName('td')[2].click();
+							}
+						}
+					} else {
+						removeThisFav();
+					}	
 				} else if (e.keyCode === 87) { //W
 					e.preventDefault();
 					if (isLoggedin) {
