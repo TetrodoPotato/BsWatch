@@ -106,6 +106,24 @@ function findPos(obj) {
 	}
 }
 
+function favNext(value) {
+	var lastFoc = document.activeElement.getAttribute('class');
+	lastFoc = parseInt(lastFoc);
+	if (isNaN(lastFoc)) {
+		var elems = document.getElementsByClassName('1');
+		if(elems.length != 0){
+			elems[0].focus();
+		}
+	} else {
+		lastFoc += value;
+		var elem = document.getElementsByClassName('' + lastFoc);
+
+		if (elem.length != 0) {
+			elem[0].focus();
+		}
+	}
+}
+
 $(window).keydown(function (e) {
 	var nextButton = document.getElementById('nextButton');
 	if (nextButton != null) {
@@ -124,10 +142,20 @@ $(window).keydown(function (e) {
 			document.getElementById('search').focus();
 		} else if (e.keyCode === 38) { //Arr-up
 			e.preventDefault();
-			focusNext(-1);
+			if (favSwitch) {
+				favNext(-1);
+
+			} else {
+				focusNext(-1);
+			}
 		} else if (e.keyCode === 40) { //Arr-down
 			e.preventDefault();
-			focusNext(1);
+			if (favSwitch) {
+				favNext(1);
+
+			} else {
+				focusNext(1);
+			}
 		} else if (e.keyCode === 13) { //Enter
 			e.preventDefault();
 
@@ -177,15 +205,16 @@ $(window).keydown(function (e) {
 				setCookie('autoplay', false, false);
 				window.location = backFunction;
 			}
-		}  else if (e.keyCode === 77) { //Backspace
+		} else if (e.keyCode === 77) { //Backspace
 			favSwitch = !favSwitch;
-			if(favSwitch){
+			if (favSwitch) {
 				var favTab = document.getElementsByClassName('1');
-				if(favTab != 0){
+				if (favTab != 0) {
 					favTab[0].focus();
-				} else {
-					focusNext(1);
 				}
+
+			} else {
+				focusNext(1);
 			}
 		} else {
 			var path = window.location.pathname;
