@@ -83,6 +83,14 @@ function updateFavorites() {
 		tr.addEventListener('mouseover', function (){
 			this.focus();
 		});
+		tr.addEventListener('focus', function (){
+			$('#favButton').addClass('favShow');
+			console.log('show');
+		});
+		tr.addEventListener('blur', function (){
+			$('#favButton').removeClass('favShow');
+			console.log('show not');
+		});
 		tr.setAttribute('class',i+1);
 		
 		var td1 = document.createElement('td');
@@ -136,6 +144,7 @@ function updateFavorites() {
 		var addButton = document.createElement('tr');
 		addButton.setAttribute('class',i+1);
 		addButton.setAttribute('id', 'addButton');
+		addButton.setAttribute('tabindex', -1);
 		addButton.addEventListener('mouseover', function (){
 			this.focus();
 		});
