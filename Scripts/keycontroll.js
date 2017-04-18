@@ -205,7 +205,7 @@ $(window).keydown(function (e) {
 				setCookie('autoplay', false, false);
 				window.location = backFunction;
 			}
-		} else if (e.keyCode === 77) { //Backspace
+		} else if (e.keyCode === 77) { //M
 			favSwitch = !favSwitch;
 			if (favSwitch) {
 				var favTab = document.getElementsByClassName('1');

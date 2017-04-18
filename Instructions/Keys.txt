@@ -1,0 +1,41 @@
+//On Lists
+	//List General - On all Locations
+		H 				- Home
+		Esc / Enter 	- Exit Search
+		K				- Enter Search
+		Arrow-Up		- List-Entry Up
+		Arrow-Down 		- List-Entry Down
+		Enter 			- Klick List-Entry
+		A 				- Switch Autoplay
+		Tab 			- Resume Last Watched Season
+		M 				- Switch Between Favorite- and Series-List
+		F1				- Swicth to Fullkeymode 'None Mouse Controll'
+		
+	//On Favorite-List - 'M'
+		F 				- Favorise this Series
+		D 				- Defavorise Selected Series
+		
+	//List Season - Season and Episode List
+		Arrow-Left 		- Previous Season
+		Arrow-Right		- Next Season
+		O				- Watch all Episodes
+		P 				- Unwatch all Episodes
+		F 				- Favorise this Series-List
+		D 				- Defavorise this Series
+		W 				- Watch / Unwatch Selected Series
+		
+	//List Hoster
+		Next			- Next Episode
+		
+//On Player
+	//Video Player
+		Space 			- Play / Pause
+		Esc 			- Close Player / Next Episode
+		Q 				- Mute / Unmute
+		Arrow-Left 		- Previous 10sec
+		Arrow-Right 	- Next 10sec
+		Arrow-Up 		- Volume Up
+		Arrow-Down 		- Volume Down
+		+				- Speed Up 1% max 400%
+		-				- Slow Down 1% min 50%;
+	

@@ -42,13 +42,14 @@ function createMenubar() {
 
 	}
 
+	//Create the favorite menu
 	var favButton = document.createElement('div');
 	favButton.setAttribute('id', 'favButton');
 	favButton.setAttribute('tabindex', -1);
-	favButton.addEventListener('mouseenter',function(){
+	favButton.addEventListener('mouseenter', function () {
 		this.focus();
 	});
-	favButton.addEventListener('mouseleave',function(){
+	favButton.addEventListener('mouseleave', function () {
 		this.blur();
 	});
 
@@ -111,6 +112,7 @@ function createMenubar() {
 
 		var tbodys = document.getElementsByTagName('tbody');
 
+		//Check existance for other tables
 		var seasonTable = document.getElementById('seasonTable');
 		var functionTable = document.getElementById('functionTable');
 		var favTable = document.getElementById('favTable');
@@ -125,6 +127,7 @@ function createMenubar() {
 			favTable = document.createElement('div');
 		}
 
+		//All tablerows in one array
 		var allContent = [];
 		for (i = 0; i < tbodys.length; i++) {
 
@@ -167,16 +170,19 @@ function createMenubar() {
 	var nextDiv = document.createElement('div');
 	nextDiv.setAttribute('id', 'nextDiv');
 
-	//Left Element
+	//Button for Continue
 	var nextButton1 = document.createElement('div');
 	nextButton1.innerHTML = 'Weiter schauen';
 
+	//Just for style
 	var nextButton2 = document.createElement('div');
 	nextButton2.appendChild(getArrow());
 
+	//Append content
 	nextDiv.appendChild(nextButton1);
 	nextDiv.appendChild(nextButton2);
 
+	//Open next episode on click
 	nextDiv.addEventListener('click', function () {
 		var lastSeriesPerm = getCookie('lastSeriesPerm');
 		var lastSeasonPerm = getCookie('lastSeasonPerm');
@@ -186,11 +192,11 @@ function createMenubar() {
 			lastSeasonPerm != undefined &&
 			lastEpisodePerm != undefined) {
 
-			setCookie('lastSeries',lastSeriesPerm,false);
-			setCookie('lastSeason',lastSeasonPerm,false);
-			setCookie('lastEpisode',lastEpisodePerm,false);
-			setCookie('autoplay',true,false);
-			
+			setCookie('lastSeries', lastSeriesPerm, false);
+			setCookie('lastSeason', lastSeasonPerm, false);
+			setCookie('lastEpisode', lastEpisodePerm, false);
+			setCookie('autoplay', true, false);
+
 			var loc = 'https://bs.to/serie/' + lastSeriesPerm + '/' +
 				lastSeasonPerm;
 			window.location = loc;
@@ -198,7 +204,8 @@ function createMenubar() {
 	});
 
 	baseCon.appendChild(nextDiv);
-	
+
+	//Return menü
 	return baseCon;
 }
 

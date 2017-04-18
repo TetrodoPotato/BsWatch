@@ -393,7 +393,7 @@ function updateProcessbar() {
 		lastVol = video.volume;
 	}
 
-	var innerTopLayer = document.getElementById('vid').playbackRate.toFixed(2) + 'x';
+	var innerTopLayer = (document.getElementById('vid').playbackRate * 100).toFixed(0) + '%';
 	document.getElementById('topLayer').innerHTML = innerTopLayer;
 
 }
