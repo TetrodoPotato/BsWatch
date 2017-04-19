@@ -26,11 +26,11 @@ function getSound(val) {
 
 	if (val == 0) {
 		var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-		pol2.setAttribute('points', '10,21 24,32 25,32 39,21');
+		pol2.setAttribute('points', '19,12 30,24 32,23 21,10');
 		svg.appendChild(pol2);
 
 		var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-		pol3.setAttribute('points', '33,39 30,27 19,27');
+		pol3.setAttribute('points', '22,24 32,12 30,10 20,23');
 		svg.appendChild(pol3);
 	}
 	
