@@ -180,7 +180,7 @@ function constructPlayer(mediaFile) {
 	});
 
 	document.getElementById('playpause').innerHTML = getPlay().outerHTML;
-	document.getElementById('close').innerHTML = getClose.outerHTML;
+	document.getElementById('close').innerHTML = getClose().outerHTML;
 	document.getElementById('mute').innerHTML = '<img src="' + muteLink3 + '" width="35" height="35" alt="mute" />';
 
 	checkTime = setInterval(updateProcessbar, 100);
