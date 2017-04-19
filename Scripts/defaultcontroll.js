@@ -214,11 +214,11 @@ function removeBlackPage() {
 	document.getElementById('blackP').outerHTML = '';
 	document.documentElement.style.overflow = 'auto'; // firefox, chrome
 
-	if (keyonly != null) {
+	try {
 		if (keyonly) {
 			makeKeyOnly();
 		}
-	}
+	} catch (e) {}
 }
 
 function makeKeyOnly() {
