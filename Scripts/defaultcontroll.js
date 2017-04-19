@@ -54,6 +54,8 @@ function getSound(val) {
 		pol4.setAttribute('style', 'fill:none; stroke-width:3;');
 		svg.appendChild(pol4);
 	}
+	
+	return svg;
 }
 
 function getClose() {
