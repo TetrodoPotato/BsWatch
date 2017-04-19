@@ -33,28 +33,28 @@ function getSound(val) {
 		pol3.setAttribute('points', '22,24 32,12 30,10 20,23');
 		svg.appendChild(pol3);
 	}
-	
-	if(val >= 1){
+
+	if (val >= 1) {
 		var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
 		pol2.setAttribute('points', '21,12 23,14 23,17 23,20 21,22');
 		pol2.setAttribute('style', 'fill:none; stroke-width:3;');
 		svg.appendChild(pol2);
 	}
-	
-	if(val >= 2){
+
+	if (val >= 2) {
 		var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
 		pol3.setAttribute('points', '24,26 27,22 28,17 27,12 24,8');
 		pol3.setAttribute('style', 'fill:none; stroke-width:3;');
 		svg.appendChild(pol3);
 	}
-	
-	if(val >= 3){
+
+	if (val >= 3) {
 		var pol4 = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
 		pol4.setAttribute('points', '28,5 31,9 33,17 31,25 28,30');
 		pol4.setAttribute('style', 'fill:none; stroke-width:3;');
 		svg.appendChild(pol4);
 	}
-	
+
 	return svg;
 }
 
@@ -214,8 +214,10 @@ function removeBlackPage() {
 	document.getElementById('blackP').outerHTML = '';
 	document.documentElement.style.overflow = 'auto'; // firefox, chrome
 
-	if (keyonly) {
-		makeKeyOnly();
+	if (typeof keyonly != 'undefined') {
+		if (keyonly) {
+			makeKeyOnly();
+		}
 	}
 }
 
