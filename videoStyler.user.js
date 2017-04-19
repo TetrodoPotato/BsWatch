@@ -26,7 +26,6 @@ $(document).ready(function () {
 
 	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 	$(window).bind("load", function () {
-		$('#blackP').remove();
 		removeBlackPage();
 	});
 
