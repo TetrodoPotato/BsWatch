@@ -55,7 +55,6 @@ $(document).ready(function () {
 		//Make a hoster page
 		makePage(hoster, nextDirPath);
 		updateFavorites();
-		
 
 		//Delete blackP... because the stylesheed needs to be loaded
 		$(window).bind("load", function () {
@@ -68,8 +67,6 @@ $(document).ready(function () {
 function makePage(hoster, bsout) {
 	var lastSeries = getCookie('lastSeries');
 	var lastSeason = getCookie('lastSeason');
-
-	var nextFunction = 'window.location = \'https://bs.to/?next\'';
 
 	//Create base
 	var headObject = createHead();
@@ -91,21 +88,24 @@ function makePage(hoster, bsout) {
 	hosterTable.setAttribute('id', 'hosterTable');
 	var hosterTbody = document.createElement('tbody');
 
+	//Construct Hostertable rows
 	for (i = 0; i < hoster.length + 1; i++) {
 		if (!(i < hoster.length)) {
-			var playHosterTr = document.createElement('tr');
-			playHosterTr.setAttribute('class', 'playHosterTr');
-			playHosterTr.setAttribute('id', (i + 1));
-			playHosterTr.setAttribute('tabindex', -1);
+			//Open hoster row
+			var tr = document.createElement('tr');
+			tr.setAttribute('class', 'playHosterTr');
+			tr.setAttribute('id', (i + 1));
+			tr.setAttribute('tabindex', -1);
 			var playHosterTd = document.createElement('td');
 			playHosterTd.setAttribute('id', 'playHosterTd');
+			//Link open in new Tab
 			playHosterTd.innerHTML = '<a target="_blank" href="' + bsout + '">Open Selected Hoster</a>';
-			playHosterTr.appendChild(playHosterTd);
-			hosterTbody.appendChild(playHosterTr);
+			tr.appendChild(playHosterTd);
 		} else {
 			var tr = document.createElement('tr');
 			var td = document.createElement('td');
 
+			//Open hoster on click
 			var clickFunc = 'https://bs.to/serie/' + getCookie('lastSeries');
 			 + '/' +
 			getCookie('lastSeason');
@@ -113,31 +113,51 @@ function makePage(hoster, bsout) {
 			 + '/' + hoster[i];
 			clickFunc = 'window.location = \'' + clickFunc + '\'';
 
+			//Click
 			tr.setAttribute('onclick', clickFunc);
 			tr.setAttribute('id', (i + 1));
 			tr.setAttribute('tabindex', -1);
 			td.innerHTML = hoster[i];
 
 			tr.appendChild(td);
-			hosterTbody.appendChild(tr);
 		}
+		//Focus on mouseover if its not search
+		tr.addEventListener('mouseover', , function () {
+			var searchElem = document.getElementById('search');
 
+			if (searchElem !== document.activeElement) {
+				this.focus();
+			}
+		});
+		hosterTbody.appendChild(tr);
 	}
 
 	hosterTable.appendChild(hosterTbody);
 
+	//Two button table for next episode and Back
 	var functionTable = document.createElement('table');
 	functionTable.setAttribute('id', 'functionTable');
 	var functionTbody = document.createElement('tbody');
 	var functionTr = document.createElement('tr');
 
+	//The two "buttons"
 	var backButton = document.createElement('td');
 	var nextButton = document.createElement('td');
 
 	backButton.innerHTML = 'Zurück';
 	backButton.setAttribute('id', 'backButton');
+
+	//Next Episode onclick
+	var nextFunction = 'window.location = \'https://bs.to/?next\'';
 	nextButton.innerHTML = 'Nexte Episode';
 	nextButton.setAttribute('onclick', nextFunction);
+
+	//Open last Series onclick and disable autoplay
+	backButton.addEventListener("click", function () {
+		var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
+		setCookie('autoplay', false, false);
+		window.location = backFunction;
+	});
 
 	functionTr.appendChild(backButton);
 	functionTr.appendChild(nextButton);
@@ -145,6 +165,7 @@ function makePage(hoster, bsout) {
 	functionTbody.appendChild(functionTr);
 	functionTable.appendChild(functionTbody);
 
+	//Construct body
 	bodyObject.appendChild(menuobject);
 	bodyObject.appendChild(titleH);
 	bodyObject.appendChild(hosterTable);
@@ -153,19 +174,4 @@ function makePage(hoster, bsout) {
 	//Add content
 	document.head.innerHTML = headObject.innerHTML;
 	document.body = bodyObject;
-
-	$("#hosterTable").on("mouseover", "tr", function () {
-		var searchElem = document.getElementById('search');
-
-		if (searchElem !== document.activeElement) {
-			this.focus();
-		}
-	});
-
-	$("#backButton").on("click", function () {
-		var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
-		setCookie('autoplay', false, false);
-		window.location = backFunction;
-
-	});
 }

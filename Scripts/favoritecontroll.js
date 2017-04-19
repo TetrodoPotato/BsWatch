@@ -176,6 +176,7 @@ function updateFavorites() {
 }
 
 function addThisFav() {
+	//Show all elements
 	$('#favButton').addClass('favShow');
 
 	window.setTimeout(function () {
@@ -188,15 +189,18 @@ function addThisFav() {
 		updateFavorites();
 
 		window.setTimeout(function () {
+			//Hide table
 			$('#favButton').removeClass('favShow');
-		}, 1000);
+		}, 500);
 
-	}, 1000);
+	}, 500);
 }
 
 function removeThisFav() {
+	//Show all Elements
 	$('#favButton').addClass('favShow');
 
+	//Wait
 	window.setTimeout(function () {
 		//Get the current url path
 		var slicePath = window.location.pathname;
@@ -207,9 +211,10 @@ function removeThisFav() {
 		updateFavorites();
 
 		window.setTimeout(function () {
+			//Hide table
 			$('#favButton').removeClass('favShow');
-		}, 1000);
+		}, 500);
 
-	}, 1000);
+	}, 500);
 
 }

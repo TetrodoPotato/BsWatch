@@ -35,15 +35,15 @@ tr {
 }
 
 #leftCon button svg polygon {
-	fill:#ee4d2e:
+	fill:#ee4d2e;
 }
 
 #leftCon button:active svg polygon {
-	fill:#333;
+	fill:#333 !important;
 }
 
 #leftCon button:hover svg polygon {
-	fill:#a0260d:
+	fill:#a0260d;
 }
 
 #search {
@@ -193,6 +193,7 @@ h2 {
 	color:#CCC;
 	font-size:40px;
 	font-weight:bold;
+	text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
 }
 
 h2 small {
@@ -367,19 +368,16 @@ h2 small {
 
 #episodeTable tr td:nth-child(3){
 	background:#000;
-	width:1%;
-	color:#FFF;
-	font-weight: bold;
-	text-align:center; 
-	vertical-align:middle;
-	padding:0 5px;;
-	border:none;
+	width:35px;
+	padding:0 10px 0 10px;
+	fill:#ee4d2e;
+	stroke:#ee4d2e;
 	border-radius:0 5px 5px 0;	
 }
 
 #episodeTable tr td:nth-child(3):hover{
-	background:#ee4d2e;
-	
+	fill:#a0260d;
+	stroke:#a0260d;
 }
 
 #episodeTable tr td:last-child{
@@ -540,7 +538,27 @@ h2 small {
 	width:50px;
 }
 
-#favButton:hover #favCon{
+#favButton:focus #favCon{
+	display:block;
+	transition: max-height 0.25s ease-in;
+	max-height: 1080px;
+}
+
+.favShow #favCon{
+	display:block;
+	transition: max-height 0.25s ease-in;
+	max-height: 1080px;
+}
+
+#favButton > svg:nth-of-type(1) polygon{
+	fill:#ee4d2e;
+}
+
+#favButton:focus > svg:nth-of-type(1) polygon{
+	fill:#a0260d;
+}
+
+#favCon table tr:focus + #favCon{
 	display:block;
 	transition: max-height 0.25s ease-in;
 	max-height: 1080px;
@@ -592,17 +610,17 @@ h2 small {
 	fill:#a0260d;
 }
 
-#favCon table tr:hover td:nth-child(2){
+#favCon table tr:focus td:nth-child(2){
 	color:#ee4d2e;
 	background-color:#181818;
 }
 
-#favCon table tr:hover td:nth-child(3){
+#favCon table tr:focus td:nth-child(3){
 	color:#ee4d2e;
 	background-color:#181818;
 }
 
-#favCon table tr:hover td:nth-child(1){
+#favCon table tr:focus td:nth-child(1){
 	background-color:#a0260d;
 }
 
@@ -612,7 +630,47 @@ h2 small {
 	height:50px;
 	cursor:pointer;
 }
-#addButton:hover td{
+#addButton:focus td{
 	background:#a0260d !important;
 }
 
+#nextDiv {
+	height:50px;
+	width:200px;
+	position:fixed;
+	bottom:100px;
+	left:-170px;
+	background-color:#252525;
+	cursor:pointer;
+	border-radius:0 5px 5px 0;
+	overflow:hidden;
+	transition: left 0.5s ease-out;
+}
+
+#nextDiv:hover {
+	left:0px;
+}
+
+#nextDiv:hover div:nth-child(2){
+	width:0px;
+}
+
+#nextDiv div:nth-child(1){
+	float:left;
+	height:50px;
+	line-height:50px;
+	text-align:center;
+	padding-left:10px;
+	font-size:20px;
+	color:#CCC;
+}
+
+#nextDiv div:nth-child(2){
+	float:right;
+	height:50px;
+	width:30px;
+	background-color:#000;
+	fill:#FFF;
+	overflow:hidden;
+	transition: width 0.5s ease-out;
+}

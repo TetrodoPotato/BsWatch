@@ -135,6 +135,7 @@ function makeThePage() {
 			nameDE = "";
 		}
 
+		//Get the Original name
 		var nameOr = episodeNodes[i].getElementsByTagName('i');
 		if (nameOr.length != 0) {
 			nameOr = nameOr[0].innerHTML;
@@ -142,20 +143,24 @@ function makeThePage() {
 			nameOr = "";
 		}
 
+		//Get the direction
 		var linkTo = episodeNodes[i].getElementsByTagName('a')[0];
 		linkTo = linkTo.getAttribute('href');
 
+		//Check if it is watched
 		var watched = false;
 		if (episodeNodes[i].getAttribute('class') == 'watched') {
 			watched = true;
 		}
 
+		//When logged in this is the link to unwatch or watch this episode
 		var linkWatched = "";
 		if (isLoggedin) {
 			linkWatched = episodeNodes[i].getElementsByClassName('icon')[0];
 			linkWatched = linkWatched.getAttribute('href');
 		}
 
+		//Create node and append it to the body
 		var contentNode = createNode((i + 1), nameDE, nameOr, linkTo, watched, linkWatched);
 		tbody.appendChild(contentNode);
 	}
@@ -323,6 +328,7 @@ function createSeasonNode(index, linkTo, onSeason) {
 }
 
 function onError() {
+	//Reload page
 	if (playNextEpisode() == false) {
 		window.location = window.location.href;
 	}
@@ -411,6 +417,7 @@ function nextWindow(time) {
 	nextTime = time;
 	nextBreak = false;
 
+	//The styles that get loaded before the actual styles get loaded
 	var styleTag = document.createElement('style');
 	styleTag.innerHTML = '* {margin:0;padding:0;font-family: Arial, Helvetica, sans-serif;font-size:16px;}' +
 		'#plane { z-index:999; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8);}' +
@@ -419,7 +426,8 @@ function nextWindow(time) {
 		'#nextButton {border:none; color:#ee4d2e; font-weight:bold; background-color:#161616; height:50px; width:100%;}' +
 		'#nextButton:hover{background-color:#202020;} #nextButton:active{background-color:#000;}'
 
-		var plane = document.createElement('div');
+	//The window levels
+	var plane = document.createElement('div');
 	var bodys = document.createElement('div');
 	var texts = document.createElement('div');
 	var butto = document.createElement('button');
@@ -428,23 +436,23 @@ function nextWindow(time) {
 	bodys.setAttribute('id', 'nextBody');
 
 	texts.setAttribute('id', 'texts');
-
 	texts.innerHTML = 'Nächste Folge in ' + time + 's';
 
+	//Button on click interrupt autoplay
 	butto.setAttribute("id", "nextButton");
-
 	butto.innerHTML = "Cancel";
+	butto.addEventListener("click", function () {
+		setNextBreak();
+	});
 
+	//Construct plane
 	plane.appendChild(bodys);
 	plane.appendChild(styleTag);
 	bodys.appendChild(texts);
 	bodys.appendChild(butto);
 	document.documentElement.appendChild(plane);
 
-	$("#nextButton").on("click", function () {
-		setNextBreak();
-	});
-
+	//Start Timer ugly but work work
 	for (i = 1; i < time + 2; i++) {
 		setTimeout(checkTimeNextWindow, 1000 * i)
 	}
@@ -452,25 +460,32 @@ function nextWindow(time) {
 
 function setNextBreak() {
 	nextBreak = true;
+	
+	//Close window
 	closeNextBreak();
 
 	document.getElementById('auto').checked = false;
 
+	//Autoplay = false;
 	setCookie('autoplay', false, false);
 
+	//Remove last watched episode
 	removeCookie('lastSeries');
 	removeCookie('lastSeason');
 	removeCookie('lastEpisode');
 }
 
 function checkTimeNextWindow() {
+	//Timer
 	nextTime--;
 
+	//Update Text time
 	var texts = document.getElementById('texts');
 	if (texts !== null) {
 		texts.innerHTML = "Nächste Folge in " + nextTime + "s";
 	}
 
+	//If the time is over and the window was not interrupted
 	if (nextTime < 0 && !nextBreak) {
 		closeNextBreak();
 		playNextEpisode();
@@ -478,6 +493,7 @@ function checkTimeNextWindow() {
 }
 
 function closeNextBreak() {
+	//Remove window
 	$('#plane').remove();
 	document.documentElement.style.overflow = 'auto'; // firefox, chrome fuck ie
 }

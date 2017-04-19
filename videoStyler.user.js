@@ -13,10 +13,6 @@
 // ==/UserScript==
 
 //Global vars
-var closeLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/close.png';
-var pauseLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/pause.png';
-var playLink = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/play.png';
-
 var muteLink0 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute0.png';
 var muteLink1 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute1.png';
 var muteLink2 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute2.png';
@@ -40,7 +36,7 @@ $(document).ready(function () {
 	$(this).scrollTop(0);
 
 	//Preload
-	preload(closeLink, pauseLink, playLink, muteLink0, muteLink1, muteLink2, muteLink3);
+	preload(muteLink0, muteLink1, muteLink2, muteLink3);
 
 	//Clear body
 	document.body.innerHTML = '';
@@ -183,8 +179,8 @@ function constructPlayer(mediaFile) {
 		closeVideo();
 	});
 
-	document.getElementById('playpause').innerHTML = '<img src="' + playLink + '" width="35" height="35" alt="play" />';
-	document.getElementById('close').innerHTML = '<img src="' + closeLink + '" width="35" height="35" alt="close" />';
+	document.getElementById('playpause').innerHTML = getPlay().outerHTML;
+	document.getElementById('close').innerHTML = getClose.outerHTML;
 	document.getElementById('mute').innerHTML = '<img src="' + muteLink3 + '" width="35" height="35" alt="mute" />';
 
 	checkTime = setInterval(updateProcessbar, 100);
@@ -350,11 +346,12 @@ function updateProcessbar() {
 	document.getElementById('volume').setAttribute('value', volume);
 	if (video.paused != curPlay) {
 		if (video.paused || video.ended) {
-			document.getElementById('playpause').innerHTML = '<img src="' + playLink + '" width="35" height="35" alt="play" />';
+			
+			document.getElementById('playpause').innerHTML = getPlay().outerHTML;
 			curPlay = video.paused;
 			activateControll(false);
 		} else {
-			document.getElementById('playpause').innerHTML = '<img src="' + pauseLink + '" width="35" height="35" alt="pause" />';
+			document.getElementById('playpause').innerHTML = getPause().outerHTML;
 			curPlay = video.paused;
 			activateControll(true);
 		}

@@ -1,6 +1,51 @@
 //var cssLink = 'https://rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/bsStyle.css';
 var cssLink = 'https://dl.dropbox.com/s/rf3rzlzsa3lg3to/bsStyle.css';
+//var cssVidLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/playerStyle.css';
 var cssVidLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/playerStyle.css';
+
+function getPlay(){
+	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	svg.setAttribute('height', '35');
+	svg.setAttribute('width', '35');
+
+	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol1.setAttribute('points', '5,5 5,30 30,18');
+	svg.appendChild(pol1);
+
+	return svg;
+}
+
+function getClose(){
+	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	svg.setAttribute('height', '35');
+	svg.setAttribute('width', '35');
+
+	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol1.setAttribute('points', '9,6 6,9 26,29 29,26');
+	svg.appendChild(pol1);
+
+	var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol2.setAttribute('points', '6,26 9,29 29,9 26,6');
+	svg.appendChild(pol2);
+	
+	return svg;
+}
+
+function getPause(){
+	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	svg.setAttribute('height', '35');
+	svg.setAttribute('width', '35');
+
+	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol1.setAttribute('points', '10,5 15,5 15,30 10,30');
+	svg.appendChild(pol1);
+
+	var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol2.setAttribute('points', '20,5 25,5 25,30 20,30');
+	svg.appendChild(pol2);
+	
+	return svg;
+}
 
 function getStar() {
 	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -138,6 +183,7 @@ function makeKeyOnly() {
 	blackP.setAttribute('style', blackPStyle);
 	blackP.setAttribute('id', 'keyonly');
 
+	//Text on bottom right
 	var textKey = document.createElement('span');
 	textKey.innerHTML = 'Keyboard only';
 	var keyStyle = 'position:fixed; color:#ee4d2e; bottom:0; right:0; font-size:20px; font-weight:bold;';
