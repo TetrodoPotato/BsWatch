@@ -65,7 +65,7 @@ function constructPlayer(mediaFile) {
 	var topLayer = '<div id="topLayer" class="hide">1.0</div>';
 	var clickPause = '<div id="clicklayer" class="hide"></div>';
 
-	var addit = '<video id="vid" src="' + mediaFile + '">Scheise Gelaufen</video>';
+	var addit = '<video id="vid" src="' + mediaFile + '" autoplay>Scheise Gelaufen</video>';
 	container.innerHTML = showCurrTime + clickPause + topLayer + addit + control;
 
 	document.body.innerHTML = '';
