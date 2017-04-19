@@ -12,31 +12,12 @@
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/videoStyler.user.js
 // ==/UserScript==
 
-//Global vars
-var muteLink0 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute0.png';
-var muteLink1 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute1.png';
-var muteLink2 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute2.png';
-var muteLink3 = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/playerImg/unmute3.png';
-
-//Black page over original
-var blackP = document.createElement('div');
-var blackPStyle = 'width:100%; height:100%; position:fixed; top:0; left:0; background:#000; z-index:99';
-blackP.setAttribute('style', blackPStyle);
-blackP.setAttribute('id', 'blackP');
-
-//Attach blackPage
-document.documentElement.appendChild(blackP);
-
-//disable scrollbars .. for ... reasons
-document.documentElement.style.overflow = 'hidden'; // firefox, chrome
+makeBlackPage();
 
 //When document loaded
 $(document).ready(function () {
 	//Scroll to top ... reasons
 	$(this).scrollTop(0);
-
-	//Preload
-	preload(muteLink0, muteLink1, muteLink2, muteLink3);
 
 	//Clear body
 	document.body.innerHTML = '';
@@ -46,19 +27,10 @@ $(document).ready(function () {
 	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 	$(window).bind("load", function () {
 		$('#blackP').remove();
-		document.getElementById('vid').play();
+		removeBlackPage();
 	});
 
 });
-
-//Picture preloader
-var images = [];
-function preload() {
-	for (var i = 0; i < arguments.length; i++) {
-		images[i] = new Image();
-		images[i].src = preload.arguments[i];
-	}
-}
 
 var control = '<div id="video-controls" class="hide" data-state="hidden">' +
 	'	<table>' +
@@ -92,9 +64,9 @@ function constructPlayer(mediaFile) {
 	var showCurrTime = '<div id="curProc">00:00</div>';
 
 	var topLayer = '<div id="topLayer" class="hide">1.0</div>';
-	var clickPause = '<div id="clicklayer" class="hide"></div>'
+	var clickPause = '<div id="clicklayer" class="hide"></div>';
 
-		var addit = '<video id="vid" src="' + mediaFile + '">Scheise Gelaufen</video>';
+	var addit = '<video id="vid" src="' + mediaFile + '">Scheise Gelaufen</video>';
 	container.innerHTML = showCurrTime + clickPause + topLayer + addit + control;
 
 	document.body.innerHTML = '';
@@ -181,7 +153,7 @@ function constructPlayer(mediaFile) {
 
 	document.getElementById('playpause').innerHTML = getPlay().outerHTML;
 	document.getElementById('close').innerHTML = getClose().outerHTML;
-	document.getElementById('mute').innerHTML = '<img src="' + muteLink3 + '" width="35" height="35" alt="mute" />';
+	document.getElementById('mute').innerHTML = getSound(3).outerHTML;
 
 	checkTime = setInterval(updateProcessbar, 100);
 
@@ -260,15 +232,15 @@ function muteVid() {
 	}
 
 	if (video.muted) {
-		document.getElementById('mute').innerHTML = '<img src="' + muteLink0 + '" width="35" height="35" alt="mute" />';
+		document.getElementById('mute').innerHTML = getSound(0).outerHTML;
 	} else if (video.volume == 0) {
-		document.getElementById('mute').innerHTML = '<img src="' + muteLink0 + '" width="35" height="35" alt="mute" />';
+		document.getElementById('mute').innerHTML = getSound(0).outerHTML;
 	} else if (video.volume < 0.3) {
-		document.getElementById('mute').innerHTML = '<img src="' + muteLink1 + '" width="35" height="35" alt="mute" />';
+		document.getElementById('mute').innerHTML = getSound(1).outerHTML;
 	} else if (video.volume < 0.6) {
-		document.getElementById('mute').innerHTML = '<img src="' + muteLink2 + '" width="35" height="35" alt="mute" />';
+		document.getElementById('mute').innerHTML = getSound(2).outerHTML;
 	} else if (video.volume <= 1) {
-		document.getElementById('mute').innerHTML = '<img src="' + muteLink3 + '" width="35" height="35" alt="mute" />';
+		document.getElementById('mute').innerHTML = getSound(3).outerHTML;
 	}
 
 }
@@ -290,15 +262,15 @@ function updateVolume(vol) {
 	}
 
 	if (video.muted) {
-		document.getElementById('mute').innerHTML = '<img src="' + muteLink0 + '" width="35" height="35" alt="mute" />';
+		document.getElementById('mute').innerHTML = getSound(0).outerHTML;
 	} else if (video.volume == 0) {
-		document.getElementById('mute').innerHTML = '<img src="' + muteLink0 + '" width="35" height="35" alt="mute" />';
+		document.getElementById('mute').innerHTML = getSound(0).outerHTML;
 	} else if (video.volume < 0.3) {
-		document.getElementById('mute').innerHTML = '<img src="' + muteLink1 + '" width="35" height="35" alt="mute" />';
+		document.getElementById('mute').innerHTML = getSound(1).outerHTML;
 	} else if (video.volume < 0.6) {
-		document.getElementById('mute').innerHTML = '<img src="' + muteLink2 + '" width="35" height="35" alt="mute" />';
+		document.getElementById('mute').innerHTML = getSound(2).outerHTML;
 	} else if (video.volume <= 1) {
-		document.getElementById('mute').innerHTML = '<img src="' + muteLink3 + '" width="35" height="35" alt="mute" />';
+		document.getElementById('mute').innerHTML = getSound(3).outerHTML;
 	}
 
 }
@@ -346,7 +318,7 @@ function updateProcessbar() {
 	document.getElementById('volume').setAttribute('value', volume);
 	if (video.paused != curPlay) {
 		if (video.paused || video.ended) {
-			
+
 			document.getElementById('playpause').innerHTML = getPlay().outerHTML;
 			curPlay = video.paused;
 			activateControll(false);
@@ -377,15 +349,15 @@ function updateProcessbar() {
 	if (lastVol != video.volume) {
 
 		if (video.muted) {
-			document.getElementById('mute').innerHTML = '<img src="' + muteLink0 + '" width="35" height="35" alt="mute" />';
+			document.getElementById('mute').innerHTML = getSound(0).outerHTML;
 		} else if (video.volume == 0) {
-			document.getElementById('mute').innerHTML = '<img src="' + muteLink0 + '" width="35" height="35" alt="mute" />';
+			document.getElementById('mute').innerHTML = getSound(0).outerHTML;
 		} else if (video.volume < 0.3) {
-			document.getElementById('mute').innerHTML = '<img src="' + muteLink1 + '" width="35" height="35" alt="mute" />';
+			document.getElementById('mute').innerHTML = getSound(1).outerHTML;
 		} else if (video.volume < 0.6) {
-			document.getElementById('mute').innerHTML = '<img src="' + muteLink2 + '" width="35" height="35" alt="mute" />';
+			document.getElementById('mute').innerHTML = getSound(2).outerHTML;
 		} else if (video.volume <= 1) {
-			document.getElementById('mute').innerHTML = '<img src="' + muteLink3 + '" width="35" height="35" alt="mute" />';
+			document.getElementById('mute').innerHTML = getSound(3).outerHTML;
 		}
 		lastVol = video.volume;
 	}

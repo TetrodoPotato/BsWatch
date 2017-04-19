@@ -3,19 +3,60 @@ var cssLink = 'https://dl.dropbox.com/s/rf3rzlzsa3lg3to/bsStyle.css';
 //var cssVidLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/playerStyle.css';
 var cssVidLink = 'https://dl.dropbox.com/s/wove4f8v3jgb4na/playerStyle.css';
 
-function getPlay(){
+function getPlay() {
 	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 	svg.setAttribute('height', '35');
 	svg.setAttribute('width', '35');
 
 	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-	pol1.setAttribute('points', '5,5 5,30 30,18');
+	pol1.setAttribute('points', '8,5 8,30 28,18');
 	svg.appendChild(pol1);
 
 	return svg;
 }
 
-function getClose(){
+function getSound(val) {
+	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	svg.setAttribute('height', '35');
+	svg.setAttribute('width', '35');
+
+	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol1.setAttribute('points', '1,12 1,21 8,21 17,29 17,5 9,12');
+	svg.appendChild(pol1);
+
+	if (val == 0) {
+		var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+		pol2.setAttribute('points', '10,21 24,32 25,32 39,21');
+		svg.appendChild(pol2);
+
+		var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+		pol3.setAttribute('points', '33,39 30,27 19,27');
+		svg.appendChild(pol3);
+	}
+	
+	if(val <= 1){
+		var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+		pol2.setAttribute('points', '21,12 23,14 23,17 23,20 21,22');
+		pol2.setAttribute('style', 'fill:none; stroke-width:3;');
+		svg.appendChild(pol2);
+	}
+	
+	if(val <= 2){
+		var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+		pol3.setAttribute('points', '24,26 27,22 28,17 27,12 24,8');
+		pol3.setAttribute('style', 'fill:none; stroke-width:3;');
+		svg.appendChild(pol3);
+	}
+	
+	if(val <= 3){
+		var pol4 = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+		pol4.setAttribute('points', '28,5 31,9 33,17 31,25 28,30');
+		pol4.setAttribute('style', 'fill:none; stroke-width:3;');
+		svg.appendChild(pol4);
+	}
+}
+
+function getClose() {
 	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 	svg.setAttribute('height', '35');
 	svg.setAttribute('width', '35');
@@ -27,11 +68,11 @@ function getClose(){
 	var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
 	pol2.setAttribute('points', '6,26 9,29 29,9 26,6');
 	svg.appendChild(pol2);
-	
+
 	return svg;
 }
 
-function getPause(){
+function getPause() {
 	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 	svg.setAttribute('height', '35');
 	svg.setAttribute('width', '35');
@@ -43,7 +84,7 @@ function getPause(){
 	var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
 	pol2.setAttribute('points', '20,5 25,5 25,30 20,30');
 	svg.appendChild(pol2);
-	
+
 	return svg;
 }
 
@@ -187,10 +228,10 @@ function makeKeyOnly() {
 	var textKey = document.createElement('span');
 	textKey.innerHTML = 'Keyboard only';
 	var keyStyle = 'position:fixed; color:#ee4d2e; bottom:0; right:0; font-size:20px; font-weight:bold;';
-	textKey.setAttribute('style',keyStyle);
-	
+	textKey.setAttribute('style', keyStyle);
+
 	blackP.appendChild(textKey);
-	
+
 	var base = document.getElementById('baseCon');
 	base.appendChild(blackP);
 }
