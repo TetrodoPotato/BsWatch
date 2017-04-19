@@ -214,7 +214,7 @@ function removeBlackPage() {
 	document.getElementById('blackP').outerHTML = '';
 	document.documentElement.style.overflow = 'auto'; // firefox, chrome
 
-	if (typeof keyonly != 'undefined') {
+	if (keyonly != null) {
 		if (keyonly) {
 			makeKeyOnly();
 		}
