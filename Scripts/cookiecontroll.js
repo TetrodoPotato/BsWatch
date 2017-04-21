@@ -26,7 +26,7 @@ function getCookie(cname) {
 		while (c.charAt(0) == ' ') {
 			c = c.substring(1);
 		}
-		
+
 		//When the name is part of the string
 		if (c.indexOf(name) == 0) {
 			//Only the string value after 'cname='
@@ -37,7 +37,9 @@ function getCookie(cname) {
 				return true;
 			} else if (returnVal.toLowerCase() == 'false') {
 				return false;
-			} else if ((/^\d+$/).test(returnVal)) {
+			} else if (!isNaN(returnVal) && returnVal.toString().indexOf('.') != -1) {
+				return parseFloat(returnVal);
+			} else if (!isNaN(returnVal)) {
 				return parseInt(returnVal);
 			} else {
 				return returnVal;

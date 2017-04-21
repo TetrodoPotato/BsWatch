@@ -10,6 +10,7 @@
 // @run-at 		document-start
 // @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/cookiecontroll.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch9.user.js
 // ==/UserScript==
 
@@ -28,9 +29,54 @@ $(document).ready(function () {
 	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 	$(window).bind("load", function () {
 		removeBlackPage();
+		checkInterval = setInterval(intervalCheck, 1000);
 	});
 
 });
+
+var checkInterval;
+var isChecked = false;
+function intervalCheck() {
+	var vid = document.getElementById('vid');
+
+	if (!isChecked) {
+		if (!isNaN(vid.duration)) {
+			var isError = getCookie('isError');
+			if (isError) {
+				var lastTime = getCookie('lastTime');
+				var lastVid = getCookie('lastVid');
+				var thisVid = window.location.href;
+
+				console.log(lastTime);
+				console.log(lastVid);
+				console.log(thisVid);
+				
+				
+				if (lastVid != null && lastTime != null) {
+					if (lastVid == thisVid) {
+						vid.currentTime = lastTime;
+					}
+				}
+			}
+
+			var lastVolume = getCookie('lastVolume');
+			if (lastVolume != null) {
+				vid.volume = lastVolume;
+			}
+
+			console.log(lastVolume);
+			
+			setCookie('isError', true, false);
+			setCookie('lastVid', window.location.href, false);
+			isChecked = true;
+
+		}
+	} else {
+		setCookie('lastTime', vid.currentTime, false);
+		setCookie('lastVolume', vid.volume, false);
+	}
+
+}
 
 var control = '<div id="video-controls" class="hide" data-state="hidden">' +
 	'	<table>' +
@@ -382,6 +428,7 @@ function updateTime(time) {
 }
 
 function closeVideo() {
+	setCookie('isError', false, false);
 	window.location = 'https://bs.to/?next';
 }
 
