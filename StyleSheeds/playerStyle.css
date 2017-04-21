@@ -146,14 +146,14 @@
 }
 
 #playcontrols td:nth-child(1){
-	background-color:#ee4d2e;
+	fill:#ee4d2e;
 	height:35px;
 	width:35px;
 	vertical-align:top;
 }
 
 #playcontrols td:nth-child(1):hover{
-	background-color:#a0260d;
+	fill:#a0260d;
 }
 
 #playcontrols td:nth-child(2){
@@ -169,14 +169,16 @@
 }
 
 #playcontrols td:nth-child(3){
-	background-color:#ee4d2e;
+	fill:#ee4d2e;
+	stroke:#ee4d2e;
 	height:35px;
 	width:35px;
 	vertical-align:top;
 }
 
 #playcontrols td:nth-child(3):hover{
-	background-color:#a0260d;
+	fill:#a0260d;
+	stroke:#a0260d;
 }
 
 #playcontrols td:nth-child(3):hover + td:nth-child(4) #volume{
@@ -212,12 +214,12 @@
 }
 
 #playcontrols td:nth-child(6){
-	background-color:#ee4d2e;
+	fill:#ee4d2e;
 	height:35px;
 	width:35px;
 	vertical-align:top;
 }
 
 #playcontrols td:nth-child(6):hover{
-	background-color:#a0260d;
+	fill:#a0260d;
 }

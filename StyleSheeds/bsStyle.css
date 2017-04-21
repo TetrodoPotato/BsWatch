@@ -18,13 +18,13 @@ tr {
 	position:fixed;
 	top:0;
 	left:0;
+	background-color:rgba(0,0,0,0.5);
 }
 
 #menuCon {
 	max-width:1052px;
 	min-width:760px;
 	height:50px;
-	background-color:rgba(0,0,0,0.5);
 	margin:0 auto;
 }
 
@@ -540,13 +540,13 @@ h2 small {
 
 #favButton:focus #favCon{
 	display:block;
-	transition: max-height 0.25s ease-in;
+	transition: max-height 0.5s ease-in;
 	max-height: 1080px;
 }
 
 .favShow #favCon{
 	display:block;
-	transition: max-height 0.25s ease-in;
+	transition: max-height 0.5s ease-in;
 	max-height: 1080px;
 }
 
@@ -560,7 +560,7 @@ h2 small {
 
 #favCon table tr:focus + #favCon{
 	display:block;
-	transition: max-height 0.25s ease-in;
+	transition: max-height 0.5s ease-in;
 	max-height: 1080px;
 }
 

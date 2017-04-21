@@ -46,11 +46,6 @@ function intervalCheck() {
 				var lastTime = getCookie('lastTime');
 				var lastVid = getCookie('lastVid');
 				var thisVid = window.location.href;
-
-				console.log(lastTime);
-				console.log(lastVid);
-				console.log(thisVid);
-				
 				
 				if (lastVid != null && lastTime != null) {
 					if (lastVid == thisVid) {
@@ -63,8 +58,6 @@ function intervalCheck() {
 			if (lastVolume != null) {
 				vid.volume = lastVolume;
 			}
-
-			console.log(lastVolume);
 			
 			setCookie('isError', true, false);
 			setCookie('lastVid', window.location.href, false);
