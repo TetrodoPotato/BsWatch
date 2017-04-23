@@ -121,7 +121,7 @@
 }
 
 #video-controls table tr:last-child {
-	background-color:#161616;
+	background-color:rgba(22,22,22,0.8);
 }
 
 #progress {

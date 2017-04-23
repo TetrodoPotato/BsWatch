@@ -201,6 +201,7 @@ $(document).ready(function () {
 				e.preventDefault();
 				window.location = 'https://bs.to/serie-alphabet';
 			} else if (e.keyCode == 9) { //Tab
+				e.preventDefault();
 				//Permanent cookies .. hm 2.7 years
 				var lastSeriesPerm = getCookie('lastSeriesPerm');
 				var lastSeasonPerm = getCookie('lastSeasonPerm');
@@ -233,6 +234,7 @@ $(document).ready(function () {
 					window.location = backFunction;
 				}
 			} else if (e.keyCode === 77) { //M
+				e.preventDefault();
 				favSwitch = !favSwitch;
 				if (favSwitch) {
 					favNext(1);
@@ -273,6 +275,7 @@ $(document).ready(function () {
 							allWatch.getElementsByTagName('td')[1].click();
 						}
 					} else if (e.keyCode === 70) { //F
+						e.preventDefault();
 						var favTab = document.getElementById('favTable');
 						if (favTab.contains(document.activeElement)) {
 							var addButton = document.getElementById('addButton');
@@ -291,6 +294,7 @@ $(document).ready(function () {
 							}
 						}
 					} else if (e.keyCode === 68) { //D
+						e.preventDefault();
 						var favTab = document.getElementById('favTable');
 						if (favTab.contains(document.activeElement)) {
 							var addButton = document.getElementById('addButton');
@@ -326,6 +330,7 @@ $(document).ready(function () {
 		}
 
 		if (e.keyCode == 112) {
+			e.preventDefault();
 			keyonly = !keyonly;
 			setCookie('keyonly', keyonly, false);
 
