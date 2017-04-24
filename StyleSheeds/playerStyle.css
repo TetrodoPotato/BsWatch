@@ -43,10 +43,10 @@
 #volume::-moz-progress-bar { background: #ee4d2e; }
 #volume {background: rgba(0,0,0,0);}
 
-#buffer::-webkit-progress-bar { background: #000; }
+#buffer::-webkit-progress-bar { background: rgba(22,22,22,0.8); }
 #buffer::-webkit-progress-value { background: #888; }
 #buffer::-moz-progress-bar { background: #888; }
-#buffer {background: #000;}
+#buffer {background: rgba(22,22,22,0.8);}
 
 #mediaPlayer {
 	width:100%;
