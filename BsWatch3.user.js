@@ -8,7 +8,7 @@
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/unwatch\:all$/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/watch\:all$/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+$/
-// @version    	1
+// @version    	1.1
 // @description	Episode List
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -38,7 +38,7 @@ $(document).ready(function () {
 
 	makeThePage();
 	updateFavorites();
-	
+
 	//Check if there was a last episode
 	if (typeof getCookie('lastEpisode') == 'string') {
 		//Check if this is the same series
@@ -69,10 +69,13 @@ $(document).ready(function () {
 	if (getCookie('lastEpisode') == 'next0x000001') {
 		playNextEpisode();
 	}
-	
+
 	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 	$(window).bind("load", function () {
 		removeBlackPage();
+		if (document.getElementById('plane') !== null) {
+			document.documentElement.style.overflow = 'hidden'; // firefox, chrome
+		}
 	});
 });
 
@@ -293,7 +296,7 @@ function createNode(index, nameDE, nameOr, linkTo, watched, linkWatched) {
 			this.focus();
 		}
 	});
-	
+
 	return tableRow;
 
 }
@@ -324,7 +327,7 @@ function createSeasonNode(index, linkTo, onSeason) {
 			this.focus();
 		}
 	});
-	
+
 	return tdNode;
 }
 
@@ -357,10 +360,10 @@ function playNextEpisode() {
 		linkArr[linkArr.length] = linkFunction;
 	}
 
-	if(getCookie('lastEpisode') == 'next0x000001'){
+	if (getCookie('lastEpisode') == 'next0x000001') {
 		window.location = 'https://bs.to/' + linkArr[0];
 	}
-	
+
 	//Find next episode
 	for (i = 0; i < linkArr.length; i++) {
 		var linkEpisode = linkArr[i].split('/')[3];
@@ -414,9 +417,101 @@ function openNextSeasonUser(seasonAmount) {
 	return hasNext;
 }
 
+function nextEpisodeText() {
+
+	//Dom array with elements that contains a episode link
+	var domArr = document.getElementById('episodeTable');
+
+	if (domArr == null) {
+		return Error;
+	}
+
+	domArr = domArr.getElementsByTagName('tr');
+
+	//Dom array with the first td-tag-href in the domArr index
+	var linkArr = [];
+	for (i = 0; i < domArr.length; i++) {
+		var tdTag = domArr[i].getElementsByTagName('td')[0];
+		var linkFunction = tdTag.getAttribute('onclick');
+		linkFunction = linkFunction.replace('window.location = \'https://bs.to/', '');
+		linkFunction = linkFunction.replace('\'', '');
+		linkArr[linkArr.length] = linkFunction;
+	}
+
+	//Find next episode
+	for (i = 0; i < linkArr.length; i++) {
+		var linkEpisode = linkArr[i].split('/')[3];
+		//Find the last watched Episode
+		if (linkEpisode == getCookie('lastEpisode')) {
+			//The next index of the episode "i + 1"
+			if ((i + 1) < linkArr.length) {
+				//Return (Number:Next)/(Number:Max) - Season (Number:curSeason)
+				var nextEpiNumber = linkArr[i + 1]; // series/Season/??-Episode
+				nextEpiNumber = nextEpiNumber.split('/')[3];
+				nextEpiNumber = parseInt(nextEpiNumber);
+
+				var curSeason = document.getElementsByClassName('onSeason')[0];
+				curSeason = curSeason.innerHTML;
+
+				if (curSeason != 'Specials') {
+					curSeason = 'Staffel ' + curSeason;
+				}
+				
+				// 11/22 - Staffel 1
+				return nextEpiNumber + '/' + linkArr.length + ' - ' + curSeason;
+			} else {
+
+				if (!hasNextSeason()) {
+					return true;
+				}
+
+				//What is next Season. Is There one?
+				var curSeason = document.getElementsByClassName('onSeason')[0];
+				curSeason = curSeason.innerHTML;
+
+				//Check next
+				if (curSeason == 'Specials') {
+					return 'Staffel 1';
+				} else {
+					var nextNumber = parseInt(curSeason);
+					nextNumber++;
+
+					return 'Staffel ' + nextNumber;
+				}
+			}
+		}
+	}
+
+}
+
+function hasNextSeason() {
+	//You know
+	var allSeasons = document.getElementById('seasonTable');
+	allSeasons = allSeasons.getElementsByTagName('td');
+
+	var hasNext = false;
+
+	//Search current season
+	for (i = 0; i < allSeasons.length; i++) {
+		if (allSeasons[i].getAttribute('class') == 'onSeason') {
+
+			//Check if there is the next/previous season
+			if ((i + 1) < allSeasons.length) {
+				if ((i + 1) > -1) {
+					//the fucking next Season
+					hasNext = true;
+				}
+			}
+		}
+	}
+
+	return hasNext;
+}
+
 //Massive shit for autoplay interrupt
 var nextTime = 0;
 var nextBreak = false;
+var nextText;
 
 function nextWindow(time) {
 	nextTime = time;
@@ -427,9 +522,9 @@ function nextWindow(time) {
 	styleTag.innerHTML = '* {margin:0;padding:0;font-family: Arial, Helvetica, sans-serif;font-size:16px;}' +
 		'#plane { z-index:999; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8);}' +
 		'#nextBody {overflow:hidden; border-radius:5px; position:absolute; z-index:1000; height:120px; width:200px; background:#161616; left:0; right:0; top:0; bottom:0; margin:auto;}' +
-		'#texts{width:100%; margin:24px auto; color:#FFF; text-align:center; font-size:18px; font-weight:bold;}' +
+		'#texts{width:100%; margin:13px auto; color:#FFF; text-align:center; font-size:18px; font-weight:bold;}' +
 		'#nextButton {border:none; color:#ee4d2e; font-weight:bold; background-color:#161616; height:50px; width:100%;}' +
-		'#nextButton:hover{background-color:#202020;} #nextButton:active{background-color:#000;}'
+		'#nextButton:hover{background-color:#202020;} #nextButton:active{background-color:#000;}';
 
 	//The window levels
 	var plane = document.createElement('div');
@@ -441,7 +536,14 @@ function nextWindow(time) {
 	bodys.setAttribute('id', 'nextBody');
 
 	texts.setAttribute('id', 'texts');
-	texts.innerHTML = 'Nächste Folge in ' + time + 's';
+
+	nextText = nextEpisodeText();
+
+	if (nextText == true) {
+		return false;
+	}
+
+	texts.innerHTML = 'Nächste Folge in ' + time + 's <br>' + nextText;
 
 	//Button on click interrupt autoplay
 	butto.setAttribute("id", "nextButton");
@@ -465,7 +567,7 @@ function nextWindow(time) {
 
 function setNextBreak() {
 	nextBreak = true;
-	
+
 	//Close window
 	closeNextBreak();
 
@@ -487,13 +589,14 @@ function checkTimeNextWindow() {
 	//Update Text time
 	var texts = document.getElementById('texts');
 	if (texts !== null) {
-		texts.innerHTML = "Nächste Folge in " + nextTime + "s";
+		texts.innerHTML = 'Nächste Folge in ' + nextTime + 's <br>' + nextText;
 	}
 
 	//If the time is over and the window was not interrupted
 	if (nextTime < 0 && !nextBreak) {
-		closeNextBreak();
-		playNextEpisode();
+		if (!playNextEpisode()) {
+			closeNextBreak();
+		}
 	}
 }
 

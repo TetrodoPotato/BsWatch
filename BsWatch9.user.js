@@ -4,7 +4,7 @@
 // @namespace   http://www.greasespot.net/
 // @include     *oloadcdn.net*
 // @include     /^https:\/\/delivery\-\-.+$/
-// @version    	1
+// @version    	1.1
 // @description	Media-Player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -29,6 +29,7 @@ $(document).ready(function () {
 	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 	$(window).bind("load", function () {
 		removeBlackPage();
+		intervalCheck();
 		checkInterval = setInterval(intervalCheck, 1000);
 	});
 
@@ -62,7 +63,7 @@ function intervalCheck() {
 			setCookie('isError', true, false);
 			setCookie('lastVid', window.location.href, false);
 			isChecked = true;
-
+			showAllEvent();
 		}
 	} else {
 		setCookie('lastTime', vid.currentTime, false);
@@ -234,21 +235,6 @@ function makeVidHead() {
 	return head;
 }
 
-var lastscroll = 0;
-
-function reloadScrollBars() {
-	document.documentElement.style.overflow = 'auto'; // firefox, chrome
-	document.body.scroll = "yes"; // ie only
-	window.scrollTo(0, lastscroll);
-}
-
-function unloadScrollBars() {
-	lastscroll = document.getElementsByTagName('body')[0].scrollTop;
-	window.scrollTo(0, 0);
-	document.documentElement.style.overflow = 'hidden'; // firefox, chrome
-	document.body.scroll = "no"; // ie only
-}
-
 function showCur(x, sec) {
 	document.getElementById('curProc').style.left = (x - 20) + "px";
 
@@ -321,6 +307,8 @@ function playpause() {
 	} else {
 		video.pause();
 	}
+	
+	showAllEvent();
 }
 
 var curPlay = null;
