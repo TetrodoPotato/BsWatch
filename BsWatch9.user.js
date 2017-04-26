@@ -77,7 +77,7 @@ var control = '<div id="video-controls" class="hide" data-state="hidden">' +
 	'		<tbody>' +
 	'			<tr id="bars">' +
 	'				<td colspan="6">' +
-	'					<progress id="buffer" value="0" min="0" max="0"></progress>' +
+	'					<canvas id="buffer" width="0" height="5">' +
 	'					<progress id="progress" value="0" min="0" max="0"></progress>' +
 	'				</td>' +
 	'			</tr>' +
@@ -336,6 +336,27 @@ function updateProcessbar() {
 		}
 
 		document.getElementById('buffer').setAttribute('value', buffered);
+		
+		var bf = document.getElementById('vid').buffered;
+		bf.setAttribute('width',duration);
+		var myCanvas = document.getElementById('buffer');
+		var context = myCanvas.getContext('2d');
+		
+		context.fillStyle = 'lightgray';
+		context.fillRect(0, 0, myCanvas.width, 5);
+		
+		context.fillStyle = 'red';
+		context.strokeStyle = 'yellow';
+		
+		for(i=0;bf.length;i++){
+			var startX = myAudio.buffered.start(i);
+			var endX = myAudio.buffered.end(i);
+
+			context.rect(startX, 0, endX, 20);
+			context.fillRect(startX, 0, endX, 20);
+		}
+		
+		context.stroke();
 	} else {
 		duration = 0;
 	}

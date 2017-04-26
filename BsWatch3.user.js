@@ -560,7 +560,7 @@ function nextWindow(time) {
 	document.documentElement.appendChild(plane);
 
 	//Start Timer ugly but work work
-	for (i = 1; i < time + 2; i++) {
+	for (i = 1; i < time + 1; i++) {
 		setTimeout(checkTimeNextWindow, 1000 * i)
 	}
 }
@@ -593,7 +593,7 @@ function checkTimeNextWindow() {
 	}
 
 	//If the time is over and the window was not interrupted
-	if (nextTime < 0 && !nextBreak) {
+	if (nextTime <= 0 && !nextBreak) {
 		if (!playNextEpisode()) {
 			closeNextBreak();
 		}
