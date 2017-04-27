@@ -4,7 +4,7 @@
 // @namespace   http://www.greasespot.net/
 // @include     *oloadcdn.net*
 // @include     /^https:\/\/delivery\-\-.+$/
-// @version    	1.2
+// @version    	1.3
 // @description	Media-Player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -69,7 +69,7 @@ function intervalCheck() {
 			if (lastSpeed != null) {
 				vid.playbackRate = lastSpeed;
 			}
-			
+
 			setCookie('isError', true, false);
 			setCookie('lastVid', window.location.href, false);
 			isChecked = true;
@@ -458,7 +458,7 @@ function updateProcessbar() {
 	var darkProcess = document.getElementById('darkPlane');
 	var darkOpa = document.getElementById('clicklayer');
 
-	if (!isNaN(darkOpa.style.opacity) && darkOpa.style.opacity != 0) {
+	if (!isNaN(darkOpa.style.opacity)) {
 		darkProcess.value = (parseFloat(darkOpa.style.opacity) * 100).toFixed(2);
 		document.getElementById('showPerc').innerHTML = (parseFloat(darkOpa.style.opacity) * 100).toFixed(0) + '%';
 	}
@@ -559,26 +559,37 @@ $(window).keydown(function (e) {
 
 			document.getElementById('vid').playbackRate = nextVal;
 		} else if (e.keyCode === 49) {
+			e.preventDefault();
 			updateDark(0);
 		} else if (e.keyCode === 50) {
+			e.preventDefault();
 			updateDark(10);
 		} else if (e.keyCode === 51) {
+			e.preventDefault();
 			updateDark(20);
 		} else if (e.keyCode === 52) {
+			e.preventDefault();
 			updateDark(30);
 		} else if (e.keyCode === 53) {
+			e.preventDefault();
 			updateDark(40);
 		} else if (e.keyCode === 54) {
+			e.preventDefault();
 			updateDark(50);
 		} else if (e.keyCode === 55) {
+			e.preventDefault();
 			updateDark(60);
 		} else if (e.keyCode === 56) {
+			e.preventDefault();
 			updateDark(70);
 		} else if (e.keyCode === 57) {
+			e.preventDefault();
 			updateDark(80);
 		} else if (e.keyCode === 48) {
+			e.preventDefault();
 			updateDark(90);
 		} else if (e.keyCode === 63) {
+			e.preventDefault();
 			updateDark(100);
 		}
 
