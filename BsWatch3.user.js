@@ -8,7 +8,7 @@
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/unwatch\:all$/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/watch\:all$/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+$/
-// @version    	1.1
+// @version    	1.2
 // @description	Episode List
 // @author     	Kartoffeleintopf
 // @run-at 		document-start

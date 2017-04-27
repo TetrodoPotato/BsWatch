@@ -34,8 +34,8 @@
 }
 
 #progress::-webkit-progress-bar { background: rgba(0,0,0,0); }
-#progress::-webkit-progress-value { background: #ee4d2e; }
-#progress::-moz-progress-bar { background: #ee4d2e; }
+#progress::-webkit-progress-value { background: rgba(196,52,28,0.8); }
+#progress::-moz-progress-bar { background: rgba(196,52,28,0.8); }
 #progress {background: rgba(0,0,0,0);}
 
 #volume::-webkit-progress-bar { background: rgba(0,0,0,0); }
@@ -43,10 +43,37 @@
 #volume::-moz-progress-bar { background: #ee4d2e; }
 #volume {background: rgba(0,0,0,0);}
 
-#buffer::-webkit-progress-bar { background: rgba(22,22,22,0.8); }
-#buffer::-webkit-progress-value { background: #888; }
-#buffer::-moz-progress-bar { background: #888; }
-#buffer {background: rgba(22,22,22,0.8);}
+#darkPlane::-webkit-progress-bar { background: #161616; }
+#darkPlane::-webkit-progress-value { background: #ee4d2e; }
+#darkPlane::-moz-progress-bar { background: #ee4d2e; }
+#darkPlane {background: #161616;}
+
+#darkPlane {
+	position:relative;
+	left:0;
+	top:0;
+	width:100%;
+	height:10px;
+	border:none;
+}
+
+#showPerc{
+	position:absolute;
+	margin:0 auto;
+	color:#CCC;
+	font-weight:bold;
+	z-index:21;
+	top:-2px;
+	left: -moz-calc(50% - 5px);
+	/* WebKit */
+	left: -webkit-calc(50% - 5px);
+	/* Opera */
+	left: -o-calc(50% - 5px);
+	/* Standard */
+	left: calc(50% - 5px);
+	pointer-events: none;
+	font-size:10px;
+}
 
 #mediaPlayer {
 	width:100%;
@@ -65,14 +92,14 @@
 }
 
 #topLayer {
-	height:20px;
+	height:10px;
 	width:100%;
 	position:absolute;
 	top:0;
 	left:0;
 	background-color:#161616;
 	text-align:center;
-	z-index:2;
+	z-index:20;
 	color:#CCC;
 	font-weight:bold;
 }
@@ -84,6 +111,8 @@
 	height:100%;
 	width:100%;
 	z-index:3;
+	background:#000;
+	opacity:0;
 }
 
 #video-controls {
@@ -212,14 +241,20 @@
 #playcontrols td:nth-child(5){
 	width:100%;
 }
-
 #playcontrols td:nth-child(6){
+	width:0.1%;
+	height:35px;
+	color:#CCC;
+	font-weight:bold;
+}
+
+#playcontrols td:nth-child(7){
 	fill:#ee4d2e;
 	height:35px;
 	width:35px;
 	vertical-align:top;
 }
 
-#playcontrols td:nth-child(6):hover{
+#playcontrols td:nth-child(7):hover{
 	fill:#a0260d;
 }

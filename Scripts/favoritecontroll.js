@@ -99,7 +99,7 @@ function updateFavorites() {
 			td1.innerHTML = (i + 1);
 			td1.setAttribute('val', favs[i]);
 			//Name
-			td2.innerHTML = favs[i];
+			td2.innerHTML = favs[i].split('-').join(' ');
 			td2.setAttribute('val', favs[i]);
 			//Remove icon
 

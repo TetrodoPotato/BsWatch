@@ -4,7 +4,7 @@
 // @namespace   http://www.greasespot.net/
 // @include     *oloadcdn.net*
 // @include     /^https:\/\/delivery\-\-.+$/
-// @version    	1.1
+// @version    	1.2
 // @description	Media-Player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -47,7 +47,7 @@ function intervalCheck() {
 				var lastTime = getCookie('lastTime');
 				var lastVid = getCookie('lastVid');
 				var thisVid = window.location.href;
-				
+
 				if (lastVid != null && lastTime != null) {
 					if (lastVid == thisVid) {
 						vid.currentTime = lastTime;
@@ -59,6 +59,16 @@ function intervalCheck() {
 			if (lastVolume != null) {
 				vid.volume = lastVolume;
 			}
+
+			var lastDark = getCookie('lastDark');
+			if (lastDark != null) {
+				updateDark(lastDark * 100);
+			}
+
+			var lastSpeed = getCookie('lastSpeed');
+			if (lastSpeed != null) {
+				vid.playbackRate = lastSpeed;
+			}
 			
 			setCookie('isError', true, false);
 			setCookie('lastVid', window.location.href, false);
@@ -67,7 +77,15 @@ function intervalCheck() {
 		}
 	} else {
 		setCookie('lastTime', vid.currentTime, false);
-		setCookie('lastVolume', vid.volume, false);
+		setCookie('lastVolume', vid.volume, true);
+		setCookie('lastSpeed', vid.playbackRate, true);
+		var darkOpa = document.getElementById('clicklayer');
+
+		if (!isNaN(darkOpa.style.opacity)) {
+			var nextDarkVal = (parseFloat(darkOpa.style.opacity)).toFixed(2);
+			setCookie('lastDark', nextDarkVal, true);
+		}
+
 	}
 
 }
@@ -76,8 +94,8 @@ var control = '<div id="video-controls" class="hide" data-state="hidden">' +
 	'	<table>' +
 	'		<tbody>' +
 	'			<tr id="bars">' +
-	'				<td colspan="6">' +
-	'					<canvas id="buffer" width="0" height="5">' +
+	'				<td colspan="7">' +
+	'					<canvas id="buffer" width="0" height="5"></canvas>' +
 	'					<progress id="progress" value="0" min="0" max="0"></progress>' +
 	'				</td>' +
 	'			</tr>' +
@@ -89,6 +107,7 @@ var control = '<div id="video-controls" class="hide" data-state="hidden">' +
 	'					<progress tabindex="-1" id="volume" value="50" min="0" max="100"></progress>' +
 	'				</td>' +
 	'				<td></td>' +
+	'				<td id="speed"></td>' +
 	'				<td id="close"></td>' +
 	'			</tr>' +
 	'		</tbody>' +
@@ -103,7 +122,8 @@ function constructPlayer(mediaFile) {
 
 	var showCurrTime = '<div id="curProc">00:00</div>';
 
-	var topLayer = '<div id="topLayer" class="hide">1.0</div>';
+	var topLayer = '<div id="topLayer" class="hide"><progress id="darkPlane" value="0" min="0" max="100"></progress>' +
+		'<span id="showPerc">0%</span></div>';
 	var clickPause = '<div id="clicklayer" class="hide"></div>';
 
 	var addit = '<video id="vid" src="' + mediaFile + '" autoplay>Scheise Gelaufen</video>';
@@ -116,6 +136,27 @@ function constructPlayer(mediaFile) {
 	function myHandler(e) {
 		closeVideo();
 	}
+
+	var handlerDar = function (e) {
+		var darElem = document.getElementById('darkPlane');
+		var x = e.pageX - offset(darElem).left, // or e.offsetX (less support, though)
+		clickedValue = x * darElem.max / darElem.offsetWidth;
+		updateDark(clickedValue);
+	};
+
+	$('#darkPlane').bind('mousedown', function (e) {
+		var x = e.pageX - offset(this).left, // or e.offsetX (less support, though)
+		clickedValue = x * this.max / this.offsetWidth;
+		updateDark(clickedValue);
+
+		this.focus();
+
+		$('body').bind('mousemove', handlerDar);
+
+		$('body').bind('mouseup', function (e) {
+			$('body').unbind();
+		});
+	});
 
 	var handlerPro = function (e) {
 		var proElem = document.getElementById('progress');
@@ -199,6 +240,12 @@ function constructPlayer(mediaFile) {
 
 	document.getElementById('vid').defaultPlaybackRate = 1.0;
 	document.getElementById('vid').playbackRate = 1.0;
+}
+
+function updateDark(val) {
+	var elemDark = document.getElementById('clicklayer');
+	elemDark.style.opacity = val / 100;
+
 }
 
 function offset(elem) {
@@ -307,7 +354,7 @@ function playpause() {
 	} else {
 		video.pause();
 	}
-	
+
 	showAllEvent();
 }
 
@@ -320,43 +367,38 @@ function updateProcessbar() {
 		document.getElementById('progress').setAttribute('max', duration);
 		document.getElementById('progress').setAttribute('value', curTime);
 
-		//Set the buffer progressbar
-		document.getElementById('buffer').setAttribute('max', duration);
+		//////////////////
 
-		var range = 0;
-		var bf = document.getElementById('vid').buffered;
+		var vid = document.getElementById('vid');
+		var canvas = document.getElementById('buffer');
+		canvas.setAttribute('width', duration);
+		var ctx = canvas.getContext('2d');
 
-		var buffered = 0;
-		for (i = 0; i < bf.length; i++) {
-			if (bf.start(i) <= curTime && curTime <= bf.end(i)) {
-				buffered = bf.end(i);
+		var b = vid.buffered,
+		i = b.length,
+		w = canvas.width,
+		h = canvas.height,
+		vl = vid.duration,
+		x1,
+		x2;
 
-				break;
-			}
+		ctx.fillStyle = '#000';
+		ctx.fillRect(0, 0, w, h);
+		ctx.fillStyle = '#888888';
+		while (i--) {
+			x1 = b.start(i) / vl * w;
+			x2 = b.end(i) / vl * w;
+			ctx.fillRect(x1, 0, x2 - x1, h);
 		}
+		ctx.fillStyle = '#fff';
 
-		document.getElementById('buffer').setAttribute('value', buffered);
-		
-		var bf = document.getElementById('vid').buffered;
-		bf.setAttribute('width',duration);
-		var myCanvas = document.getElementById('buffer');
-		var context = myCanvas.getContext('2d');
-		
-		context.fillStyle = 'lightgray';
-		context.fillRect(0, 0, myCanvas.width, 5);
-		
-		context.fillStyle = 'red';
-		context.strokeStyle = 'yellow';
-		
-		for(i=0;bf.length;i++){
-			var startX = myAudio.buffered.start(i);
-			var endX = myAudio.buffered.end(i);
+		x1 = vid.currentTime / vl * w;
 
-			context.rect(startX, 0, endX, 20);
-			context.fillRect(startX, 0, endX, 20);
-		}
-		
-		context.stroke();
+		ctx.fill();
+
+		/////////////////
+
+
 	} else {
 		duration = 0;
 	}
@@ -411,8 +453,15 @@ function updateProcessbar() {
 	}
 
 	var innerTopLayer = (document.getElementById('vid').playbackRate * 100).toFixed(0) + '%';
-	document.getElementById('topLayer').innerHTML = innerTopLayer;
+	document.getElementById('speed').innerHTML = innerTopLayer;
 
+	var darkProcess = document.getElementById('darkPlane');
+	var darkOpa = document.getElementById('clicklayer');
+
+	if (!isNaN(darkOpa.style.opacity) && darkOpa.style.opacity != 0) {
+		darkProcess.value = (parseFloat(darkOpa.style.opacity) * 100).toFixed(2);
+		document.getElementById('showPerc').innerHTML = (parseFloat(darkOpa.style.opacity) * 100).toFixed(0) + '%';
+	}
 }
 
 var lastVol = 0;
@@ -509,6 +558,28 @@ $(window).keydown(function (e) {
 			nextVal = parseFloat(Math.round(nextVal * 100) / 100);
 
 			document.getElementById('vid').playbackRate = nextVal;
+		} else if (e.keyCode === 49) {
+			updateDark(0);
+		} else if (e.keyCode === 50) {
+			updateDark(10);
+		} else if (e.keyCode === 51) {
+			updateDark(20);
+		} else if (e.keyCode === 52) {
+			updateDark(30);
+		} else if (e.keyCode === 53) {
+			updateDark(40);
+		} else if (e.keyCode === 54) {
+			updateDark(50);
+		} else if (e.keyCode === 55) {
+			updateDark(60);
+		} else if (e.keyCode === 56) {
+			updateDark(70);
+		} else if (e.keyCode === 57) {
+			updateDark(80);
+		} else if (e.keyCode === 48) {
+			updateDark(90);
+		} else if (e.keyCode === 63) {
+			updateDark(100);
 		}
 
 		showAllEvent();
