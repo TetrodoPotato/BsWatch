@@ -11,6 +11,7 @@ function setCookie(name, value, perma) {
 
 	//Set domains for all subdomains
 	var website_host = window.location.hostname.replace('www.', '');
+	console.log(website_host);
 
 	//Create new cookie
 	document.cookie = name + "=" + value + expires + ";path=/;domain=." + website_host;
