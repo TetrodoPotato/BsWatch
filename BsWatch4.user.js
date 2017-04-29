@@ -4,13 +4,17 @@
 // @namespace   http://www.greasespot.net/
 // @include     https://bs.to/?next
 // @include     https://bs.to/?error
-// @version    	1
+// @version    	1.1
 // @description	Error and Next
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/cookiecontroll.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch4.user.js
 // ==/UserScript==
+
+//Black page over original
+makeBlackPage();
 
 //Get the current lastplayed episode
 var series = getCookie('lastSeries'),
