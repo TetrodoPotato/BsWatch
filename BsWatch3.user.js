@@ -456,7 +456,7 @@ function nextEpisodeText() {
 				if (curSeason != 'Specials') {
 					curSeason = 'Staffel ' + curSeason;
 				}
-				
+
 				// 11/22 - Staffel 1
 				return nextEpiNumber + '/' + linkArr.length + ' - ' + curSeason;
 			} else {
@@ -523,6 +523,7 @@ function nextWindow(time) {
 		'#plane { z-index:999; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8);}' +
 		'#nextBody {overflow:hidden; border-radius:5px; position:absolute; z-index:1000; height:120px; width:200px; background:#161616; left:0; right:0; top:0; bottom:0; margin:auto;}' +
 		'#texts{width:100%; margin:13px auto; color:#FFF; text-align:center; font-size:18px; font-weight:bold;}' +
+		'#texts span{font-size:10px; font-style: italic;}' +
 		'#nextButton {border:none; color:#ee4d2e; font-weight:bold; background-color:#161616; height:50px; width:100%;}' +
 		'#nextButton:hover{background-color:#202020;} #nextButton:active{background-color:#000;}';
 
@@ -531,10 +532,9 @@ function nextWindow(time) {
 	var bodys = document.createElement('div');
 	var texts = document.createElement('div');
 	var butto = document.createElement('button');
+	
 	plane.setAttribute('id', 'plane');
-
 	bodys.setAttribute('id', 'nextBody');
-
 	texts.setAttribute('id', 'texts');
 
 	nextText = nextEpisodeText();
@@ -543,7 +543,7 @@ function nextWindow(time) {
 		return false;
 	}
 
-	texts.innerHTML = 'Nächste Folge in ' + time + 's <br>' + nextText;
+	texts.innerHTML = 'Nächste Folge in ' + time + 's <br><span>' + nextText + '</span>';
 
 	//Button on click interrupt autoplay
 	butto.setAttribute("id", "nextButton");
@@ -589,7 +589,7 @@ function checkTimeNextWindow() {
 	//Update Text time
 	var texts = document.getElementById('texts');
 	if (texts !== null) {
-		texts.innerHTML = 'Nächste Folge in ' + nextTime + 's <br>' + nextText;
+		texts.innerHTML = 'Nächste Folge in ' + nextTime + 's <br><span>' + nextText + '</span>';
 	}
 
 	//If the time is over and the window was not interrupted

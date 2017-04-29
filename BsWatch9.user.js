@@ -433,9 +433,6 @@ function updateProcessbar() {
 		document.getElementById('timeShow').innerHTML = inner;
 	}
 
-	//l = f
-	//c = t
-
 	if (lastVol != video.volume) {
 
 		if (video.muted) {
@@ -459,7 +456,7 @@ function updateProcessbar() {
 	var darkOpa = document.getElementById('clicklayer');
 
 	if (!isNaN(darkOpa.style.opacity)) {
-		darkProcess.value = (parseFloat(darkOpa.style.opacity) * 100).toFixed(2);
+		darkProcess.value = parseFloat(darkOpa.style.opacity) * 100;
 		document.getElementById('showPerc').innerHTML = (parseFloat(darkOpa.style.opacity) * 100).toFixed(0) + '%';
 	}
 }
