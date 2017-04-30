@@ -22,7 +22,7 @@ tr {
 }
 
 #menuCon {
-	max-width:1052px;
+	max-width:1262px;
 	min-width:760px;
 	height:50px;
 	margin:0 auto;
@@ -189,7 +189,7 @@ h2 {
 	margin:0 auto;
 	margin-top:70px;
 	width:100%;
-	max-width: 1052px;
+	max-width: 1262px;
 	color:#CCC;
 	font-size:40px;
 	font-weight:bold;
@@ -222,10 +222,10 @@ h2 small {
 	margin:0 auto;
 	margin-top:70px;
 	width:100%;
-	max-width: 1052px;
+	max-width: 1262px;
 	overflow:hidden;
 	border-collapse:separate; 
-  border-spacing:0 5px;
+	border-spacing:0 5px;
 }
 
 #seriesTable tr {
@@ -266,8 +266,10 @@ h2 small {
 #seasonTable {
 	margin:0 auto;
 	margin-top:20px;
-	width:100%;
-	max-width: 1052px;
+	
+	width: 100%;
+	
+	max-width: 1272px;
 	overflow:hidden;
 	border-collapse:separate; 
 	border-spacing:5px 0;
@@ -313,7 +315,7 @@ h2 small {
 	margin:0 auto;
 	margin-top:20px;
 	width:100%;
-	max-width: 1052px;
+	max-width: 1262px;
 	overflow:hidden;
 	border-collapse:separate; 
 	border-spacing:0 5px;
@@ -387,7 +389,7 @@ h2 small {
 #allWatchTable {
 	margin:20px auto 20px auto;
 	width:100%;
-	max-width: 1052px;
+	max-width: 1262px;
 	overflow:hidden;
 	border-collapse:separate; 
 	border-spacing:0;
@@ -424,7 +426,7 @@ h2 small {
 #functionTable {
 	margin:20px auto 20px auto;
 	width:100%;
-	max-width: 1052px;
+	max-width: 1262px;
 	overflow:hidden;
 	border-collapse:separate; 
 	border-spacing:0;
@@ -462,7 +464,7 @@ h2 small {
 	margin:0 auto;
 	margin-top:20px;
 	width:100%;
-	max-width: 1052px;
+	max-width: 1262px;
 	overflow:hidden;
 	border-collapse:separate; 
 	border-spacing:0 5px;
