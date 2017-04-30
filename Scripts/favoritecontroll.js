@@ -25,14 +25,12 @@ function addFavorite(series) {
 function getFavs() {
 	//Get the cookie-string
 	var favs = getCookie('favorites');
-
+	console.log(favs);
+	
 	//Check if the cookie is not added or empty
 	if (favs == null) {
 		return [];
-	} else if (favs == '') {
-		return [];
-	}
-	else if (favs.split(',')[0] == '') {
+	} else if (favs.split(',')[0] == '') {
 		//When the cookie is empty remove it completly
 		removeCookie('favorites');
 		return [];
