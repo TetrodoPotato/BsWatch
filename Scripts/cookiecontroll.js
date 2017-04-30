@@ -35,6 +35,8 @@ function getCookie(cname) {
 			//Pase values in boolean int and string
 			if (returnVal.toLowerCase() == 'true') {
 				return true;
+			} else if (returnVal.length == 0) {
+				return '';
 			} else if (returnVal.toLowerCase() == 'false') {
 				return false;
 			} else if (!isNaN(returnVal) && returnVal.toString().indexOf('.') != -1) {

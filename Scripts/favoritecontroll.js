@@ -25,7 +25,6 @@ function addFavorite(series) {
 function getFavs() {
 	//Get the cookie-string
 	var favs = getCookie('favorites');
-	console.log(favs);
 	
 	//Check if the cookie is not added or empty
 	if (favs == null) {
