@@ -27,9 +27,12 @@ function getFavs() {
 	var favs = getCookie('favorites');
 
 	//Check if the cookie is not added or empty
-	if (favs == undefined) {
+	if (favs == null) {
 		return [];
-	} else if (favs.split(',')[0] == '') {
+	} else if (favs == '') {
+		return [];
+	}
+	else if (favs.split(',')[0] == '') {
 		//When the cookie is empty remove it completly
 		removeCookie('favorites');
 		return [];
