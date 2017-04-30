@@ -532,7 +532,7 @@ $(window).keydown(function (e) {
 		} else if (e.keyCode === 40) { //Arr-down
 			e.preventDefault();
 			updateVolume((player.volume * 100) - 10);
-		} else if (e.keyCode === 107) { //+
+		} else if (e.keyCode === 107 || e.keyCode === 171) { //+
 			e.preventDefault();
 			var nextVal = document.getElementById('vid').playbackRate + 0.01;
 			if (nextVal > 4) {
@@ -543,7 +543,7 @@ $(window).keydown(function (e) {
 
 			document.getElementById('vid').playbackRate = nextVal;
 
-		} else if (e.keyCode === 109) { // -
+		} else if (e.keyCode === 109 || e.keyCode === 173) { // -
 			e.preventDefault();
 
 			var nextVal = document.getElementById('vid').playbackRate - 0.01;
