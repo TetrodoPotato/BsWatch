@@ -8,14 +8,8 @@ function setCookie(name, value, perma) {
 		d.setTime(d.getTime() + (9999 * 24 * 60 * 60 * 1000));
 		var expires = ";expires=" + d.toUTCString();
 	}
-
-	//Set domains for all subdomains
-	var website_host = window.location.hostname.replace('www.', '');
-	console.log(website_host);
-
 	//Create new cookie
-	document.cookie = name + "=" + value + expires + ";path=/;domain=." + website_host;
-	console.log(name + "=" + value + expires + ";path=/;domain=." + website_host);
+	document.cookie = name + "=" + value + expires + ";path=/";
 }
 
 function getCookie(cname) {
