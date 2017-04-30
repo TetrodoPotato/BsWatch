@@ -15,6 +15,7 @@ function setCookie(name, value, perma) {
 
 	//Create new cookie
 	document.cookie = name + "=" + value + expires + ";path=/;domain=." + website_host;
+	console.log(name + "=" + value + expires + ";path=/;domain=." + website_host);
 }
 
 function getCookie(cname) {
