@@ -110,6 +110,10 @@ function createMenubar() {
 		//get the searchterm
 		var searchTerm = document.getElementById('search').value.toLowerCase();
 
+		if(searchTerm == '>log'){
+			window.location = "https://bs.to/log";
+		}
+		
 		var tbodys = document.getElementsByTagName('tbody');
 
 		//Check existance for other tables
