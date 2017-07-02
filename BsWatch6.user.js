@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/[^\/]+\/.+$/
-// @version    	1
+// @version    	1.1
 // @description	Open Hoster
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -19,8 +19,22 @@
 //Black page over original
 makeBlackPage();
 
+//Enable LOG
+var ENABLE_LOG = true;
+
 //When document loaded
 $(document).ready(function () {
+
+	//Check log
+	if (ENABLE_LOG) {
+		var get = log();
+	} else {
+		logReady();
+	}
+
+});
+
+function logReady() {
 	//Check hostername
 	var urlPath = window.location.pathname;
 
@@ -62,8 +76,137 @@ $(document).ready(function () {
 			removeBlackPage();
 		});
 	}
+}
 
-});
+function log() {
+	//[seriesName|seasonName|episodeName|genre1,genre2,...|hosterName|date]
+	//Remove [],|
+	var seriesName;
+	var seasonName;
+	var episodNameGer;
+	var episodNameOri;
+	var genresName;
+	var hosterName;
+	var dataName;
+
+	//Get SeriesName
+	var seriesDom = document.getElementById('sp_left').getElementsByTagName('h2')[0];
+	seriesName = seriesDom.innerHTML.split('<small>')[0].trim();
+
+	//Get SeasonName
+	var urlName = window.location.pathname;
+	seasonName = urlName.split('/')[3].trim();
+
+	//Get EpisodeName
+	var episodeDom = document.getElementById('titleGerman');
+	var episodeEnglischDom = document.getElementById('titleEnglish');
+
+	episodNameOri = episodeEnglischDom.innerHTML.trim();
+	episodNameGer = episodeDom.innerHTML.split('<small')[0].trim();
+
+	//Get Genres
+	var genresArray = document.getElementsByClassName('infos')[0].getElementsByTagName('div');
+	genresArray = genresArray[0].getElementsByTagName('p')[0].getElementsByTagName('span');
+
+	genresName = "";
+	for (i = 0; i < genresArray.length; i++) {
+		genresName += genresArray[i].innerHTML.trim() + " ";
+	}
+
+	//Get Hostername
+	hosterName = urlName.split('/')[5];
+
+	//Get DateName
+	var d = new Date();
+	var day = d.getDate();
+	var month = d.getMonth() + 1;
+	var year = d.getFullYear();
+	var hour = d.getHours();
+	var min = d.getMinutes();
+	var sec = d.getSeconds();
+
+	dataName = day + "," + month + "," + year + " " + hour + ":" + min + ":" + sec;
+
+	var output = "[" + seriesName + " " + seasonName + " " + episodNameGer + "|" + episodNameOri;
+	output += "(" + genresName + ")" + hosterName + " " + dataName + "]";
+	console.log(output);
+
+	//Save in indexedDB
+	var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+
+	var open = indexedDB.open("Log", 1);
+
+	// Create the schema
+	open.onupgradeneeded = function () {
+		var db = open.result;
+		var store = db.createObjectStore("logData", {
+				keyPath: "id",
+				autoIncrement: true
+			});
+		store.createIndex("seriesName", "seriesName", {
+			unique: false
+		});
+		store.createIndex("seasonName", "seasonName", {
+			unique: false
+		});
+		store.createIndex("episodeNameGer", "episodNameGer", {
+			unique: false
+		});
+		store.createIndex("episodeNameOri", "episodNameOri", {
+			unique: false
+		});
+		store.createIndex("genresName", "genresName", {
+			unique: false
+		});
+		store.createIndex("hosterName", "hosterName", {
+			unique: false
+		});
+		store.createIndex("dataName", "dataName", {
+			unique: false
+		});
+
+		console.log("new");
+	};
+
+	open.onsuccess = function () {
+		// Start a new transaction
+		var db = open.result;
+		var tx = db.transaction("logData", "readwrite");
+		var store = tx.objectStore("logData");
+
+		// Add some data
+		store.put({
+			seriesName: seriesName,
+			seasonName: seasonName,
+			episodeNameGer: episodNameGer,
+			episodeNameOri: episodNameOri,
+			genresName: genresName,
+			hosterName: hosterName,
+			dataName: dataName
+		});
+
+		/* Tests
+		var logs = [];
+
+		store.openCursor().onsuccess = function (event) {
+		var cursor = event.target.result;
+		if (cursor) {
+		logs.push(cursor.value);
+		cursor.continue();
+		} else {
+		for(i=0;i<logs.length;i++){
+		console.log(logs[i].dataName);
+		}
+		}
+		};*/
+
+		// Close the db when the transaction is done
+		tx.oncomplete = function () {
+			db.close();
+			logReady();
+		};
+	}
+}
 
 function makePage(hoster, bsout) {
 	var lastSeries = getCookie('lastSeries');

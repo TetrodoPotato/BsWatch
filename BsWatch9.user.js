@@ -4,7 +4,7 @@
 // @namespace   http://www.greasespot.net/
 // @include     *oloadcdn.net*
 // @include     /^https:\/\/delivery\-\-.+$/
-// @version    	1.3
+// @version    	1.4
 // @description	Media-Player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -456,9 +456,15 @@ function updateProcessbar() {
 	var darkOpa = document.getElementById('clicklayer');
 
 	if (!isNaN(darkOpa.style.opacity)) {
-		darkProcess.value = parseFloat(darkOpa.style.opacity) * 100;
-		document.getElementById('showPerc').innerHTML = (parseFloat(darkOpa.style.opacity) * 100).toFixed(0) + '%';
+		if (isFloat(parseFloat(darkOpa.style.opacity))) {
+			darkProcess.value = parseFloat(darkOpa.style.opacity) * 100;
+			document.getElementById('showPerc').innerHTML = (parseFloat(darkOpa.style.opacity) * 100).toFixed(0) + '%';
+		}
 	}
+}
+
+function isFloat(n) {
+	return Number(n) === n;
 }
 
 var lastVol = 0;
