@@ -40,3 +40,6 @@
 	107	+				- Speed Up 1% max 400%
 	109	-				- Slow Down 1% min 50%;
 	
+//Log
+	Search '>log' for Log -> Default: Enabled
+	Change File 6 -> LOG_ENABLED 

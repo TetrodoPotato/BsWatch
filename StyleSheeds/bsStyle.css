@@ -676,3 +676,133 @@ h2 small {
 	overflow:hidden;
 	transition: width 0.5s ease-out;
 }
+
+
+
+
+
+
+
+
+
+
+
+#logTable {
+	margin:0 auto;
+	margin-top:70px;
+	width:100%;
+	overflow:hidden;
+	border-spacing:2px 5px;
+}
+
+#logTable tr td{
+	background:#111;
+	color:#FFF;
+	font-weight: bold;
+	padding:5px 15px;
+}
+
+#logTable tr {
+	width:100%;
+}
+
+#logTable tr td:last-child {
+	color:#ee4d2e !important;
+	background:#000;
+	fill:#ee4d2e;
+	stroke:#ee4d2e;
+}
+
+#logTable tr td:last-child:hover {
+	fill:#a0260d;
+	stroke:#a0260d;
+}
+
+#logTable tr td:first-child{
+	background:#ee4d2e;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:5px 15px;
+
+}
+
+#logTable tr th {
+	background:#282828;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:5px 0px;
+}
+
+#logTable tr td:nth-child(1){
+	width:1%;
+}
+#logTable tr td:nth-child(2){
+	width:25%;
+}
+#logTable tr td:nth-child(3){
+	width:1%;
+}
+#logTable tr td:nth-child(4){
+	width:25%;
+}
+#logTable tr td:nth-child(5){
+	width:25%;
+}
+#logTable tr td:nth-child(6){
+	width:20%;
+}
+#logTable tr td:nth-child(7){
+	width:1%;
+}
+#logTable tr td:nth-child(8){
+	width:1%;
+}
+#logTable tr td:nth-child(9){
+	width:1%;
+}
+
+#content {
+	width:100%;
+}
+
+#info {
+	margin:0 auto;
+	margin-top:80px;
+	width:100%;
+	max-width:1052px;
+	padding:5px;
+	color:#fff;
+	font-weight:bold;
+}
+
+#logButton{
+	max-width:1052px;
+	color:#fff;
+	font-weight:bold;
+	margin:0 auto;
+	margin-top:20px;
+	width:100%;
+	overflow:hidden;
+	border-spacing:2px 5px;
+	
+}
+
+#logButton tr {
+	width:100%;
+}
+
+#logButton tr td{
+	background-color:#ee4d2e;
+	padding:5px 15px;
+	text-align:center; 
+	vertical-align:middle;
+}
+
+#logButton tr td:hover{
+	background-color:#a0260d;
+	padding:5px 15px;
+}
