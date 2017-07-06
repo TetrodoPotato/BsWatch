@@ -1,4 +1,3 @@
-
 //name ..
 function addFavorite(series) {
 	//Get all favorites

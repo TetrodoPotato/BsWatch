@@ -21,15 +21,8 @@
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch3.user.js
 // ==/UserScript==
 
-//Some Global variables
-var watchedIcon = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/pageImg/unwatch.png';
-var unwatchedIcon = 'https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/pageImg/watch.png';
-
 //Black page over original
 makeBlackPage();
-
-//Name of this series
-var thisSeries = window.location.pathname.split('/')[2];
 
 //When document loaded
 $(document).ready(function () {
@@ -42,6 +35,8 @@ $(document).ready(function () {
 	//Check if there was a last episode
 	if (typeof getCookie('lastEpisode') == 'string') {
 		//Check if this is the same series
+		//Name of this series
+		var thisSeries = window.location.pathname.split('/')[2];
 		if (getCookie('lastSeries') == thisSeries) {
 			//Check if autoplay is on
 			if (getCookie('autoplay') == true) {
@@ -532,7 +527,7 @@ function nextWindow(time) {
 	var bodys = document.createElement('div');
 	var texts = document.createElement('div');
 	var butto = document.createElement('button');
-	
+
 	plane.setAttribute('id', 'plane');
 	bodys.setAttribute('id', 'nextBody');
 	texts.setAttribute('id', 'texts');

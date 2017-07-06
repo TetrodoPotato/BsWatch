@@ -14,6 +14,7 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/favoritecontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/menucontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/data.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch10.user.js
 // ==/UserScript==
 
@@ -54,70 +55,7 @@ function makePage() {
 	document.head.innerHTML = headObject.innerHTML;
 	document.body = bodyObject;
 
-	makeDB();
-}
-
-function makeDB() {
-	//Save in indexedDB
-	var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-
-	var open = indexedDB.open("Log", 1);
-
-	// Create the schema
-	open.onupgradeneeded = function () {
-		var db = open.result;
-		var store = db.createObjectStore("logData", {
-				keyPath: "id",
-				autoIncrement: true
-			});
-		store.createIndex("seriesName", "seriesName", {
-			unique: false
-		});
-		store.createIndex("seasonName", "seasonName", {
-			unique: false
-		});
-		store.createIndex("episodeNameGer", "episodNameGer", {
-			unique: false
-		});
-		store.createIndex("episodeNameOri", "episodNameOri", {
-			unique: false
-		});
-		store.createIndex("genresName", "genresName", {
-			unique: false
-		});
-		store.createIndex("hosterName", "hosterName", {
-			unique: false
-		});
-		store.createIndex("dataName", "dataName", {
-			unique: false
-		});
-
-		console.log("new");
-	};
-
-	open.onsuccess = function () {
-		// Start a new transaction
-		var db = open.result;
-		var tx = db.transaction("logData", "readwrite");
-		var store = tx.objectStore("logData");
-
-		var logs = [];
-
-		store.openCursor().onsuccess = function (event) {
-			var cursor = event.target.result;
-			if (cursor) {
-				logs.push(cursor.value);
-				cursor.continue();
-			} else {
-				makeLog(logs);
-			}
-		};
-
-		// Close the db when the transaction is done
-		tx.oncomplete = function () {
-			db.close();
-		};
-	}
+	makeTable(getLog());
 }
 
 function makeTable(logs) {

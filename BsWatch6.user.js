@@ -13,6 +13,7 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/menucontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/keycontroll.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/data.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch6.user.js
 // ==/UserScript==
 
@@ -131,81 +132,7 @@ function log() {
 	output += "(" + genresName + ")" + hosterName + " " + dataName + "]";
 	console.log(output);
 
-	//Save in indexedDB
-	var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-
-	var open = indexedDB.open("Log", 1);
-
-	// Create the schema
-	open.onupgradeneeded = function () {
-		var db = open.result;
-		var store = db.createObjectStore("logData", {
-				keyPath: "id",
-				autoIncrement: true
-			});
-		store.createIndex("seriesName", "seriesName", {
-			unique: false
-		});
-		store.createIndex("seasonName", "seasonName", {
-			unique: false
-		});
-		store.createIndex("episodeNameGer", "episodNameGer", {
-			unique: false
-		});
-		store.createIndex("episodeNameOri", "episodNameOri", {
-			unique: false
-		});
-		store.createIndex("genresName", "genresName", {
-			unique: false
-		});
-		store.createIndex("hosterName", "hosterName", {
-			unique: false
-		});
-		store.createIndex("dataName", "dataName", {
-			unique: false
-		});
-
-		console.log("new");
-	};
-
-	open.onsuccess = function () {
-		// Start a new transaction
-		var db = open.result;
-		var tx = db.transaction("logData", "readwrite");
-		var store = tx.objectStore("logData");
-
-		// Add some data
-		store.put({
-			seriesName: seriesName,
-			seasonName: seasonName,
-			episodeNameGer: episodNameGer,
-			episodeNameOri: episodNameOri,
-			genresName: genresName,
-			hosterName: hosterName,
-			dataName: dataName
-		});
-
-		/* Tests
-		var logs = [];
-
-		store.openCursor().onsuccess = function (event) {
-		var cursor = event.target.result;
-		if (cursor) {
-		logs.push(cursor.value);
-		cursor.continue();
-		} else {
-		for(i=0;i<logs.length;i++){
-		console.log(logs[i].dataName);
-		}
-		}
-		};*/
-
-		// Close the db when the transaction is done
-		tx.oncomplete = function () {
-			db.close();
-			logReady();
-		};
-	}
+	addLock(seriesName, seasonName, episodNameGer, episodNameOri, genresName, hosterName, dataName);
 }
 
 function makePage(hoster, bsout) {

@@ -8,17 +8,11 @@
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
 // @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch7.user.js
 // ==/UserScript==
 
-//Black page over original
-var blackP = document.createElement('div');
-var blackPStyle = 'width:100%; height:100%; position:fixed; top:0; left:0; background:#000; z-index:999';
-blackP.setAttribute('style', blackPStyle);
-blackP.setAttribute('id', 'blackP');
-
-//Attach blackPage
-document.documentElement.appendChild(blackP);
+makeBlackPage();
 
 //disable scrollbars .. for ... reasons
 document.documentElement.style.overflow = 'hidden'; // firefox, chrome
