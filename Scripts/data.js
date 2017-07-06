@@ -126,5 +126,5 @@ function getLog() {
 	}
 	while (arrLogs === null) {}
 
-	return arrLogs();
+	return arrLogs;
 }
