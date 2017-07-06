@@ -38,6 +38,10 @@ function createMenubar() {
 		//Get the bs.to username welcome
 		var textDiv = loggedSection.getElementsByTagName('div')[0];
 		textDiv.setAttribute('id', 'welcome');
+		
+		var nameText = textDiv.getElementsByTagName('strong')[0];
+		nameText.innerHTML = '<a href="https://bs.to/logout">' + nameText.innerHTML + '</a>';
+		
 		rightCon.appendChild(textDiv);
 
 	}
