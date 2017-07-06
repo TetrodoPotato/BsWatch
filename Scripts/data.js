@@ -99,6 +99,8 @@ function getLog() {
 		console.log("new");
 	};
 
+	var arrLogs;
+
 	open.onsuccess = function () {
 		// Start a new transaction
 		var db = open.result;
@@ -113,7 +115,7 @@ function getLog() {
 				logs.push(cursor.value);
 				cursor.continue();
 			} else {
-				return logs;
+				arrLogs = logs;
 			}
 		};
 
@@ -122,4 +124,7 @@ function getLog() {
 			db.close();
 		};
 	}
+	while (arrLogs === null) {}
+
+	return arrLogs();
 }
