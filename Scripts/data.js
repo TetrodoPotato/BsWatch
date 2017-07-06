@@ -99,7 +99,7 @@ function getLog() {
 		console.log("new");
 	};
 
-	var arrLogs;
+	var arrLogs = "none";
 
 	open.onsuccess = function () {
 		// Start a new transaction
@@ -124,7 +124,7 @@ function getLog() {
 			db.close();
 		};
 	}
-	while (arrLogs === null) {}
+	while (arrLogs == "none") {}
 
 	return arrLogs;
 }
