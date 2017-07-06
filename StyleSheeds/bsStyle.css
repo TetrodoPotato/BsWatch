@@ -113,6 +113,29 @@ tr {
 	margin-right:20px;
 }
 
+welcome a:link {
+    color:#ee4d2e !important;
+	text-decoration: none;
+}
+
+/* visited link */
+welcome a:visited {
+    color:#ee4d2e !important;
+	text-decoration: none;
+}
+
+/* mouse over link */
+welcome a:hover {
+    color:#ee4d2e !important;
+	text-decoration: none;
+}
+
+/* selected link */
+welcome a:active {
+    color:#ee4d2e !important;
+	text-decoration: none;
+}
+
 #rightCon div strong{
 	margin:0 5px 0 5px;
 	color:#ee4d2e !important;
