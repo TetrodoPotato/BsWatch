@@ -14,6 +14,7 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/favoritecontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/menucontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
+// @require		http://rubaxa.github.io/Sortable/Sortable.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch10.user.js
 // ==/UserScript==
 
@@ -228,41 +229,43 @@ function makeLog(logs) {
 	if (urlPath.length != 1) {
 		if (urlPath[1] == 'info') {
 			makeInfo(logs);
+		} else if (urlPath[1] == 'data') {
+			makeConf();
 		}
 	} else {
 		makeTable(logs);
 	}
-	
+
 	createButtons();
 }
 
-function createButtons(){
+function createButtons() {
 	var tab = document.createElement('table');
-	tab.setAttribute('id','logButton');
-	
+	tab.setAttribute('id', 'logButton');
+
 	var tr = document.createElement('tr');
-	
+
 	var log = document.createElement('td');
 	var logClick = 'window.location = \'' + "https://bs.to/log" + '\'';
 	log.setAttribute('onclick', logClick);
 	log.innerHTML = 'Log';
-	
+
 	var info = document.createElement('td');
 	var infoClick = 'window.location = \'' + "https://bs.to/log?info" + '\'';
 	info.setAttribute('onclick', infoClick);
 	info.innerHTML = 'Info';
-	
+
 	var data = document.createElement('td');
 	var dataClick = 'window.location = \'' + "https://bs.to/log?data" + '\'';
 	data.setAttribute('onclick', dataClick);
 	data.innerHTML = 'Data';
-	
+
 	tr.appendChild(log);
 	tr.appendChild(info);
 	tr.appendChild(data);
-	
+
 	tab.appendChild(tr);
-	
+
 	document.getElementById('content').appendChild(tab);
 }
 
@@ -277,20 +280,20 @@ function makeInfo(logs) {
 	for (i = 0; i < logs.length; i++) {
 		var gen = logs[i].genresName;
 		gen = gen.split(' ');
-		for (x=0;x<gen.length;x++) {
+		for (x = 0; x < gen.length; x++) {
 			if (gen[x].length !== 0 || gen[x]) {
 				genres[genres.length] = gen[x];
 			}
 		}
 	}
 
-	if(genres.length !== 0){
+	if (genres.length !== 0) {
 		cont.innerHTML += '<tr><td>Meist geschautes Genre:</td><td>' + mode(genres) + '</td>';
 	} else {
 		cont.innerHTML += '<tr><td>Meist geschautes Genre:</td><td>none</td>';
 	}
 
-	//Most watched on - 
+	//Most watched on -
 	var date = [];
 	for (i = 0; i < logs.length; i++) {
 		var dat = logs[i].dataName;
@@ -298,67 +301,59 @@ function makeInfo(logs) {
 		date[date.length] = dat;
 	}
 
-	if(date.length !== 0){
+	if (date.length !== 0) {
 		cont.innerHTML += '<tr><td>Am meisten geschaut am:</td><td>' + mode(date) + '</td>';
 	} else {
 		cont.innerHTML += '<tr><td>Am meisten geschaut am:</td><td>none</td>';
 	}
-	
+
 	//Most watched Series
-	
+
 	var date = [];
 	for (i = 0; i < logs.length; i++) {
 		date[date.length] = logs[i].seriesName;
 	}
 
-	if(date.length !== 0){
+	if (date.length !== 0) {
 		cont.innerHTML += '<tr><td>Am meisten geschaute Serie:</td><td>' + mode(date) + '</td>';
 	} else {
 		cont.innerHTML += '<tr><td>Am meisten geschaute Serie:</td><td>none</td>';
 	}
-	
+
 	document.getElementById('content').appendChild(cont);
 }
 
-function mode(array)
-{
-    if(array.length == 0)
-        return null;
-    var modeMap = {};
-    var maxEl = array[0], maxCount = 1;
-    for(var i = 0; i < array.length; i++)
-    {
-        var el = array[i];
-        if(modeMap[el] == null)
-            modeMap[el] = 1;
-        else
-            modeMap[el]++;  
-        if(modeMap[el] > maxCount)
-        {
-            maxEl = el;
-            maxCount = modeMap[el];
-        }
-    }
-    return maxEl;
+function mode(array) {
+	if (array.length == 0)
+		return null;
+	var modeMap = {};
+	var maxEl = array[0],
+	maxCount = 1;
+	for (var i = 0; i < array.length; i++) {
+		var el = array[i];
+		if (modeMap[el] == null)
+			modeMap[el] = 1;
+		else
+			modeMap[el]++;
+		if (modeMap[el] > maxCount) {
+			maxEl = el;
+			maxCount = modeMap[el];
+		}
+	}
+	return maxEl;
 }
 
+function makeConf() {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	var addIt = '<h1>Hoster Priorität</h1>' +
+		'<ul id="hosterSort">' +
+		'	<li>Vivo</li>' +
+		'   <li>OpenLoadHd</li>' +
+		'   <li>OpenLoad</li>' +
+		'</ul>';
+	document.getElementById('content').innerHTML = addIt;
+	var el = document.getElementById('hosterSort');
+	var sortable = Sortable.create(el);
+	
+}
 

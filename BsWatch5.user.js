@@ -19,6 +19,14 @@
 //Black page over original page
 makeBlackPage();
 
+//Hoster Sort
+var hosterSort = getCookie('cookieSort');
+if (hosterSort != undefined) {
+	hosterSort = hosterSort.split('|');
+} else {
+	hosterSort = ["Vivo", "OpenLoadHD", "OpenLoad"];
+}
+
 //When document loaded
 $(document).ready(function () {
 	//Get all available hoster
@@ -54,26 +62,26 @@ $(document).ready(function () {
 
 	//Set cookies for next episode
 	setGlobalVars();
-	//Check if hoster-var contains a supportet hoster
-	if ($.inArray("Vivo", hoster) != -1 && errorCode < 1) {
-		window.location = window.location.href + '/Vivo';
-	} else if ($.inArray("OpenLoadHD", hoster) != -1 && errorCode < 2) {
-		window.location = window.location.href + '/OpenLoadHD';
-	} else if ($.inArray("OpenLoad", hoster) != -1 && errorCode < 3) {
-		window.location = window.location.href + '/OpenLoad';
-	} else {
-		//Activate everything and go hang yourself
 
-		//Make a hoster page
-		makePage(hoster);
-		updateFavorites();
-
-		//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
-		$(window).bind("load", function () {
-			removeBlackPage();
-
-		});
+	for (i = 0; i < hosterSort.length; i++) {
+		if ($.inArray(hosterSort[i], hoster) != -1 && errorCode < 1) {
+			window.location = window.location.href + '/' + hosterSort[i];
+			return;
+		}
 	}
+	
+	//Activate everything and go hang yourself
+
+	//Make a hoster page
+	makePage(hoster);
+	updateFavorites();
+
+	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
+	$(window).bind("load", function () {
+		removeBlackPage();
+
+	});
+
 });
 
 function makePage(hoster) {
@@ -146,7 +154,7 @@ function makePage(hoster) {
 
 	var nextButton = document.createElement('td');
 	nextButton.innerHTML = 'Nexte Episode';
-	
+
 	var nextFunction = 'window.location = \'https://bs.to/?next\'';
 	nextButton.setAttribute('onclick', nextFunction);
 
