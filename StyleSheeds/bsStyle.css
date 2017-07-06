@@ -113,25 +113,25 @@ tr {
 	margin-right:20px;
 }
 
-welcome a:link {
+#welcome a:link {
     color:#ee4d2e !important;
 	text-decoration: none;
 }
 
 /* visited link */
-welcome a:visited {
+#welcome a:visited {
     color:#ee4d2e !important;
 	text-decoration: none;
 }
 
 /* mouse over link */
-welcome a:hover {
+#welcome a:hover {
     color:#ee4d2e !important;
 	text-decoration: none;
 }
 
 /* selected link */
-welcome a:active {
+#welcome a:active {
     color:#ee4d2e !important;
 	text-decoration: none;
 }
@@ -829,4 +829,46 @@ h2 small {
 #logButton tr td:hover{
 	background-color:#a0260d;
 	padding:5px 15px;
+}
+
+#contpane {
+	margin:0 auto;
+	margin-top:60px;
+	width:200px;
+}
+
+#contpane h1 {
+	color:#ee4d2e;
+}
+
+#hosterSort {
+	list-style-type: none;
+	margin: 0 auto;
+}
+
+#hosterSort li {
+	color:#FFFFFF;
+	background:#ee4d2e;
+	border-radius:5px;
+	margin-bottom:3px;
+	cursor:grab;
+}
+
+#contpane button{
+	background:#ee4d2e;
+	width:200px;
+	border:none;
+	color:#FFFFFF;
+	margin-top:20px;
+	border-radius:5px;
+	cursor:pointer;
+}
+
+#contpane button:active {
+	background:#FFF !important;
+	color:#000;
+}
+
+#contpane button:hover {
+	background:#a0260d;
 }

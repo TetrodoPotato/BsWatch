@@ -345,15 +345,52 @@ function mode(array) {
 
 function makeConf() {
 
-	var addIt = '<h1>Hoster Priorität</h1>' +
-		'<ul id="hosterSort">' +
-		'	<li>Vivo</li>' +
-		'   <li>OpenLoadHd</li>' +
-		'   <li>OpenLoad</li>' +
-		'</ul>';
-	document.getElementById('content').innerHTML = addIt;
+	//Hoster Sort
+	var hosterSort = getCookie('cookieSort');
+	if (hosterSort != undefined) {
+		hosterSort = hosterSort.split('|');
+	} else {
+		hosterSort = ["Vivo", "OpenLoadHD", "OpenLoad"];
+	}
+	
+	var contPane = document.createElement('div');
+	contPane.setAttribute('id','contpane');
+	
+	var titleSet = document.createElement('h1');
+	titleSet.innerHTML = 'Hoster Priorität';
+	contPane.appendChild(titleSet);
+	
+	var listSet = document.createElement('ul');
+	listSet.setAttribute('id','hosterSort');
+	
+	for(i=0;i<hosterSort.length;i++){
+		var li = document.createElement('li');
+		li.innerHTML = hosterSort[i]
+		
+		listSet.appendChild(li);
+	}
+	contPane.appendChild(listSet);
+	
+	document.getElementById('content').appendChild(contPane);
+
 	var el = document.getElementById('hosterSort');
 	var sortable = Sortable.create(el);
-	
-}
+	var applyButton = document.createElement('button');
+	applyButton.innerHTML = "Anwenden";
+	applyButton.addEventListener('click', function () {
+		var prios = document.getElementById('hosterSort').getElementsByTagName('li');
+		var cook = "";
+		for (i = 0; i < prios.length; i++) {
+			if (i < prios.length - 1) {
+				cook += prios[i].innerHTML + '|';
+			} else {
+				cook += prios[i].innerHTML;
+			}
 
+		}
+
+		setCookie('cookieSort', cook, true);
+	});
+	
+	document.getElementById('contpane').appendChild(applyButton);
+}
