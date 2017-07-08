@@ -64,12 +64,12 @@ $(document).ready(function () {
 	setGlobalVars();
 
 	for (i = 0; i < hosterSort.length; i++) {
-		if ($.inArray(hosterSort[i], hoster) != -1 && errorCode < 1) {
+		if ($.inArray(hosterSort[i], hoster) != -1 && errorCode - 1 < i) {
 			window.location = window.location.href + '/' + hosterSort[i];
 			return;
 		}
 	}
-	
+
 	//Activate everything and go hang yourself
 
 	//Make a hoster page

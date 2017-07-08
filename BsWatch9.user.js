@@ -94,7 +94,7 @@ var control = '<div id="video-controls" class="hide" data-state="hidden">' +
 	'	<table>' +
 	'		<tbody>' +
 	'			<tr id="bars">' +
-	'				<td colspan="7">' +
+	'				<td colspan="9">' +
 	'					<canvas id="buffer" width="0" height="5"></canvas>' +
 	'					<progress id="progress" value="0" min="0" max="0"></progress>' +
 	'				</td>' +
@@ -107,7 +107,9 @@ var control = '<div id="video-controls" class="hide" data-state="hidden">' +
 	'					<progress tabindex="-1" id="volume" value="50" min="0" max="100"></progress>' +
 	'				</td>' +
 	'				<td></td>' +
+	'				<td>+</td>' +
 	'				<td id="speed"></td>' +
+	'				<td>-</td>' +
 	'				<td id="close"></td>' +
 	'			</tr>' +
 	'		</tbody>' +
