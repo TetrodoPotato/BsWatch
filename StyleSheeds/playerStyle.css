@@ -241,20 +241,49 @@
 #playcontrols td:nth-child(5){
 	width:100%;
 }
+
 #playcontrols td:nth-child(6){
+	width:0.1%;
+	color:#ee4d2e;
+	text-align:center; 
+    vertical-align:top;
+	font-weight:bold;
+	font-size:29px;
+	padding:0 20px 0 20px;
+}
+
+#playcontrols td:nth-child(6):hover{
+	color:#a0260d;
+}
+
+#playcontrols td:nth-child(7){
 	width:0.1%;
 	height:35px;
 	color:#CCC;
 	font-weight:bold;
 }
 
-#playcontrols td:nth-child(7){
+#playcontrols td:nth-child(8){
+	width:0.1%;
+	color:#ee4d2e;
+	text-align:center; 
+    vertical-align:top;
+	font-weight:bold;
+	font-size:29px;
+	padding:0 20px 0 20px;
+}
+
+#playcontrols td:nth-child(8):hover{
+	color:#a0260d;
+}
+
+#playcontrols td:nth-child(9){
 	fill:#ee4d2e;
 	height:35px;
 	width:35px;
 	vertical-align:top;
 }
 
-#playcontrols td:nth-child(7):hover{
+#playcontrols td:nth-child(9):hover{
 	fill:#a0260d;
 }

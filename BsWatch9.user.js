@@ -4,7 +4,7 @@
 // @namespace   http://www.greasespot.net/
 // @include     *oloadcdn.net*
 // @include     /^https:\/\/delivery\-\-.+$/
-// @version    	1.4
+// @version    	1.9
 // @description	Media-Player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -107,9 +107,9 @@ var control = '<div id="video-controls" class="hide" data-state="hidden">' +
 	'					<progress tabindex="-1" id="volume" value="50" min="0" max="100"></progress>' +
 	'				</td>' +
 	'				<td></td>' +
-	'				<td>+</td>' +
+	'				<td id="plus">+</td>' +
 	'				<td id="speed"></td>' +
-	'				<td>-</td>' +
+	'				<td id="minus">-</td>' +
 	'				<td id="close"></td>' +
 	'			</tr>' +
 	'		</tbody>' +
@@ -117,6 +117,54 @@ var control = '<div id="video-controls" class="hide" data-state="hidden">' +
 	'</div>';
 
 var checkTime;
+
+var isSpeed = false;
+var speedTick = 1;
+
+var plusTick = function (e) {
+	if (isSpeed) {
+		var nextVal = document.getElementById('vid').playbackRate + 0.01;
+		if (nextVal > 4) {
+			nextVal = 4;
+		}
+
+		nextVal = parseFloat(Math.round(nextVal * 100) / 100);
+
+		document.getElementById('vid').playbackRate = nextVal;
+
+		var nextSpeed = speedTick * 100;
+		if (nextSpeed > 900) {
+			nextSpeed = 950;
+		}
+
+		speedTick++;
+
+		setTimeout(plusTick, 1000 - nextSpeed);
+	}
+};
+
+var minusTick = function (e) {
+	if (isSpeed) {
+		var nextVal = document.getElementById('vid').playbackRate - 0.01;
+		if (nextVal < 0.5) {
+			nextVal = 0.5;
+
+		}
+
+		nextVal = parseFloat(Math.round(nextVal * 100) / 100);
+
+		document.getElementById('vid').playbackRate = nextVal;
+
+		var nextSpeed = speedTick * 100;
+		if (nextSpeed > 900) {
+			nextSpeed = 950;
+		}
+
+		speedTick++;
+
+		setTimeout(minusTick, 1000 - nextSpeed);
+	}
+};
 
 function constructPlayer(mediaFile) {
 	var container = document.createElement('div');
@@ -157,6 +205,28 @@ function constructPlayer(mediaFile) {
 
 		$('body').bind('mouseup', function (e) {
 			$('body').unbind();
+		});
+	});
+
+	$('#plus').bind('mousedown', function (e) {
+		isSpeed = true;
+		plusTick();
+
+		$('body').bind('mouseup', function (e) {
+			$('body').unbind();
+			isSpeed = false;
+			speedTick = 1;
+		});
+	});
+	
+	$('#minus').bind('mousedown', function (e) {
+		isSpeed = true;
+		minusTick();
+
+		$('body').bind('mouseup', function (e) {
+			$('body').unbind();
+			isSpeed = false;
+			speedTick = 1;
 		});
 	});
 
