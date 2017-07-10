@@ -95,6 +95,7 @@ function getStar() {
 	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
 	svg.setAttribute('height', '50');
 	svg.setAttribute('width', '50');
+	svg.setAttribute('viewBox', '0 0 50 50');
 
 	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
 	pol1.setAttribute('points', '24,10 16,39 30,27 25,10');
@@ -107,6 +108,23 @@ function getStar() {
 	var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
 	pol3.setAttribute('points', '33,39 30,27 19,27');
 	svg.appendChild(pol3);
+
+	return svg;
+}
+
+function getFavStar() {
+	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+	svg.setAttribute('height', '35');
+	svg.setAttribute('width', '35');
+	svg.setAttribute('viewBox', '0 0 50 50');
+
+	var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol1.setAttribute('points', '24,0 40,49 24,38 9,49');
+	svg.appendChild(pol1);
+
+	var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+	pol2.setAttribute('points', '0,19 24,38 49,19');
+	svg.appendChild(pol2);
 
 	return svg;
 }

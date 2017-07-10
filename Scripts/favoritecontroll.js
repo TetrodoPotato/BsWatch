@@ -3,6 +3,11 @@ function addFavorite(series) {
 	//Get all favorites
 	var favsSolo = getFavs();
 
+	if (favSolo.length > 14) {
+		alert('Zu viele Favoriten!');
+		return;
+	}
+
 	//When it already exist .. piss your pants
 	if ($.inArray(series, favsSolo) != -1) {
 		return;
@@ -19,12 +24,14 @@ function addFavorite(series) {
 	//Update the cookie ... hmmm yaa ...
 	//to the new favorite string
 	setCookie('favorites', newCookie, true);
+	//Update favorites table
+	updateFavorites();
 }
 
 function getFavs() {
 	//Get the cookie-string
 	var favs = getCookie('favorites');
-	
+
 	//Check if the cookie is not added or empty
 	if (favs == null) {
 		return [];
@@ -57,6 +64,8 @@ function removeFavorite(name) {
 	for (i = 0; i < favsSolo.length; i++) {
 		addFavorite(favsSolo[i]);
 	}
+	//Update favorites table
+	updateFavorites();
 }
 
 //Simply
@@ -184,8 +193,6 @@ function addThisFav() {
 		slicePath = slicePath.split('/');
 		//Add the current series to favorites
 		addFavorite(slicePath[2]);
-		//Update favorites table
-		updateFavorites();
 
 		window.setTimeout(function () {
 			//Hide table
@@ -206,8 +213,6 @@ function removeThisFav() {
 		slicePath = slicePath.split('/');
 		//Remove the current series to favorites
 		removeFavorite(slicePath[2]);
-		//Update favorites table
-		updateFavorites();
 
 		window.setTimeout(function () {
 			//Hide table

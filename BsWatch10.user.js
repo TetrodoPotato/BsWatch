@@ -181,8 +181,6 @@ function makeTable(logs) {
 		td8.addEventListener('click', function (e) {
 			var target = this.getAttribute('id');
 
-			//var targetId = target.getAttribute('id');
-			console.log(target);
 			deleteLog(parseInt(target));
 		}, false);
 		tr.appendChild(td8);

@@ -14,4 +14,4 @@
 // ==/UserScript==
 
 //You know ?!
-window.location = 'https://bs.to/serie-alphabet';
+window.location = 'https://bs.to/serie-genre';
