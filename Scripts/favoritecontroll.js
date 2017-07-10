@@ -3,7 +3,7 @@ function addFavorite(series) {
 	//Get all favorites
 	var favsSolo = getFavs();
 
-	if (favSolo.length > 14) {
+	if (favsSolo.length > 14) {
 		alert('Zu viele Favoriten!');
 		return;
 	}
