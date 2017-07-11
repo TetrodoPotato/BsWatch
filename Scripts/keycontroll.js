@@ -324,7 +324,7 @@ $(document).ready(function () {
 						e.preventDefault();
 						window.location = 'https://bs.to/?next';
 					}
-				} else if (path.length > 2) {
+				} else if (path.length == 2) {
 					if (e.keyCode === 70) { //f
 						e.preventDefault();
 						var act = document.activeElement;
