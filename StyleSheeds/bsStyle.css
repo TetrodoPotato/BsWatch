@@ -252,6 +252,20 @@ h2 small {
 	border-spacing:0 5px;
 }
 
+#seriesTable tr:first-child th{
+	color:#FFF;
+	background-color:#202020;
+	height:35px;
+}
+
+#seriesTable tr:first-child th:first-child{
+	border-radius:5px 0 0 0;
+}
+
+#seriesTable tr:first-child th:last-child{
+	border-radius:0 5px 0 0;
+}
+
 #seriesTable tr {
 	width:100%;
 }
@@ -271,7 +285,7 @@ h2 small {
 	color:#FFF;
 	font-weight: bold;
 	text-align:center; 
-  vertical-align:middle;
+	vertical-align:middle;
 	padding:5px 15px;
 	border:none;
 	border-radius: 5px 0 0 5px;	
@@ -285,6 +299,50 @@ h2 small {
 	padding:5px 15px;
 	border:none;
 	border-radius: 0 5px 5px 0;	
+}
+
+#seriesTable tr td:nth-child(3){
+	background:#222;
+	width:1%;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:5px 15px;
+	border:none;
+}
+
+#seriesTable tr td:nth-child(4){
+	background:#000;
+	width:1%;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:5px 15px;
+	border:none;
+	border-radius: 0 5px 5px 0;	
+}
+
+#seriesTable .noFav{
+	fill:#888;
+}
+
+#seriesTable .noFav:hover{
+	background-color:#ee4d2e !important;
+}
+
+#seriesTable .isFav{
+	fill:#ee4d2e !important;
+}
+
+#seriesTable .isFav:hover{
+	fill:#a0260d !important;
+	background-color:#ee4d2e !important;
+}
+
+#seriesTable tr td:nth-child(4) svg{
+	height:25px;
 }
 
 #seasonTable {

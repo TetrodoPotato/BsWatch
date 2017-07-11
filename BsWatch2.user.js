@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie-genre[^\/]*$/
-// @version    	1
+// @version    	1.9
 // @description	Series List
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -184,6 +184,7 @@ function createRow(index, rowObj) {
 	for (i = 0; i < favoritesSeries.length; i++) {
 		if (favoritesSeries[i] == toFav) {
 			favNode.setAttribute('class', 'isFav');
+			isFav = true;
 			break;
 		}
 	}

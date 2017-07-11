@@ -255,6 +255,7 @@ $(document).ready(function () {
 					}
 				}
 
+				//On EpisodeTable
 				if (path.length == 3 || path.length == 4 || watchedLink) {
 					if (e.keyCode === 37) { //Arr-left
 						e.preventDefault();
@@ -322,6 +323,15 @@ $(document).ready(function () {
 					if (e.keyCode === 78) { //N
 						e.preventDefault();
 						window.location = 'https://bs.to/?next';
+					}
+				} else if (path.length > 2) {
+					if (e.keyCode === 70) { //f
+						e.preventDefault();
+						var act = document.activeElement;
+						var actFav = act.getElementsByTagName('td')[3];
+						if(actFav !==null){
+							actFav.click();
+						}
 					}
 				}
 
