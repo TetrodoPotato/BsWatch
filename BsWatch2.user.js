@@ -33,6 +33,10 @@ function initPage(cp){
 	cp.appendChild(makeTable(cp));
 }
 
+function afterInit(){
+	alert("Wörk")
+}
+
 function makeTable(cp) {
 	var rowObj = makeRowObj();
 

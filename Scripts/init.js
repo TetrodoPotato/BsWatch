@@ -82,8 +82,8 @@ function init() { //Black page over original
 		//Write fav. Table
 		updateFavorites();
 
-		if (typeof afterIni === "function") {
-			afterIni();
+		if (typeof afterInit === "function") {
+			afterInit();
 		}
 
 		//Delete blackP onload ... because the stylesheed needs to be loaded
