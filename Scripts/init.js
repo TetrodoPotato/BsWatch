@@ -46,6 +46,9 @@ function removeBlackPage() {
 }
 
 function init() { //Black page over original
+	//Messure Time
+	var start = new Date();
+
 	makeBlackPage();
 
 	//keyonly check
@@ -84,8 +87,6 @@ function init() { //Black page over original
 
 		if (typeof afterInit === "function") {
 			afterInit();
-		} else {
-			alert('not');
 		}
 
 		//Delete blackP onload ... because the stylesheed needs to be loaded
@@ -94,6 +95,8 @@ function init() { //Black page over original
 			if (document.getElementById('plane') !== null) {
 				document.documentElement.style.overflow = 'hidden'; // firefox, chrome
 			}
+			var time = new Date() - start;
+			console.log('Executiontime: ' + time);
 		});
 	});
 }
