@@ -4,12 +4,12 @@
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs.to(\/)?(((home|\?next|\?error))(\/)?)?$/
 // @version    	2.0
-// @description	Error and Next
+// @description	Error and Next - Redirect
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/cookiecontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
-// @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch4.user.js
+// @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch1.user.js
 // ==/UserScript==
 
 //Black page over original

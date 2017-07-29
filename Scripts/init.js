@@ -69,6 +69,7 @@ function init() { //Black page over original
 		var contantContainer = document.createElement('div');
 		contantContainer.setAttribute('id', 'contentContainer');
 
+		//Construct Base-Body
 		newBody.appendChild(menu);
 		newBody.appendChild(contantContainer);
 
@@ -80,6 +81,10 @@ function init() { //Black page over original
 
 		//Write fav. Table
 		updateFavorites();
+
+		if (typeof afterIni === "function") {
+			afterIni();
+		}
 
 		//Delete blackP onload ... because the stylesheed needs to be loaded
 		$(window).bind("load", function () {
