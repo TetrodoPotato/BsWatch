@@ -67,7 +67,7 @@ function init() { //Black page over original
 
 		//Container with Tables and stuffff
 		var contantContainer = document.createElement('div');
-		contantContainer.setAttribute(id, 'contentContainer');
+		contantContainer.setAttribute('id', 'contentContainer');
 
 		newBody.appendChild(menu);
 		newBody.appendChild(contantContainer);
