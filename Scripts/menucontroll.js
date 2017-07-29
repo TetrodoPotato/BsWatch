@@ -71,7 +71,7 @@ function createMenubar() {
 
 	//Create the backbutton that links to this site ... so no function
 	var backButton = document.createElement('button');
-	var linkTo = 'window.location = \'https://bs.to/\'';
+	var linkTo = 'window.location = \https://bs.to/serie-genre\'';
 	backButton.setAttribute('onclick', linkTo);
 
 	backButton.appendChild(getHome());
