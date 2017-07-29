@@ -72,14 +72,14 @@ function init() { //Black page over original
 		newBody.appendChild(menu);
 		newBody.appendChild(contantContainer);
 
+		//Needed
+		initPage(contantContainer);
+
 		//Change body
 		document.body = newBody;
 
 		//Write fav. Table
 		updateFavorites();
-
-		//Needed
-		initPage(contantContainer);
 
 		//Delete blackP onload ... because the stylesheed needs to be loaded
 		$(window).bind("load", function () {
