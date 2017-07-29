@@ -13,14 +13,14 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/menucontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/keycontroll.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/init.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch2.user.js
 // ==/UserScript==
 
-//Black page over original
-makeBlackPage();
+//Init page
+init();
 
-//When document loaded
-$(document).ready(function () {
+function initPage(cp){
 	//Scroll to top
 	window.scroll(0, 0);
 
@@ -29,37 +29,11 @@ $(document).ready(function () {
 	removeCookie('lastSeries');
 	removeCookie('lastSeason');
 	removeCookie('lastEpisode');
-
-	makePage();
-	updateFavorites();
-
-	//Delete blackP ... because the stylesheed needs to be loaded
-	$(window).bind("load", function () {
-		removeBlackPage();
-	});
-});
-
-function makePage() {
-	//Create base
-	var headObject = createHead();
-	var bodyObject = document.createElement('body');
-
-	//Create menubar
-	var menuobject = createMenubar();
-
-	//Table
-	var genretable = makeTable();
-
-	//Fill the body
-	bodyObject.appendChild(menuobject);
-	bodyObject.appendChild(genretable);
-
-	//Add content
-	document.head.innerHTML = headObject.innerHTML;
-	document.body = bodyObject;
+	
+	cp.appendChild(makeTable(cp));
 }
 
-function makeTable() {
+function makeTable(cp) {
 	var rowObj = makeRowObj();
 
 	//create the series table
