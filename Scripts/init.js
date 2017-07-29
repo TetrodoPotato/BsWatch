@@ -84,6 +84,8 @@ function init() { //Black page over original
 
 		if (typeof afterInit === "function") {
 			afterInit();
+		} else {
+			alert('not');
 		}
 
 		//Delete blackP onload ... because the stylesheed needs to be loaded
