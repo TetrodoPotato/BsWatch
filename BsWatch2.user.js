@@ -20,25 +20,18 @@
 //Init page
 init();
 
-function initPage(cp){
-	//Scroll to top
-	window.scroll(0, 0);
-
+function initPage(cp) {
 	//Reset last connection
 	setCookie('autoplay', false, false);
 	removeCookie('lastSeries');
 	removeCookie('lastSeason');
 	removeCookie('lastEpisode');
-	
+
 	cp.appendChild(makeTable(cp));
 }
 
-function afterInit(){
-	alert("Wörk")
-}
-
 function makeTable(cp) {
-	var rowObj = makeRowObj();
+	var rowObj = searchSeriesNames();
 
 	//create the series table
 	var table = document.createElement('table');
@@ -46,7 +39,7 @@ function makeTable(cp) {
 	var tbody = document.createElement('tbody');
 
 	tbody.appendChild(createHeadRow());
-	
+
 	//Create the content of the table
 	for (t = 0; t < rowObj.length; t++) {
 		var node = createRow((t + 1), rowObj[t]);
@@ -57,7 +50,7 @@ function makeTable(cp) {
 	return table;
 }
 
-function makeRowObj() {
+function searchSeriesNames() {
 	var genresContainer = document.getElementsByClassName('genre');
 	var tableRows = [];
 
@@ -99,28 +92,28 @@ function makeRowObj() {
 	return tableRows;
 }
 
-function createHeadRow(){
+function createHeadRow() {
 	var row = document.createElement('tr');
-	
+
 	var numNode = document.createElement('th');
 	numNode.innerHTML = 'Nr';
-	
+
 	var serNode = document.createElement('th');
 	serNode.innerHTML = 'Series';
-	serNode.setAttribute('onclick',"window.location = 'https://bs.to/serie-genre?title'");
-	
+	serNode.setAttribute('onclick', "window.location = 'https://bs.to/serie-genre?title'");
+
 	var genNode = document.createElement('th');
 	genNode.innerHTML = 'Genre';
-	genNode.setAttribute('onclick',"window.location = 'https://bs.to/serie-genre?genre'");
-	
+	genNode.setAttribute('onclick', "window.location = 'https://bs.to/serie-genre?genre'");
+
 	var favNode = document.createElement('th');
 	favNode.innerHTML = 'Fav';
-	
+
 	row.appendChild(numNode);
 	row.appendChild(serNode);
 	row.appendChild(genNode);
 	row.appendChild(favNode);
-	
+
 	return row;
 }
 
@@ -137,19 +130,17 @@ function createRow(index, rowObj) {
 	var clickFunc = 'window.location = \'' + seriesLinkTo + '\'';
 	tableRow.setAttribute("tabindex", -1);
 	tableRow.setAttribute("id", index);
+	tableRow.setAttribute("class", seriesLinkTo);
 
 	//Node with the index in it
 	var indexNode = document.createElement('td');
-	indexNode.setAttribute('onclick', clickFunc);
 	indexNode.innerHTML = index;
 
 	//Node with the name in it
 	var nameNode = document.createElement('td');
-	nameNode.setAttribute('onclick', clickFunc);
 	nameNode.innerHTML = rowObj.title;
 
 	var genreNode = document.createElement('td');
-	genreNode.setAttribute('onclick', clickFunc);
 	genreNode.innerHTML = rowObj.genreName;
 
 	//Favorite Node set/rem-favorite
@@ -158,20 +149,11 @@ function createRow(index, rowObj) {
 	favNode.setAttribute('favId', toFav);
 	favNode.appendChild(getFavStar());
 
-	var isFav = false;
-	for (i = 0; i < favoritesSeries.length; i++) {
-		if (favoritesSeries[i] == toFav) {
-			favNode.setAttribute('class', 'isFav');
-			isFav = true;
-			break;
-		}
-	}
-
-	if (!isFav) {
+	if (favoritesSeries.indexOf(toFav) > -1) {
+		favNode.setAttribute('class', 'isFav');
+	} else {
 		favNode.setAttribute('class', 'noFav');
 	}
-
-	favNode.addEventListener("click", favClick);
 
 	//Construct the row
 	tableRow.appendChild(indexNode);
@@ -179,30 +161,47 @@ function createRow(index, rowObj) {
 	tableRow.appendChild(genreNode);
 	tableRow.appendChild(favNode);
 
-	//Focus object when mouse hover
-	tableRow.addEventListener("mouseover", mouseOverRow);
-
 	return tableRow;
 }
 
-var mouseOverRow = function () {
-	var searchElem = document.getElementById('search');
+//init row-events
+function afterInit() {
+	$("#seriesTable tr").click(function () {
+		var className = $(this).attr('class');
+		if (className !== undefined) {
+			window.location = className;
+		}
+	});
 
-	//Prevent focus when search-textarea has it
-	if (searchElem !== document.activeElement) {
-		this.focus();
-	}
-};
+	$("#seriesTable tr").mouseover(function () {
+		var searchElem = document.getElementById('search');
 
-//On favorise click
-var favClick = function (e) {
-	var target = this;
-	var favName = target.getAttribute('favId');
-	if (target.getAttribute('class') == 'isFav') {
-		removeFavorite(favName);
-		target.setAttribute('class', 'noFav');
-	} else {
-		addFavorite(favName);
-		target.setAttribute('class', 'isFav');
+		//Prevent focus when search-textarea has it
+		if (searchElem !== document.activeElement) {
+			$(this).focus();
+		}
+	});
+
+	$("#seriesTable tr td:last-child").click(function (e) {
+		e.stopPropagation();
+
+		var favName = $(this).attr('favId');
+		if ($(this).attr('class') == 'isFav') {
+			removeFavorite(favName);
+			$(this).attr('class', 'noFav');
+		} else {
+			addFavorite(favName);
+			$(this).attr('class', 'isFav');
+		}
+	});
+
+	if (getCookie('seriesScroll') != undefined) {
+		//Scroll to LastPos
+		window.scroll(0, getCookie('seriesScroll'));
 	}
-};
+
+	setInterval(function () {
+		var doc = document.documentElement;
+		setCookie('seriesScroll', (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0));
+	}, 1000)
+}

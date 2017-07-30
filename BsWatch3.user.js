@@ -2,12 +2,7 @@
 // @name        BsWatch - File 3
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
-// @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+$/
-// @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/unwatch\:\d+$/
-// @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/watch\:\d+$/
-// @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/unwatch\:all$/
-// @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/watch\:all$/
-// @include     /^https:\/\/bs\.to\/serie\/[^\/]+$/
+// @include     /^https:\/\/bs\.to\/serie\/[^\/]+(\/(\d+(\/((unwatch:|watch:)(\d+|all)(\/)?)?)?)?)?$/
 // @version    	1.3
 // @description	Episode List
 // @author     	Kartoffeleintopf
@@ -18,19 +13,15 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/menucontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/keycontroll.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/init.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch3.user.js
 // ==/UserScript==
 
-//Black page over original
-makeBlackPage();
+//Init page
+init();
 
-//When document loaded
-$(document).ready(function () {
-	//Scroll to top ... reasons
-	$(this).scrollTop(0);
-
-	makeThePage();
-	updateFavorites();
+function initPage(cp) {
+	makeThePage(cp);
 
 	//Check if there was a last episode
 	if (typeof getCookie('lastEpisode') == 'string') {
@@ -64,40 +55,41 @@ $(document).ready(function () {
 	if (getCookie('lastEpisode') == 'next0x000001') {
 		playNextEpisode();
 	}
+}
 
-	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
-	$(window).bind("load", function () {
-		removeBlackPage();
-		if (document.getElementById('plane') !== null) {
-			document.documentElement.style.overflow = 'hidden'; // firefox, chrome
-		}
-	});
-});
-
-function makeThePage() {
-	//Make the new page
-
-	//Create base
-	var headObject = createHead();
-	var bodyObject = document.createElement('body');
-
-	//Create menubar
-	var menuobject = createMenubar();
-
+function makeTitle() {
 	//Get The Title
-	var titleH = document.getElementById('sp_left');
-	titleH = titleH.getElementsByTagName('h2')[0];
+	var title = document.getElementById('sp_left');
+	title = title.getElementsByTagName('h2')[0];
 
-	//Get the Seasons
-	var seasonContainer = document.getElementById('seasons');
-	seasonContainer = seasonContainer.getElementsByTagName('li');
+	return title;
+}
 
+function makeSeasonTable() {
 	//Construct a season table
 	var seriesTable = document.createElement('table');
 	seriesTable.setAttribute('id', 'seasonTable');
 	var seriesTableTbody = document.createElement('tbody');
 	var seriesTableRow = document.createElement('tr');
 
+	var info = getSeasonInformation();
+
+	for (i = 0; i < info.length; i++) {
+		seriesTableRow.appendChild(createSeasonNode(info[i].index, info[i].linkTo, info[i].onSeason));
+	}
+	//Just do it.
+	seriesTableTbody.appendChild(seriesTableRow);
+	seriesTable.appendChild(seriesTableTbody)
+
+	return seriesTable;
+}
+
+function getSeasonInformation() {
+	//Get the Seasons
+	var seasonContainer = document.getElementById('seasons');
+	seasonContainer = seasonContainer.getElementsByTagName('li');
+
+	var info = [];
 	for (i = 0; i < seasonContainer.length; i++) {
 		var index = seasonContainer[i].getElementsByTagName('a')[0].innerHTML;
 		var linkTo = seasonContainer[i].getElementsByTagName('a')[0].getAttribute('href');
@@ -110,20 +102,42 @@ function makeThePage() {
 			}
 		}
 
-		seriesTableRow.appendChild(createSeasonNode(index, linkTo, onSeason));
-	}
-	//Just do it.
-	seriesTableTbody.appendChild(seriesTableRow);
-	seriesTable.appendChild(seriesTableTbody);
+		var infoBlock = {
+			index: index,
+			linkTo: linkTo,
+			onSeason: onSeason
+		};
 
-	//Variables with all episode information
-	var episodeNodes = document.getElementsByClassName('episodes')[0];
-	episodeNodes = episodeNodes.getElementsByTagName('tr');
+		info[info.length] = infoBlock;
+	}
+	return info;
+}
+
+function makeEpisodeTable() {
+	var info = getEpisodeInfo();
 
 	//create the episode table
 	var table = document.createElement('table');
 	table.setAttribute('id', 'episodeTable');
 	var tbody = document.createElement('tbody');
+
+	for (i = 0; i < info.length; i++) {
+		//Create node and append it to the body
+		var contentNode = createNode((i + 1), info[i].nameDE, info[i].nameOr, info[i].linkTo, info[i].watched, info[i].linkWatched);
+		tbody.appendChild(contentNode);
+	}
+
+	table.appendChild(tbody);
+	
+	return table;
+}
+
+function getEpisodeInfo() {
+	//Variables with all episode information
+	var episodeNodes = document.getElementsByClassName('episodes')[0];
+	episodeNodes = episodeNodes.getElementsByTagName('tr');
+
+	var info = [];
 
 	for (i = 0; i < episodeNodes.length; i++) {
 		//createNode(index, nameDE, nameOr, linkTo, watched, linkWatched)
@@ -131,7 +145,7 @@ function makeThePage() {
 		if (nameDE.length != 0) {
 			nameDE = nameDE[0].innerHTML;
 		} else {
-			nameDE = "";
+			nameDE = "- ";
 		}
 
 		//Get the Original name
@@ -159,69 +173,80 @@ function makeThePage() {
 			linkWatched = linkWatched.getAttribute('href');
 		}
 
-		//Create node and append it to the body
-		var contentNode = createNode((i + 1), nameDE, nameOr, linkTo, watched, linkWatched);
-		tbody.appendChild(contentNode);
+		var infoBlock = {
+			nameDE: nameDE,
+			nameOr: nameOr,
+			linkTo: linkTo,
+			watched: watched,
+			linkWatched: linkWatched
+		};
+
+		info[info.length] = infoBlock;
 	}
 
-	table.appendChild(tbody);
+	return info;
+}
+
+function makeWatchAllTable() {
+	//Get the current seasonnumber
+	var theUrl = window.location.pathname;
+	var seasonNumber = 1;
+
+	if (theUrl.includes('/unwatch')) {
+		theUrl = theUrl.split('/unwatch')[0];
+	} else if (theUrl.includes('/watch')) {
+		theUrl = theUrl.split('/watch')[0];
+	}
+
+	if (theUrl.split('/').length != 3) {
+		seasonNumber = parseInt(theUrl.split('/')[3]);
+
+	} else {
+		theUrl = theUrl + '/' + 1;
+	}
+
+	//Make a watch/unwatch all Table
+	var watchUnwatchTable = document.createElement('table');
+	watchUnwatchTable.setAttribute('id', 'allWatchTable');
+	var watchUnwatchTbody = document.createElement('tbody');
+	var watchUnwatchtr = document.createElement('tr');
+
+	//nice and now .. hmm .. use the hand
+	var firstFunc = 'window.location = \'https://bs.to' + theUrl + '/' + 'watch:all' + '\'';
+	var firstTd = document.createElement('td');
+	firstTd.innerHTML = "Mark all as Watched";
+	firstTd.setAttribute('onclick', firstFunc);
+
+	//nice and now .. hmm .. use the second hand
+	var secondFunc = 'window.location = \'https://bs.to' + theUrl + '/' + 'unwatch:all' + '\'';
+	var secondTd = document.createElement('td');
+	secondTd.innerHTML = "Mark all as Unwatched";
+	secondTd.setAttribute('onclick', secondFunc);
+
+	watchUnwatchtr.appendChild(firstTd);
+	watchUnwatchtr.appendChild(secondTd);
+
+	watchUnwatchTbody.appendChild(watchUnwatchtr);
+	watchUnwatchTable.appendChild(watchUnwatchTbody);
+
+	return watchUnwatchTable
+}
+
+function makeThePage(cp) {
+	//Make the new page
 
 	//Fill the body
-
-	bodyObject.appendChild(menuobject);
-	bodyObject.appendChild(titleH);
-	bodyObject.appendChild(seriesTable);
-	bodyObject.appendChild(table);
+	cp.appendChild(makeTitle());
+	cp.appendChild(makeSeasonTable());
+	cp.appendChild(makeEpisodeTable());
 
 	if (isLoggedin) {
-		//Get the current seasonnumber
-		var theUrl = window.location.pathname;
-		var seasonNumber = 1;
-
-		if (theUrl.includes('/unwatch')) {
-			theUrl = theUrl.split('/unwatch')[0];
-		} else if (theUrl.includes('/watch')) {
-			theUrl = theUrl.split('/watch')[0];
-		}
-
-		if (theUrl.split('/').length != 3) {
-			seasonNumber = parseInt(theUrl.split('/')[3]);
-
-		} else {
-			theUrl = theUrl + '/' + 1;
-		}
-
-		//Make a watch/unwatch all Table
-		var watchUnwatchTable = document.createElement('table');
-		watchUnwatchTable.setAttribute('id', 'allWatchTable');
-		var watchUnwatchTbody = document.createElement('tbody');
-		var watchUnwatchtr = document.createElement('tr');
-
-		//nice and now .. hmm .. use the hand
-		var firstFunc = 'window.location = \'https://bs.to' + theUrl + '/' + 'watch:all' + '\'';
-		var firstTd = document.createElement('td');
-		firstTd.innerHTML = "Mark all as Watched";
-		firstTd.setAttribute('onclick', firstFunc);
-
-		//nice and now .. hmm .. use the second hand
-		var secondFunc = 'window.location = \'https://bs.to' + theUrl + '/' + 'unwatch:all' + '\'';
-		var secondTd = document.createElement('td');
-		secondTd.innerHTML = "Mark all as Unwatched";
-		secondTd.setAttribute('onclick', secondFunc);
-
-		watchUnwatchtr.appendChild(firstTd);
-		watchUnwatchtr.appendChild(secondTd);
-
-		watchUnwatchTbody.appendChild(watchUnwatchtr);
-		watchUnwatchTable.appendChild(watchUnwatchTbody);
-
-		bodyObject.appendChild(watchUnwatchTable);
+		cp.appendChild(makeWatchAllTable());
 	}
 
-	//Add content
-	document.head.innerHTML = headObject.innerHTML;
-	document.body = bodyObject;
+}
 
+function afterInit() {
 	//Focus object when mouse hover
 	$("#seasonTable").on("mouseover", "td", function () {
 		var searchElem = document.getElementById('search');

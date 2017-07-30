@@ -2,7 +2,7 @@
 // @name        BsWatch - File 1
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
-// @include     /^https:\/\/bs.to(\/)?(((home|\?next|\?error))(\/)?)?$/
+// @include     /^https:\/\/bs.to(\/)?(((home|\?next|\?error|\?back))(\/)?)?$/
 // @version    	2.0
 // @description	Error and Next - Redirect
 // @author     	Kartoffeleintopf
@@ -23,6 +23,9 @@ var episode = getCookie('lastEpisode');
 //Check error on cookies and fuck you
 if (/^https:\/\/bs.to(\/home)?\/?$/.test(window.location.href)) {
 	//You know ?!
+	window.location = 'https://bs.to/serie-genre';
+} else if (window.location.href == 'https://bs.to/?back') {
+	setCookie('seriesScroll', 0);
 	window.location = 'https://bs.to/serie-genre';
 } else if (series == undefined ||
 	season == undefined ||
