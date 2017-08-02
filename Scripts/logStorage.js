@@ -1,11 +1,17 @@
 function addLog(seriesName, seasonName, episodNameGer, episodNameOri, genresName, hosterName, dateName) {
-	var addString = seriesName + "|" + seasonName + "|" + episodNameGer + "|" + episodNameOri + "|" + genresName + "|" + hosterName + "|" + dateName;
+
+	var first = dateName.split(' ')[0].split(',');
+	var secon = dateName.split(' ')[1].split(':');
+
+	var index = first[2] + first[1] + first[0] + secon[0] + secon[1] + secon[2];
+
+	var addString = seriesName + "|" + seasonName + "|" + episodNameGer + "|" + episodNameOri + "|" + genresName + "|" + hosterName + "|" + dateName + "|" + index;
 
 	var logData = getRawLog();
-	
+
 	logData.push(addString);
 	logData = clearLog(logData);
-	
+
 	localStorage.setItem('log', JSON.stringify(logData));
 }
 
@@ -28,19 +34,32 @@ function getLog() {
 		var buf = logData[i].split('|');
 
 		bufObj = {
-			series: buf[0],
-			season: buf[1],
-			epiGer: buf[2],
-			epiOri: buf[3],
-			genre: buf[4],
-			hoster: buf[5],
-			date: buf[6]
+			seriesName: buf[0],
+			seasonName: buf[1],
+			episodeNameGer: buf[2],
+			episodeNameOri: buf[3],
+			genresName: buf[4],
+			hosterName: buf[5],
+			dataName: buf[6],
+			id: buf[7]
 		}
 
 		logObj[logObj.length] = bufObj;
 	}
 
 	return logObj;
+}
+
+function removeLog(index){
+	var raw = getRawLog();
+	var newRaw = [];
+	for(i=0;i<raw.length;i++){
+		if(raw.split('|')[7] != index){
+			newRaw[newRaw.length] = raw[i];
+		}
+	}
+	
+	localStorage.setItem('log', JSON.stringify(newRaw));
 }
 
 function clearLog(logData) {
@@ -54,15 +73,14 @@ function clearLog(logData) {
 	month = month < 10 ? '0' + month : month;
 
 	dateNum = parseInt("" + year + month + day);
+	dateNum *= 1000000;
 
 	//20170806
 	var bufArr = [];
 	for (i = 0; i < logData.length; i++) {
-		var logDate = logData[i].split('|')[6];
-		var buf = logDate.split(' ')[0].split(',');
-		buf = parseInt(buf[2] + buf[1] + buf[0]);
-		
-		if ((dateNum - buf) < 100) {
+		var logDate = parseInt(logData[i].split('|')[7]);
+
+		if ((dateNum - logDate) < 100 * 1000000) {
 			bufArr[bufArr.length] = logData[i];
 		}
 	}
