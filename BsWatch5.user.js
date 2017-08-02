@@ -13,28 +13,28 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/menucontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/keycontroll.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/logStorage.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/init.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch5.user.js
 // ==/UserScript==
 
-//Black page over original
-makeBlackPage();
-
 //Enable LOG
-var ENABLE_LOG = true;
+var ENABLE_LOG = false;
 
-//When document loaded
-$(document).ready(function () {
+//Init page
+init();
 
+function initPage(cp) {
 	//Check log
 	if (ENABLE_LOG) {
-		var get = log();
+		var get = log(cp);
 	} else {
-		logReady();
+		logReady(cp);
 	}
 
-});
+}
 
-function logReady() {
+function logReady(cp) {
 	//Check hostername
 	var urlPath = window.location.pathname;
 
@@ -68,17 +68,11 @@ function logReady() {
 		}
 
 		//Make a hoster page
-		makePage(hoster, nextDirPath);
-		updateFavorites();
-
-		//Delete blackP... because the stylesheed needs to be loaded
-		$(window).bind("load", function () {
-			removeBlackPage();
-		});
+		makePage(hoster, nextDirPath, cp);
 	}
 }
 
-function log() {
+function log(cp) {
 	//[seriesName|seasonName|episodeName|genre1,genre2,...|hosterName|date]
 	//Remove [],|
 	var seriesName;
@@ -125,94 +119,72 @@ function log() {
 	var min = d.getMinutes();
 	var sec = d.getSeconds();
 
+	day = day < 10 ? '0' + day : day;
+	month = month < 10 ? '0' + month : month;
+	
+	hour = hour < 10 ? '0' + hour : hour;
+	min = min < 10 ? '0' + min : min;
+	sec = sec < 10 ? '0' + sec : sec;
+	
 	dataName = day + "," + month + "," + year + " " + hour + ":" + min + ":" + sec;
 
 	var output = "[" + seriesName + " " + seasonName + " " + episodNameGer + "|" + episodNameOri;
 	output += "(" + genresName + ")" + hosterName + " " + dataName + "]";
 	console.log(output);
 
-	//Save in indexedDB
-	var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
-
-	var open = indexedDB.open("Log", 1);
-
-	// Create the schema
-	open.onupgradeneeded = function () {
-		var db = open.result;
-		var store = db.createObjectStore("logData", {
-				keyPath: "id",
-				autoIncrement: true
-			});
-		store.createIndex("seriesName", "seriesName", {
-			unique: false
-		});
-		store.createIndex("seasonName", "seasonName", {
-			unique: false
-		});
-		store.createIndex("episodeNameGer", "episodNameGer", {
-			unique: false
-		});
-		store.createIndex("episodeNameOri", "episodNameOri", {
-			unique: false
-		});
-		store.createIndex("genresName", "genresName", {
-			unique: false
-		});
-		store.createIndex("hosterName", "hosterName", {
-			unique: false
-		});
-		store.createIndex("dataName", "dataName", {
-			unique: false
-		});
-
-		console.log("new");
-	};
-
-	open.onsuccess = function () {
-		// Start a new transaction
-		var db = open.result;
-		var tx = db.transaction("logData", "readwrite");
-		var store = tx.objectStore("logData");
-
-		// Add some data
-		store.put({
-			seriesName: seriesName,
-			seasonName: seasonName,
-			episodeNameGer: episodNameGer,
-			episodeNameOri: episodNameOri,
-			genresName: genresName,
-			hosterName: hosterName,
-			dataName: dataName
-		});
-
-		// Close the db when the transaction is done
-		tx.oncomplete = function () {
-			db.close();
-			logReady();
-		};
-	}
+	addLog(seriesName, seasonName, episodNameGer, episodNameOri, genresName, hosterName, dataName);
+	
+	logReady(cp);
 }
 
-function makePage(hoster, bsout) {
-	var lastSeries = getCookie('lastSeries');
-	var lastSeason = getCookie('lastSeason');
-
-	//Create base
-	var headObject = createHead();
-	var bodyObject = document.createElement('body');
-
+function getTitle() {
 	//Get The Title
 	var titleH = document.getElementById('sp_left');
 	titleH = titleH.getElementsByTagName('h2')[0];
 
 	//Get The Episode Title
 	var titleE = document.getElementById('titleGerman');
-
 	titleH.appendChild(titleE);
 
-	//Create menubar
-	var menuobject = createMenubar();
+	return titleH;
+}
 
+function getFunctionButtons() {
+	//Table for back and next
+	var functionTable = document.createElement('table');
+	functionTable.setAttribute('id', 'functionTable');
+	var functionTbody = document.createElement('tbody');
+	var functionTr = document.createElement('tr');
+
+	var backButton = document.createElement('td');
+	backButton.innerHTML = 'Zurück';
+	backButton.setAttribute('id', 'backButton');
+	backButton.addEventListener("click", function () {
+		var lastSeries = getCookie('lastSeries');
+		var lastSeason = getCookie('lastSeason');
+
+		var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
+		setCookie('autoplay', false, false);
+		window.location = backFunction;
+
+	});
+
+	var nextButton = document.createElement('td');
+	nextButton.innerHTML = 'Nexte Episode';
+
+	var nextFunction = 'window.location = \'https://bs.to/?next\'';
+	nextButton.setAttribute('onclick', nextFunction);
+
+	functionTr.appendChild(backButton);
+	functionTr.appendChild(nextButton);
+
+	functionTbody.appendChild(functionTr);
+	functionTable.appendChild(functionTbody);
+
+	return functionTable;
+}
+
+function getHosterTable(hoster, bsout) {
 	var hosterTable = document.createElement('table');
 	hosterTable.setAttribute('id', 'hosterTable');
 	var hosterTbody = document.createElement('tbody');
@@ -263,44 +235,11 @@ function makePage(hoster, bsout) {
 
 	hosterTable.appendChild(hosterTbody);
 
-	//Two button table for next episode and Back
-	var functionTable = document.createElement('table');
-	functionTable.setAttribute('id', 'functionTable');
-	var functionTbody = document.createElement('tbody');
-	var functionTr = document.createElement('tr');
+	return hosterTable;
+}
 
-	//The two "buttons"
-	var backButton = document.createElement('td');
-	var nextButton = document.createElement('td');
-
-	backButton.innerHTML = 'Zurück';
-	backButton.setAttribute('id', 'backButton');
-
-	//Next Episode onclick
-	var nextFunction = 'window.location = \'https://bs.to/?next\'';
-	nextButton.innerHTML = 'Nexte Episode';
-	nextButton.setAttribute('onclick', nextFunction);
-
-	//Open last Series onclick and disable autoplay
-	backButton.addEventListener("click", function () {
-		var backFunction = 'https://bs.to/serie/' + lastSeries + '/' + lastSeason;
-		setCookie('autoplay', false, false);
-		window.location = backFunction;
-	});
-
-	functionTr.appendChild(backButton);
-	functionTr.appendChild(nextButton);
-
-	functionTbody.appendChild(functionTr);
-	functionTable.appendChild(functionTbody);
-
-	//Construct body
-	bodyObject.appendChild(menuobject);
-	bodyObject.appendChild(titleH);
-	bodyObject.appendChild(hosterTable);
-	bodyObject.appendChild(functionTable);
-
-	//Add content
-	document.head.innerHTML = headObject.innerHTML;
-	document.body = bodyObject;
+function makePage(hoster, bsout, cp) {
+	cp.appendChild(getTitle());
+	cp.appendChild(getHosterTable(hoster, bsout));
+	cp.appendChild(getFunctionButtons());
 }
