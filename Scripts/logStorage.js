@@ -54,7 +54,7 @@ function removeLog(index){
 	var raw = getRawLog();
 	var newRaw = [];
 	for(i=0;i<raw.length;i++){
-		if(raw.split('|')[7] != index){
+		if(raw[i].split('|')[7] != index){
 			newRaw[newRaw.length] = raw[i];
 		}
 	}

@@ -5,7 +5,7 @@
 // @include     https://bs.to/log
 // @include     https://bs.to/log?data
 // @include     https://bs.to/log?info
-// @version    	1.1
+// @version    	1.9
 // @description	Log Page
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -15,48 +15,16 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/menucontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/logStorage.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/init.js
 // @require		http://rubaxa.github.io/Sortable/Sortable.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch9.user.js
 // ==/UserScript==
 
-//Black page over original
-makeBlackPage();
+//Init page
+init();
 
-//When document loaded
-$(document).ready(function () {
-	//Make a hoster page
-	makePage();
-	updateFavorites();
-
-	//Delete blackP... because the stylesheed needs to be loaded
-	$(window).bind("load", function () {
-		removeBlackPage();
-	});
-
-});
-
-function makePage() {
-
-	//Create base
-	var headObject = createHead();
-	var bodyObject = document.createElement('body');
-
-	//Create menubar
-	var menuobject = createMenubar();
-
-	//Content
-	var content = document.createElement('div');
-	content.setAttribute('id', 'content');
-
-	//Construct body
-	bodyObject.appendChild(menuobject);
-	bodyObject.appendChild(content);
-
-	//Add content
-	document.head.innerHTML = headObject.innerHTML;
-	document.body = bodyObject;
-
-	makeLog(getLog());
+function initPage(cp) {
+	makeLog(getLog(), cp);
 }
 
 function makeTable(logs) {
@@ -126,37 +94,38 @@ function makeTable(logs) {
 		table.appendChild(tr);
 	}
 
-	document.getElementById('content').appendChild(table);
+	return table;
 }
 
 function deleteLog(id) {
 	console.log(id);
 
 	removeLog(id);
-	
+
 	refreshContent();
 
 }
 
 function refreshContent() {
-	document.getElementById('content').innerHTML = "";
-	makeDB();
+	var cp = document.getElementById('contentContainer');
+	cp.innerHTML = "";
+	makeLog(getLog(), cp);
 }
 
-function makeLog(logs) {
+function makeLog(logs, cp) {
 	var urlPath = window.location.href;
 	urlPath = urlPath.split('?');
 	if (urlPath.length != 1) {
 		if (urlPath[1] == 'info') {
-			makeInfo(logs);
+			cp.appendChild(makeInfo(logs, cp));
 		} else if (urlPath[1] == 'data') {
-			makeConf();
+			makeConf(cp);
 		}
 	} else {
-		makeTable(logs);
+		cp.appendChild(makeTable(logs));
 	}
 
-	createButtons();
+	cp.appendChild(createButtons());
 }
 
 function createButtons() {
@@ -186,7 +155,7 @@ function createButtons() {
 
 	tab.appendChild(tr);
 
-	document.getElementById('content').appendChild(tab);
+	return tab;
 }
 
 function makeInfo(logs) {
@@ -240,7 +209,7 @@ function makeInfo(logs) {
 		cont.innerHTML += '<tr><td>Am meisten geschaute Serie:</td><td>none</td>';
 	}
 
-	document.getElementById('content').appendChild(cont);
+	return cont;
 }
 
 function mode(array) {
@@ -263,8 +232,7 @@ function mode(array) {
 	return maxEl;
 }
 
-function makeConf() {
-
+function makeConf(cp) {
 	//Hoster Sort
 	var hosterSort = getCookie('cookieSort');
 	if (hosterSort != undefined) {
@@ -272,29 +240,27 @@ function makeConf() {
 	} else {
 		hosterSort = ["Vivo", "OpenLoadHD", "OpenLoad"];
 	}
-	
+
 	var contPane = document.createElement('div');
-	contPane.setAttribute('id','contpane');
-	
+	contPane.setAttribute('id', 'contpane');
+
 	var titleSet = document.createElement('h1');
 	titleSet.innerHTML = 'Hoster Priorität';
 	contPane.appendChild(titleSet);
-	
+
 	var listSet = document.createElement('ul');
-	listSet.setAttribute('id','hosterSort');
-	
-	for(i=0;i<hosterSort.length;i++){
+	listSet.setAttribute('id', 'hosterSort');
+
+	for (i = 0; i < hosterSort.length; i++) {
 		var li = document.createElement('li');
 		li.innerHTML = hosterSort[i]
-		
-		listSet.appendChild(li);
+
+			listSet.appendChild(li);
 	}
 	contPane.appendChild(listSet);
-	
-	document.getElementById('content').appendChild(contPane);
 
-	var el = document.getElementById('hosterSort');
-	var sortable = Sortable.create(el);
+	cp.appendChild(contPane);
+
 	var applyButton = document.createElement('button');
 	applyButton.innerHTML = "Anwenden";
 	applyButton.addEventListener('click', function () {
@@ -311,6 +277,17 @@ function makeConf() {
 
 		setCookie('cookieSort', cook, true);
 	});
-	
-	document.getElementById('contpane').appendChild(applyButton);
+
+	cp.appendChild(applyButton);
+}
+
+function afterInit() {
+	var urlPath = window.location.href;
+	urlPath = urlPath.split('?');
+	if (urlPath.length != 1) {
+		if (urlPath[1] == 'data') {
+			var el = document.getElementById('hosterSort');
+			var sortable = Sortable.create(el);
+		}
+	}
 }
