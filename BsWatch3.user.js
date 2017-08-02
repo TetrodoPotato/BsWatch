@@ -23,34 +23,6 @@ init();
 function initPage(cp) {
 	makeThePage(cp);
 
-	//Check if there was a last episode
-	if (typeof getCookie('lastEpisode') == 'string') {
-		//Check if this is the same series
-		//Name of this series
-		var thisSeries = window.location.pathname.split('/')[2];
-		if (getCookie('lastSeries') == thisSeries) {
-			//Check if autoplay is on
-			if (getCookie('autoplay') == true) {
-				if (getCookie('lastEpisode') != 'next0x000001') {
-					nextWindow(5);
-				}
-			} else {
-				setCookie('autoplay', false, false);
-
-				removeCookie('lastSeries');
-				removeCookie('lastSeason');
-				removeCookie('lastEpisode');
-			}
-		} else {
-			//Reset everything
-			setCookie('autoplay', false, false);
-
-			removeCookie('lastSeries');
-			removeCookie('lastSeason');
-			removeCookie('lastEpisode');
-		}
-	}
-
 	//Play the next episode instant on season change
 	if (getCookie('lastEpisode') == 'next0x000001') {
 		playNextEpisode();
@@ -128,7 +100,7 @@ function makeEpisodeTable() {
 	}
 
 	table.appendChild(tbody);
-	
+
 	return table;
 }
 
@@ -247,6 +219,34 @@ function makeThePage(cp) {
 }
 
 function afterInit() {
+	//Check if there was a last episode
+	if (typeof getCookie('lastEpisode') == 'string') {
+		//Check if this is the same series
+		//Name of this series
+		var thisSeries = window.location.pathname.split('/')[2];
+		if (getCookie('lastSeries') == thisSeries) {
+			//Check if autoplay is on
+			if (getCookie('autoplay') == true) {
+				if (getCookie('lastEpisode') != 'next0x000001') {
+					nextWindow(5);
+				}
+			} else {
+				setCookie('autoplay', false, false);
+
+				removeCookie('lastSeries');
+				removeCookie('lastSeason');
+				removeCookie('lastEpisode');
+			}
+		} else {
+			//Reset everything
+			setCookie('autoplay', false, false);
+
+			removeCookie('lastSeries');
+			removeCookie('lastSeason');
+			removeCookie('lastEpisode');
+		}
+	}
+
 	//Focus object when mouse hover
 	$("#seasonTable").on("mouseover", "td", function () {
 		var searchElem = document.getElementById('search');
@@ -438,68 +438,30 @@ function openNextSeasonUser(seasonAmount) {
 }
 
 function nextEpisodeText() {
+	var lastSeasonNumb = getCookie('lastSeason');
+	var lastEpisodeNumb = getCookie('lastEpisode').split('-')[0];
 
-	//Dom array with elements that contains a episode link
-	var domArr = document.getElementById('episodeTable');
+	var seriesListArr = document.getElementById('episodeTable').getElementsByTagName('tr');
 
-	if (domArr == null) {
-		return Error;
-	}
+	if (seriesListArr.length <= lastEpisodeNumb) {
+		//Check next Season
+		var curSeason = document.getElementsByClassName('onSeason')[0];
 
-	domArr = domArr.getElementsByTagName('tr');
+		//Doesn't show when no more seasons
+		if (curSeason == 'Specials') {
+			return 'Staffel 1';
+		} else {
+			var nextNumber = parseInt(curSeason);
+			nextNumber++;
 
-	//Dom array with the first td-tag-href in the domArr index
-	var linkArr = [];
-	for (i = 0; i < domArr.length; i++) {
-		var tdTag = domArr[i].getElementsByTagName('td')[0];
-		var linkFunction = tdTag.getAttribute('onclick');
-		linkFunction = linkFunction.replace('window.location = \'https://bs.to/', '');
-		linkFunction = linkFunction.replace('\'', '');
-		linkArr[linkArr.length] = linkFunction;
-	}
-
-	//Find next episode
-	for (i = 0; i < linkArr.length; i++) {
-		var linkEpisode = linkArr[i].split('/')[3];
-		//Find the last watched Episode
-		if (linkEpisode == getCookie('lastEpisode')) {
-			//The next index of the episode "i + 1"
-			if ((i + 1) < linkArr.length) {
-				//Return (Number:Next)/(Number:Max) - Season (Number:curSeason)
-				var nextEpiNumber = linkArr[i + 1]; // series/Season/??-Episode
-				nextEpiNumber = nextEpiNumber.split('/')[3];
-				nextEpiNumber = parseInt(nextEpiNumber);
-
-				var curSeason = document.getElementsByClassName('onSeason')[0];
-				curSeason = curSeason.innerHTML;
-
-				if (curSeason != 'Specials') {
-					curSeason = 'Staffel ' + curSeason;
-				}
-
-				// 11/22 - Staffel 1
-				return nextEpiNumber + '/' + linkArr.length + ' - ' + curSeason;
-			} else {
-
-				if (!hasNextSeason()) {
-					return true;
-				}
-
-				//What is next Season. Is There one?
-				var curSeason = document.getElementsByClassName('onSeason')[0];
-				curSeason = curSeason.innerHTML;
-
-				//Check next
-				if (curSeason == 'Specials') {
-					return 'Staffel 1';
-				} else {
-					var nextNumber = parseInt(curSeason);
-					nextNumber++;
-
-					return 'Staffel ' + nextNumber;
-				}
-			}
+			return 'Staffel ' + nextNumber;
 		}
+	} else {
+		//Check next Episode
+		var nextEpiNum = parseInt(lastEpisodeNumb) + 1;
+		var thisSeasonString = (lastSeasonNumb == 0) ? "Specials" : "Staffel " + lastSeasonNumb;
+
+		return nextEpiNum + '/' + seriesListArr.length + ' - ' + thisSeasonString;
 	}
 
 }

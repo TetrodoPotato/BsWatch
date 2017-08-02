@@ -27,10 +27,10 @@ function initPage(cp) {
 	removeCookie('lastSeason');
 	removeCookie('lastEpisode');
 
-	cp.appendChild(makeTable(cp));
+	cp.appendChild(makeTable());
 }
 
-function makeTable(cp) {
+function makeTable() {
 	var rowObj = searchSeriesNames();
 
 	//create the series table
