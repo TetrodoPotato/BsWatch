@@ -19,7 +19,7 @@
 // ==/UserScript==
 
 //Enable LOG
-var ENABLE_LOG = false;
+var ENABLE_LOG = true;
 
 //Init page
 init();

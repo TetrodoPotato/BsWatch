@@ -1,5 +1,5 @@
 function addLog(seriesName, seasonName, episodNameGer, episodNameOri, genresName, hosterName, dateName) {
-	var addString = seriesName + "|" + seasonName + "|" + episodNameGer + "|" + episodNameOri + "|" + genresName + "|" + hosterName + "|" + dataName;
+	var addString = seriesName + "|" + seasonName + "|" + episodNameGer + "|" + episodNameOri + "|" + genresName + "|" + hosterName + "|" + dateName;
 
 	var logData = getRawLog();
 	logData.push(addString);
