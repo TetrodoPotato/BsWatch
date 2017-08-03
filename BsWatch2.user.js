@@ -94,6 +94,7 @@ function searchSeriesNames() {
 
 function createHeadRow() {
 	var row = document.createElement('tr');
+	row.setAttribute('id','headRow');
 
 	var numNode = document.createElement('th');
 	numNode.innerHTML = 'Nr';
@@ -198,10 +199,18 @@ function afterInit() {
 	if (getCookie('seriesScroll') != undefined) {
 		//Scroll to LastPos
 		window.scroll(0, getCookie('seriesScroll'));
+		var lastSearch = getCookie('seriesSearch');
+		if (typeof lastSearch != "undefined") {
+			if (lastSearch != "") {
+				document.getElementById('search').value = getCookie('seriesSearch');
+				searchEv();
+			}
+		}
 	}
 
 	setInterval(function () {
 		var doc = document.documentElement;
-		setCookie('seriesScroll', (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0));
+		setCookie('seriesScroll', (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0), false);
+		setCookie('seriesSearch', document.getElementById('search').value, false);
 	}, 1000)
 }

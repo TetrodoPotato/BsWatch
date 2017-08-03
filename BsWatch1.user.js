@@ -26,6 +26,7 @@ if (/^https:\/\/bs.to(\/home)?\/?$/.test(window.location.href)) {
 	window.location = 'https://bs.to/serie-genre';
 } else if (window.location.href == 'https://bs.to/?back') {
 	setCookie('seriesScroll', 0);
+	setCookie('seriesSearch', "");
 	window.location = 'https://bs.to/serie-genre';
 } else if (series == undefined ||
 	season == undefined ||

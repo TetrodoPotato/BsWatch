@@ -38,10 +38,10 @@ function createMenubar() {
 		//Get the bs.to username welcome
 		var textDiv = loggedSection.getElementsByTagName('div')[0];
 		textDiv.setAttribute('id', 'welcome');
-		
+
 		var nameText = textDiv.getElementsByTagName('strong')[0];
 		nameText.innerHTML = '<a href="https://bs.to/logout">' + nameText.innerHTML + '</a>';
-		
+
 		rightCon.appendChild(textDiv);
 
 	}
@@ -108,65 +108,7 @@ function createMenubar() {
 
 	//Add events
 
-	searchInput.addEventListener("input", function () {
-		//Search
-
-		//get the searchterm
-		var searchTerm = document.getElementById('search').value.toLowerCase();
-
-		if(searchTerm == '>log'){
-			window.location = "https://bs.to/log";
-		}
-		
-		var tbodys = document.getElementsByTagName('tbody');
-
-		//Check existance for other tables
-		var seasonTable = document.getElementById('seasonTable');
-		var functionTable = document.getElementById('functionTable');
-		var favTable = document.getElementById('favTable');
-
-		if (seasonTable === null) {
-			seasonTable = document.createElement('div');
-		}
-		if (functionTable === null) {
-			functionTable = document.createElement('div');
-		}
-		if (favTable === null) {
-			favTable = document.createElement('div');
-		}
-
-		//All tablerows in one array
-		var allContent = [];
-		for (i = 0; i < tbodys.length; i++) {
-
-			if (!seasonTable.contains(tbodys[i])) {
-				if (!functionTable.contains(tbodys[i])) {
-					if (!favTable.contains(tbodys[i])) {
-						var buff = Array.prototype.slice.call(tbodys[i].getElementsByTagName('tr'));
-						allContent = allContent.concat(buff);
-					}
-				}
-			}
-
-		}
-
-		for (i = 0; i < allContent.length; i++) {
-			var innerString = allContent[i].innerHTML.toLowerCase();
-			//Ugly but works .. replaceAll
-			var regexPart = new RegExp('\<[^\>]*\>');
-			innerString = innerString.split(regexPart).join('');
-
-			//Check if the inner contains the searchterm
-			if (!innerString.includes(searchTerm)) {
-				//Magic
-				allContent[i].style.display = 'none';
-			} else {
-				//No magic
-				allContent[i].style.display = '';
-			}
-		}
-		lastFocus = 0;
-	});
+	searchInput.addEventListener("input", searchEv);
 
 	//add events to search and autoplay
 	autoplayCheckbox.addEventListener('change', function () {
@@ -215,6 +157,66 @@ function createMenubar() {
 
 	//Return menü
 	return baseCon;
+}
+
+var searchEv = function () {
+	//Search
+
+	//get the searchterm
+	var searchTerm = document.getElementById('search').value.toLowerCase();
+
+	if (searchTerm == '>log') {
+		window.location = "https://bs.to/log";
+	}
+
+	var container = document.getElementById('contentContainer');
+	var tables = container.getElementsByTagName('table');
+	
+	var startRow = document.getElementById('1');
+	
+	var searchTable = null;
+	for(i=0;i<tables.length;i++){
+		if(isDescendant(tables[i], startRow)){
+			searchTable = tables[i];
+			break;
+		}
+	}
+	
+	if(searchTable === null){
+		return false;
+	}
+	
+	var allContent = searchTable.getElementsByTagName('tr');
+
+	var startIndex = 0;
+	if(document.getElementById('headRow') !== null){
+		startIndex++;
+	}
+	
+	for (i = startIndex; i < allContent.length; i++) {
+		var innerString = allContent[i].textContent.toLowerCase();
+
+		//Check if the inner contains the searchterm
+		if (!innerString.includes(searchTerm)) {
+			//Magic
+			allContent[i].style.display = 'none';
+		} else {
+			//No magic
+			allContent[i].style.display = '';
+		}
+	}
+	lastFocus = 0;
+};
+
+function isDescendant(parent, child) {
+     var node = child.parentNode;
+     while (node != null) {
+         if (node == parent) {
+             return true;
+         }
+         node = node.parentNode;
+     }
+     return false;
 }
 
 function createHead() {
