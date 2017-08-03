@@ -2,7 +2,7 @@
 // @name        BsWatch - File 1
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
-// @include     /^https:\/\/bs.to(\/)?(((home|\?next|\?error|\?back))(\/)?)?$/
+// @include     /^https:\/\/bs.to(\/)?(((home|\?next|\?error|\?back)[^\/]*)(\/)?)?$/
 // @version    	2.0
 // @description	Error and Next - Redirect
 // @author     	Kartoffeleintopf
@@ -44,9 +44,15 @@ if (/^https:\/\/bs.to(\/home)?\/?$/.test(window.location.href)) {
 	//And try it again
 	var next = 'https://bs.to/serie/' + series + '/' + season + '/' + episode;
 	window.location = next;
-} else if (window.location.href == 'https://bs.to/?next') {
+} else if (/^https:\/\/bs.to\/\?next[^\/]*$/.test(window.location.href)) {
 	//Errorcode reset
 	setCookie('errorCode', 0, false);
+
+	if (window.location.href.split('?').length > 2) {
+		var nextAuto = window.location.href.split('?')[2];
+		nextAuto = (nextAuto == 'true' || nextAuto == 'True');
+		setCookie('autoplay', nextAuto, false);
+	}
 
 	//Open the last season for next episode
 	window.location = 'https://bs.to/serie/' + series + '/' + season;

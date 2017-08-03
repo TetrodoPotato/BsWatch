@@ -1,4 +1,4 @@
-function setCookie(name, value, perma) {
+function setCookie(name, value, perma, domain) {
 	var expires = '';
 
 	//For permanent cookie
@@ -10,6 +10,11 @@ function setCookie(name, value, perma) {
 	}
 	//For subdomains
 	var website_host = window.location.hostname.replace('www.', '');
+
+	//change domain
+	if (typeof domain === "undefined") {
+		website_host = domain;
+	}
 
 	//Create new cookie
 	document.cookie = name + "=" + value + expires + ";path=/;domain=." + website_host;

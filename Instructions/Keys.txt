@@ -6,7 +6,7 @@
 	38	Arrow-Up		- List-Entry Up
 	40	Arrow-Down 		- List-Entry Down
 	13	Enter 			- Klick List-Entry
-	65	A 				- Switch Autoplay
+	65	A 				- Toggle Autoplay
 	9	Tab 			- Resume Last Watched Season
 	77	M 				- Switch Between Favorite- and Series-List
 	112	F1				- Swicth to Fullkeymode 'None Mouse Controll'
@@ -39,6 +39,7 @@
 	40	Arrow-Down 		- Volume Down
 	107	+				- Speed Up 1% max 400%
 	109	-				- Slow Down 1% min 50%;
+	65	A				- Toggle Autoplay
 	
 //Log
 	Search '>log' for Log -> Default: Enabled

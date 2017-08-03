@@ -187,7 +187,7 @@ function afterInit() {
 
 		var favName = $(this).attr('favId');
 		if ($(this).attr('class') == 'isFav') {
-			removeFavorite(favName);
+			removeFavorite(favName, true);
 			$(this).attr('class', 'noFav');
 		} else {
 			addFavorite(favName);

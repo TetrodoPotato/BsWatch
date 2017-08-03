@@ -22,6 +22,16 @@
 	cursor:pointer;
 }
 
+.hideText {
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+}
+
+.showText {
+	cursor:pointer;
+	opacity: 1; 
+}
+
 .vis-hidden {
     border: 0;
     clip: rect(0 0 0 0);
@@ -31,6 +41,18 @@
     padding: 0;
     position: absolute;
     width: 1px;
+}
+
+#infotext {
+	position:absolute;
+	z-index:30;
+	margin:auto;
+	display:block;
+	color:#ee4d2e;
+	font-weight:bold;
+	font-size:20px;
+	pointer-events: none;
+	top:10px;
 }
 
 #progress::-webkit-progress-bar { background: rgba(0,0,0,0); }

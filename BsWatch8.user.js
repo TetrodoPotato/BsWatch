@@ -177,7 +177,10 @@ function constructPlayer(mediaFile) {
 	var clickPause = '<div id="clicklayer" class="hide"></div>';
 
 	var addit = '<video id="vid" src="' + mediaFile + '" autoplay>Scheise Gelaufen</video>';
-	container.innerHTML = showCurrTime + clickPause + topLayer + addit + control;
+
+	var infoText = '<span id="infotext"><span>'
+
+		container.innerHTML = showCurrTime + clickPause + topLayer + addit + control + infoText;
 
 	document.body.innerHTML = '';
 	document.body.appendChild(container);
@@ -218,7 +221,7 @@ function constructPlayer(mediaFile) {
 			speedTick = 1;
 		});
 	});
-	
+
 	$('#minus').bind('mousedown', function (e) {
 		isSpeed = true;
 		minusTick();
@@ -312,6 +315,15 @@ function constructPlayer(mediaFile) {
 
 	document.getElementById('vid').defaultPlaybackRate = 1.0;
 	document.getElementById('vid').playbackRate = 1.0;
+}
+
+function setInfoText(infoText) {
+	document.getElementById('infotext').innerHTML = infoText;
+	$('#infotext').attr('class', 'showText');
+	setTimeout(function () {
+		$('#infotext').attr('class', 'hideText');
+	}, 1000);
+
 }
 
 function updateDark(val) {
@@ -555,7 +567,12 @@ function updateTime(time) {
 
 function closeVideo() {
 	setCookie('isError', false, false);
-	window.location = 'https://bs.to/?next';
+	var nextLink = 'https://bs.to/?next'
+	if(autoP !== null){
+		nextLink += '?' + autoP;
+	} 
+	
+	window.location = nextLink;
 }
 
 //Show hide close
@@ -586,6 +603,8 @@ function showAllEvent() {
 	_delay = setInterval(delayCheck, 500);
 }
 
+//Unknown AutoplayState
+var autoP = null;
 $(window).keydown(function (e) {
 	var player = document.getElementById('vid');
 	if (player !== null) {
@@ -666,6 +685,20 @@ $(window).keydown(function (e) {
 		} else if (e.keyCode === 63) {
 			e.preventDefault();
 			updateDark(100);
+		} else if (e.keyCode === 65) { //A
+			e.preventDefault();
+
+			if (autoP === null) {
+				autoP = true;
+			}
+			
+			autoP = !autoP;
+			
+			if (autoP) {
+				setInfoText('Autoplay On');
+			} else {
+				setInfoText('Autoplay Off');
+			}
 		}
 
 		showAllEvent();

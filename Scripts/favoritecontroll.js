@@ -41,11 +41,18 @@ function getFavs() {
 		return [];
 	}
 
+	var rawFav = favs.split(',');
+
+	//sort
+	rawFav.sort(function (a, b) {
+		return a.localeCompare(b);
+	});
+
 	//Send the favorite array
-	return favs.split(',');
+	return rawFav;
 }
 
-function removeFavorite(name) {
+function removeFavorite(name, inTable) {
 	//Get all favorites
 	var favsSolo = getFavs();
 
@@ -64,6 +71,13 @@ function removeFavorite(name) {
 	for (i = 0; i < favsSolo.length; i++) {
 		addFavorite(favsSolo[i]);
 	}
+
+	//check if edited in Table
+	if (typeof inTable === "undefined") {
+		//Edit Table
+		$("[favid=" + name + "]").attr('class', 'noFav');
+	}
+
 	//Update favorites table
 	updateFavorites();
 }
