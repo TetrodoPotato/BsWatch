@@ -12,7 +12,7 @@ function setCookie(name, value, perma, domain) {
 	var website_host = window.location.hostname.replace('www.', '');
 
 	//change domain
-	if (typeof domain === "undefined") {
+	if (typeof domain !== "undefined") {
 		website_host = domain;
 	}
 

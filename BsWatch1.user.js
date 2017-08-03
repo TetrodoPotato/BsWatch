@@ -52,8 +52,11 @@ if (/^https:\/\/bs.to(\/home)?\/?$/.test(window.location.href)) {
 		var nextAuto = window.location.href.split('?')[2];
 		nextAuto = (nextAuto == 'true' || nextAuto == 'True');
 		setCookie('autoplay', nextAuto, false);
+		console.log("setTo" + nextAuto);
 	}
 
+	console.log(getCookie('autoplay'));
+	
 	//Open the last season for next episode
 	window.location = 'https://bs.to/serie/' + series + '/' + season;
 
