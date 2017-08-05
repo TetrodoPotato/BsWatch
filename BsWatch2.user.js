@@ -40,9 +40,11 @@ function makeTable() {
 
 	tbody.appendChild(createHeadRow());
 
+	var favStar = getFavStar();
+	
 	//Create the content of the table
 	for (t = 0; t < rowObj.length; t++) {
-		var node = createRow((t + 1), rowObj[t]);
+		var node = createRow((t + 1), rowObj[t],favStar.cloneNode(true));
 		tbody.appendChild(node);
 	}
 	table.appendChild(tbody);
@@ -121,7 +123,7 @@ function createHeadRow() {
 //For performance
 var favoritesSeries = getFavs();
 
-function createRow(index, rowObj) {
+function createRow(index, rowObj,favStar) {
 	var tableRow = document.createElement('tr');
 
 	//The link to the Series
@@ -148,7 +150,7 @@ function createRow(index, rowObj) {
 	var favNode = document.createElement('td');
 	var toFav = rowObj.linkTo.split('/')[1];
 	favNode.setAttribute('favId', toFav);
-	favNode.appendChild(getFavStar());
+	favNode.appendChild(favStar);
 
 	if (favoritesSeries.indexOf(toFav) > -1) {
 		favNode.setAttribute('class', 'isFav');
