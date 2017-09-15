@@ -22,11 +22,6 @@ init();
 
 function initPage(cp) {
 	makeThePage(cp);
-
-	//Play the next episode instant on season change
-	if (getCookie('lastEpisode') == 'next0x000001') {
-		playNextEpisode();
-	}
 }
 
 function makeTitle() {
@@ -219,6 +214,11 @@ function makeThePage(cp) {
 }
 
 function afterInit() {
+	//Play the next episode instant on season change
+	if (getCookie('lastEpisode') == 'next0x000001') {
+		playNextEpisode();
+	}
+
 	//Check if there was a last episode
 	if (typeof getCookie('lastEpisode') == 'string') {
 		//Check if this is the same series
@@ -318,7 +318,6 @@ function createNode(index, nameDE, nameOr, linkTo, watched, linkWatched) {
 	});
 
 	return tableRow;
-
 }
 
 function createSeasonNode(index, linkTo, onSeason) {
@@ -447,11 +446,15 @@ function nextEpisodeText() {
 		//Check next Season
 		var curSeason = document.getElementsByClassName('onSeason')[0];
 
+		if (!hasNextSeason()) {
+			return true;
+		}
+
 		//Doesn't show when no more seasons
 		if (curSeason == 'Specials') {
 			return 'Staffel 1';
 		} else {
-			var nextNumber = parseInt(curSeason);
+			var nextNumber = parseInt(curSeason.innerHTML);
 			nextNumber++;
 
 			return 'Staffel ' + nextNumber;

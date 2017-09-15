@@ -25,6 +25,7 @@ if (/^https:\/\/bs.to(\/home)?\/?$/.test(window.location.href)) {
 	//You know ?!
 	window.location = 'https://bs.to/serie-genre';
 } else if (window.location.href == 'https://bs.to/?back') {
+	//Reset last scroll and search
 	setCookie('seriesScroll', 0);
 	setCookie('seriesSearch', "");
 	window.location = 'https://bs.to/serie-genre';
@@ -49,6 +50,7 @@ if (/^https:\/\/bs.to(\/home)?\/?$/.test(window.location.href)) {
 	//Errorcode reset
 	setCookie('errorCode', 0, false);
 
+	//Set Autoplay from Mediaplayer
 	if (window.location.href.split('?').length > 2) {
 		var nextAuto = window.location.href.split('?')[2];
 		nextAuto = (nextAuto == 'true' || nextAuto == 'True');
@@ -57,5 +59,4 @@ if (/^https:\/\/bs.to(\/home)?\/?$/.test(window.location.href)) {
 	
 	//Open the last season for next episode
 	window.location = 'https://bs.to/serie/' + series + '/' + season;
-
 }

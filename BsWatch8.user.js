@@ -31,6 +31,7 @@ $(document).ready(function () {
 		removeBlackPage();
 		intervalCheck();
 		checkInterval = setInterval(intervalCheck, 1000);
+		var video = document.getElementById('vid').play();
 	});
 
 });
@@ -176,11 +177,11 @@ function constructPlayer(mediaFile) {
 		'<span id="showPerc">0%</span></div>';
 	var clickPause = '<div id="clicklayer" class="hide"></div>';
 
-	var addit = '<video id="vid" src="' + mediaFile + '" autoplay>Scheise Gelaufen</video>';
+	var addit = '<video id="vid" src="' + mediaFile + '">Scheise Gelaufen</video>';
 
-	var infoText = '<span id="infotext"><span>'
+	var infoText = '<span id="infotext"><span>';
 
-		container.innerHTML = showCurrTime + clickPause + topLayer + addit + control + infoText;
+	container.innerHTML = showCurrTime + clickPause + topLayer + addit + control + infoText;
 
 	document.body.innerHTML = '';
 	document.body.appendChild(container);

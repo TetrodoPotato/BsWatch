@@ -199,7 +199,7 @@ $(document).ready(function () {
 				setCookie('autoplay', auto.checked, false);
 			} else if (e.keyCode === 72) { //H
 				e.preventDefault();
-				window.location = 'https://bs.to/serie-alphabet';
+				window.location = 'https://bs.to/?back';
 			} else if (e.keyCode == 9) { //Tab
 				e.preventDefault();
 				//Permanent cookies .. hm 2.7 years
