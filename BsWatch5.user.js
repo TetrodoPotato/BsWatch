@@ -15,6 +15,7 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/keycontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/logStorage.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/init.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/sessvars.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch5.user.js
 // ==/UserScript==
 
@@ -46,6 +47,9 @@ function logReady(cp) {
 		urlPath.split('/')[5] == 'OpenLoad' ||
 		urlPath.split('/')[5] == 'OpenLoadHD') {
 
+		//Crossdomain variables
+		var set = setCrossDomainVariables();
+		
 		//Open the hoster
 		window.location = nextDirPath;
 	} else {
@@ -70,6 +74,34 @@ function logReady(cp) {
 		//Make a hoster page
 		makePage(hoster, nextDirPath, cp);
 	}
+}
+
+function setCrossDomainVariables() {
+	var as = document.getElementById('episodes');
+	as = as.getElementsByTagName('a');
+	
+	var maxVal ='/' + as[as.length - 1].innerHTML;
+	var curVal = window.location.pathname; // /serie/und-dann-noch-Paula/1/1-Fick-dich-Fremder-Mann/Vivo
+	var curSes = "Season " + curVal.split('/')[3];
+	curVal = curVal.split('/')[4].split('-')[0];
+	maxVal = curVal + maxVal;
+	
+	var curSer = document.getElementById('sp_left').getElementsByTagName('h2')[0];
+	curSer = curSer.innerHTML.split('<small>')[0].trim();
+	
+	var tit = document.getElementById('titleGerman');
+	tit = tit.innerHTML.split('<small')[0].trim();
+	
+	if(tit == '' || tit == ' ' || tit == '  '){
+		tit = document.getElementById('titleEnglish').innerHTML.trim();
+	}
+	
+	sessvars.$.prefs.crossDomain = true;
+	
+	sessvars.max = maxVal;
+	sessvars.sea = curSes;
+	sessvars.ser = curSer;
+	sessvars.tit = tit;
 }
 
 function log(cp) {

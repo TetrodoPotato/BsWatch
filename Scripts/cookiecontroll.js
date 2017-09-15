@@ -11,6 +11,15 @@ function setCookie(name, value, perma, domain) {
 	//For subdomains
 	var website_host = window.location.hostname.replace('www.', '');
 
+	var website_host_buff = window.location.hostname;
+	
+	if(website_host_buff.split('.').length > 2){
+		var buffHost = website_host_buff.split('.');
+		website_host = buffHost[buffHost.length - 2] + '.' + buffHost[buffHost.length - 1];
+	} else {
+		website_host = website_host_buff;
+	}
+	
 	//change domain
 	if (typeof domain !== "undefined") {
 		website_host = domain;

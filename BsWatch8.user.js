@@ -8,6 +8,8 @@
 // @description	Media-Player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
+// @grant       GM_getValue
+// @grant       GM_setValue
 // @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/cookiecontroll.js
@@ -26,6 +28,10 @@ $(document).ready(function () {
 	document.head.innerHTML = makeVidHead().innerHTML;
 	constructPlayer(window.location.href);
 
+	document.getElementsByTagName('video')[0].addEventListener('error', function(event) {
+		onerror();
+	}, true);
+	
 	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 	$(window).bind("load", function () {
 		removeBlackPage();
@@ -166,6 +172,14 @@ var minusTick = function (e) {
 		setTimeout(minusTick, 1000 - nextSpeed);
 	}
 };
+
+function setTopText(){
+	console.log(sessvars.max);
+	console.log(sessvars.sea);
+	console.log(sessvars.ser);
+	console.log(sessvars.tit);
+}
+setTopText();
 
 function constructPlayer(mediaFile) {
 	var container = document.createElement('div');
@@ -316,6 +330,13 @@ function constructPlayer(mediaFile) {
 
 	document.getElementById('vid').defaultPlaybackRate = 1.0;
 	document.getElementById('vid').playbackRate = 1.0;
+}
+
+function onerror(){
+	var vidDOM = document.getElementsByTagName("video")[0];
+	vidDOM.setAttribute("autoplay","");
+	
+	document.getElementById("vid").outerHTML = vidDOM.outerHTML;
 }
 
 function setInfoText(infoText) {
