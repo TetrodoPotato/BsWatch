@@ -8,11 +8,10 @@
 // @description	Media-Player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
-// @grant       GM_getValue
-// @grant       GM_setValue
 // @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/defaultcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/cookiecontroll.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/sessvars.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch8.user.js
 // ==/UserScript==
 
@@ -28,9 +27,7 @@ $(document).ready(function () {
 	document.head.innerHTML = makeVidHead().innerHTML;
 	constructPlayer(window.location.href);
 
-	document.getElementsByTagName('video')[0].addEventListener('error', function(event) {
-		onerror();
-	}, true);
+	onerror();
 	
 	//Delete blackP stylesheeds loaded ... because the stylesheed needs to be loaded
 	$(window).bind("load", function () {
@@ -174,12 +171,20 @@ var minusTick = function (e) {
 };
 
 function setTopText(){
-	console.log(sessvars.max);
-	console.log(sessvars.sea);
-	console.log(sessvars.ser);
-	console.log(sessvars.tit);
+	var maxInfo = '<span id="max">' + sessvars.max + '</span>';
+	var seaInfo = '<span id="sea">' + sessvars.sea + '</span>';
+	var serInfo = '<span id="ser">' + sessvars.ser + '</span>';
+	var titInfo = '<span id="tit">' + sessvars.tit + '</span>';
+	
+	var topL = '<div id="topinfo">' + maxInfo + serInfo + seaInfo + titInfo + '</div>'
+	
+	var topLayer = '<div id="topLayer"><progress id="darkPlane" value="0" min="0" max="100"></progress>' +
+		'<span id="showPerc">0%</span></div>';
+	
+	var retLay = '<div id="infoPanel" class="hide">' + topL + topLayer + '</div>';
+	
+	return retLay;
 }
-setTopText();
 
 function constructPlayer(mediaFile) {
 	var container = document.createElement('div');
@@ -187,8 +192,7 @@ function constructPlayer(mediaFile) {
 
 	var showCurrTime = '<div id="curProc">00:00</div>';
 
-	var topLayer = '<div id="topLayer" class="hide"><progress id="darkPlane" value="0" min="0" max="100"></progress>' +
-		'<span id="showPerc">0%</span></div>';
+	var topLayer = setTopText();
 	var clickPause = '<div id="clicklayer" class="hide"></div>';
 
 	var addit = '<video id="vid" src="' + mediaFile + '">Scheise Gelaufen</video>';
@@ -330,13 +334,31 @@ function constructPlayer(mediaFile) {
 
 	document.getElementById('vid').defaultPlaybackRate = 1.0;
 	document.getElementById('vid').playbackRate = 1.0;
+	
+	
+	$('#infoPanel').bind('mouseover', function (e) {
+		activateControll(false)
+	});
+	$('#video-controls').bind('mouseover', function (e) {
+		activateControll(false)
+	});
+	
+	$('#infoPanel').bind('mouseout', function (e) {
+		activateControll(true);
+	});
+	$('#video-controls').bind('mouseout', function (e) {
+		activateControll(true);
+	});
 }
 
 function onerror(){
-	var vidDOM = document.getElementsByTagName("video")[0];
-	vidDOM.setAttribute("autoplay","");
+	document.getElementsByTagName('video')[0].addEventListener('error', function(event) {
+		var vidDOM = document.getElementsByTagName("video")[0];
+		vidDOM.setAttribute("autoplay","");
 	
-	document.getElementById("vid").outerHTML = vidDOM.outerHTML;
+		document.getElementById("vid").outerHTML = vidDOM.outerHTML;
+		onerror();
+	}, true);
 }
 
 function setInfoText(infoText) {

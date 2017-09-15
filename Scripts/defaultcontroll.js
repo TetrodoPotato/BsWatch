@@ -1,8 +1,8 @@
 var cssLink = 'https:///cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/bsStyle.css';
 //var cssLink = 'https://dl.dropbox.com/s/xpud8exmlapizrz/bsStyle.css';
 
-//var cssVidLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/playerStyle.css';
-var cssVidLink = 'https://dl.dropbox.com/s/z2evfmixktpfb9n/playerStyle.css';
+var cssVidLink = 'https://cdn.rawgit.com/Kartoffeleintopf/BsWatch/master/StyleSheeds/playerStyle.css';
+//var cssVidLink = 'https://dl.dropbox.com/s/z2evfmixktpfb9n/playerStyle.css';
 
 function getPlay() {
 	var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
