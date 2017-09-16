@@ -171,10 +171,15 @@ var minusTick = function (e) {
 };
 
 function setTopText(){
-	var maxInfo = '<span id="max">' + sessvars.max + '</span>';
-	var seaInfo = '<span id="sea">' + sessvars.sea + '</span>';
-	var serInfo = '<span id="ser">' + sessvars.ser + '</span>';
-	var titInfo = '<span id="tit">' + sessvars.tit + '</span>';
+	var sessvarmax = typeof sessvars.max !== "undefined" ? sessvars.max : "1/1";
+	var sessvarsea = typeof sessvars.sea !== "undefined" ? sessvars.sea : "Season 1";
+	var sessvarser = typeof sessvars.ser !== "undefined" ? sessvars.ser : "Series";
+	var sessvartit = typeof sessvars.tit !== "undefined" ? sessvars.tit : "Episde 1";
+	
+	var maxInfo = '<span id="max">' + sessvarmax + '</span>';
+	var seaInfo = '<span id="sea">' + sessvarsea + '</span>';
+	var serInfo = '<span id="ser">' + sessvarser + '</span>';
+	var titInfo = '<span id="tit">' + sessvartit + '</span>';
 	
 	var topL = '<div id="topinfo">' + maxInfo + serInfo + seaInfo + titInfo + '</div>'
 	
@@ -355,9 +360,25 @@ function onerror(){
 	document.getElementsByTagName('video')[0].addEventListener('error', function(event) {
 		var vidDOM = document.getElementsByTagName("video")[0];
 		vidDOM.setAttribute("autoplay","");
-	
+
 		document.getElementById("vid").outerHTML = vidDOM.outerHTML;
-		onerror();
+		nextError();
+				
+	}, true);
+}
+
+function nextError(){
+	document.getElementsByTagName('video')[0].addEventListener('error', function(event) {
+		window.setTimeout(function(){
+			var vidDOM = document.getElementsByTagName("video")[0];
+			
+			if (vidDOM.paused || vidDOM.ended) {
+				vidDOM.setAttribute("autoplay","");
+			
+				document.getElementById("vid").outerHTML = vidDOM.outerHTML;
+				nextError();
+			}	
+		},5000);
 	}, true);
 }
 
