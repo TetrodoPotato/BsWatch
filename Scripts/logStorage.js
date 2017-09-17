@@ -1,3 +1,6 @@
+/**
+ * Add a Log-segment to the log. Uses Local Storage.
+ */
 function addLog(seriesName, seasonName, episodNameGer, episodNameOri, genresName, hosterName, dateName) {
 
 	var first = dateName.split(' ')[0].split(',');
@@ -15,6 +18,10 @@ function addLog(seriesName, seasonName, episodNameGer, episodNameOri, genresName
 	localStorage.setItem('log', JSON.stringify(logData));
 }
 
+/**
+ * Get the Raw Log Array.
+ * @return {String-Array} the logs.
+ */
 function getRawLog() {
 	var log = localStorage.getItem('log');
 	if (!log) {
@@ -26,6 +33,10 @@ function getRawLog() {
 	return log;
 }
 
+/**
+ * Get the log-sement Object.
+ * @return {Object} log-segment.
+ */
 function getLog() {
 	var logData = getRawLog();
 
@@ -50,6 +61,9 @@ function getLog() {
 	return logObj;
 }
 
+/**
+ * Removes an log-segment with given index.
+ */
 function removeLog(index){
 	var raw = getRawLog();
 	var newRaw = [];
@@ -62,6 +76,9 @@ function removeLog(index){
 	localStorage.setItem('log', JSON.stringify(newRaw));
 }
 
+/**
+ * Removes log-segments older than one month.
+ */
 function clearLog(logData) {
 	//Get DateName
 	var d = new Date();

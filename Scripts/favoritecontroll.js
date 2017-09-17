@@ -1,4 +1,7 @@
-//name ..
+/**
+ * Adds a Series to the favorites.
+ * Save thru cookies.
+ */
 function addFavorite(series) {
 	//Get all favorites
 	var favsSolo = getFavs();
@@ -28,6 +31,10 @@ function addFavorite(series) {
 	updateFavorites();
 }
 
+/**
+ * Get {String-Array} rawFav with all favorised series.
+ * @return Array with all favorised series.
+ */
 function getFavs() {
 	//Get the cookie-string
 	var favs = getCookie('favorites');
@@ -52,6 +59,12 @@ function getFavs() {
 	return rawFav;
 }
 
+/**
+ * Removes a series with a {String} name from the favorised
+ * and updates the favorites.
+ * @param {String} name - name of the series.
+ * @param {boolean} inTable - if the series is remoced from {DOM} favTable.
+ */
 function removeFavorite(name, inTable) {
 	//Get all favorites
 	var favsSolo = getFavs();
@@ -82,13 +95,19 @@ function removeFavorite(name, inTable) {
 	updateFavorites();
 }
 
-//Simply
+/**
+ * Removes an index from Array.
+ * @param {Array} arr - array.
+ * @param {Number} index - index in {Array} arr. 
+ */
 function removeIndex(arr, index) {
 	arr.splice(index, 1);
 	return arr;
 }
 
-//Fill the favorites table new
+/**
+ * Reloads the {DOM} favTable with current favorites.
+ */
 function updateFavorites() {
 	//Create the new empty favoritetable
 	var favTable = document.createElement('table');
@@ -197,6 +216,9 @@ function updateFavorites() {
 	document.getElementById('favCon').appendChild(favTable);
 }
 
+/**
+ * Add the current series to the table.
+ */
 function addThisFav() {
 	//Show all elements
 	$('#favButton').addClass('favShow');
@@ -216,6 +238,9 @@ function addThisFav() {
 	}, 500);
 }
 
+/**
+ * Removes the current series from the table.
+ */
 function removeThisFav() {
 	//Show all Elements
 	$('#favButton').addClass('favShow');
@@ -234,5 +259,4 @@ function removeThisFav() {
 		}, 500);
 
 	}, 500);
-
 }

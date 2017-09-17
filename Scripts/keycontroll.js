@@ -10,6 +10,11 @@ if (getCookie('keyonly') == undefined) {
 	keyonly = getCookie('keyonly');
 }
 
+/**
+ * Focus the first element with {id} 1 on first and adds the {Number} value 
+ * to the id. If the Style is display {String} "none" the next id with {Number} value + value
+ * is focused.
+ */
 function focusNext(value) {
 	//Get current elements number
 	var lastFoc = document.activeElement.getAttribute('id');
@@ -71,6 +76,12 @@ function focusNext(value) {
 	scrollToFocus();
 }
 
+/**
+ * Get the computed {String} styleProp from {DOM} el.
+ * @param {DOM} el - element to check.
+ * @param {String} styleProp - Style to check.
+ * @return {String} styleProp.
+ */
 function getStyle(el, styleProp) {
 	var value,
 	defaultView = (el.ownerDocument || document).defaultView;
@@ -103,11 +114,16 @@ function getStyle(el, styleProp) {
 	}
 }
 
+/**
+ * Scrolls to the element with focus.
+ */
 function scrollToFocus() {
 	window.scroll(0, findPos(document.activeElement) - 180);
 }
 
-//Finds y value of given object
+/**
+ * Finds y value of given object.
+ */
 function findPos(obj) {
 	var curtop = 0;
 	if (obj.offsetParent) {
@@ -118,6 +134,10 @@ function findPos(obj) {
 	}
 }
 
+/**
+ * Focus the first element with {class} 1 on first and adds the {Number} value 
+ * to the id.
+ */
 function favNext(value) {
 	//Get last focused element
 	var lastFoc = document.activeElement.getAttribute('class');
@@ -144,7 +164,9 @@ function favNext(value) {
 	}
 }
 
-//When document loaded
+/**
+ * Make key things happen.
+ */
 $(document).ready(function () {
 	//Fuck Key controll
 	$(window).keydown(function (e) {

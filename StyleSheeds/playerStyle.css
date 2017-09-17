@@ -53,7 +53,7 @@
 	font-weight:bold;
 	font-size:20px;
 	pointer-events: none;
-	top:10px;
+	top:50px;
 }
 
 #progress::-webkit-progress-bar { background: rgba(0,0,0,0); }
