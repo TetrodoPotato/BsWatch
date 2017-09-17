@@ -367,12 +367,24 @@ function onerror(){
 	}, true);
 }
 
+var timer = 0;
 function nextError(){
+	timer++;
 	document.getElementsByTagName('video')[0].addEventListener('error', function(event) {
 		window.setTimeout(function(){
 			var vidDOM = document.getElementsByTagName("video")[0];
-			
-			if (vidDOM.paused || vidDOM.ended) {
+			if(timer > 3){
+				var canErr = getCookie("isError");
+				if(canErr == true){
+					window.location = 'https://bs.to/?error';
+					return;
+				} else {
+					setCookie("isError",true);
+					location.reload();
+					return;
+				}
+				
+			} else if (vidDOM.paused || vidDOM.ended) {
 				vidDOM.setAttribute("autoplay","");
 			
 				document.getElementById("vid").outerHTML = vidDOM.outerHTML;
