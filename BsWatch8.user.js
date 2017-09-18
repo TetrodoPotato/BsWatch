@@ -362,6 +362,10 @@ function onerror() {
         vidDOM.setAttribute("autoplay", "");
 
         document.getElementById("vid").outerHTML = vidDOM.outerHTML;
+        document.getElementById('vid').addEventListener('ended', myHandler, false);
+        function myHandler(e) {
+            closeVideo();
+        }
         nextError();
 
     }, true);
@@ -388,6 +392,10 @@ function nextError() {
                 vidDOM.setAttribute("autoplay", "");
 
                 document.getElementById("vid").outerHTML = vidDOM.outerHTML;
+                document.getElementById('vid').addEventListener('ended', myHandler, false);
+                function myHandler(e) {
+                    closeVideo();
+                }
                 nextError();
             }
         }, 5000);
