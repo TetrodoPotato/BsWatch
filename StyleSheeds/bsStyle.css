@@ -18,7 +18,7 @@ tr {
 	position:fixed;
 	top:0;
 	left:0;
-	background-color:rgba(0,0,0,0.5);
+	background-color:rgba(0,0,0,0.8);
 }
 
 #menuCon {
@@ -912,7 +912,9 @@ h2 small {
 	cursor:grab;
 }
 
-#contpane button{
+#apply{
+    display:block;
+    margin: 0 auto;
 	background:#ee4d2e;
 	width:200px;
 	border:none;
@@ -922,11 +924,33 @@ h2 small {
 	cursor:pointer;
 }
 
-#contpane button:active {
+#apply:active {
 	background:#FFF !important;
 	color:#000;
 }
 
-#contpane button:hover {
+#apply:hover {
 	background:#a0260d;
+}
+
+#infotext {
+	position:absolute;
+	z-index:30;
+	margin:auto;
+	display:block;
+	color:#ee4d2e;
+	font-weight:bold;
+	font-size:20px;
+	pointer-events: none;
+	top:50px;
+}
+
+.hideText {
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+}
+
+.showText {
+	cursor:pointer;
+	opacity: 1; 
 }

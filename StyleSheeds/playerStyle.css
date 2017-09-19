@@ -318,6 +318,7 @@
 	text-align:left;
 	color:#CCC;
 	font-weight:bold;
+    pointer-events: none;
 }
 
 #topLayer {

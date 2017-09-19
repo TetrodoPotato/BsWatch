@@ -261,6 +261,7 @@ function makeConf(cp) {
     cp.appendChild(contPane);
 
     var applyButton = document.createElement('button');
+    applyButton.setAttribute("id","apply");
     applyButton.innerHTML = "Anwenden";
     applyButton.addEventListener('click', function () {
         var prios = document.getElementById('hosterSort').getElementsByTagName('li');
@@ -275,9 +276,27 @@ function makeConf(cp) {
         }
 
         setCookie('cookieSort', cook, true);
+        setInfoText("Hosterpriorität angewendet");
     });
 
     cp.appendChild(applyButton);
+}
+
+function setInfoText(infoText) {
+    var infTxt = document.getElementById('infotext');
+    if(infTxt === null){
+        infTxt = document.createElement('span');
+        infTxt.setAttribute('id','infotext');
+        document.body.appendChild(infTxt);
+    }
+    
+    
+	infTxt.innerHTML = infoText;
+	$('#infotext').attr('class', 'showText');
+	setTimeout(function () {
+		$('#infotext').attr('class', 'hideText');
+	}, 1000);
+
 }
 
 function afterInit() {
