@@ -260,7 +260,6 @@ function makeConf(cp) {
 
     cp.appendChild(contPane);
 
-	//<label><input type="checkbox" name="zutat" value="salami" id="check1">Salami</label>
 	//Focus Search on start
 	var searchFocus = document.createElement('label')
 	searchFocus.setAttribute('id','checkboxLabel');

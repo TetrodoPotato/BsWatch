@@ -23,6 +23,12 @@ $(document).ready(function () {
 	//Scroll to top ... reasons
 	$(this).scrollTop(0);
 
+    //Stop old Video : Parallel Fix
+    var stopFrame = document.getElementsByTagName("video");
+    if(stopFrame.lenght != 0){
+        stopFrame[0].pause();
+    }
+    
 	//Clear body
 	document.body.innerHTML = '';
 	document.head.innerHTML = makeVidHead().innerHTML;

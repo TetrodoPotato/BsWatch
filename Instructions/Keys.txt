@@ -43,4 +43,4 @@
 	
 //Log
 	Search '>log' for Log -> Default: Enabled
-	Change File 6 -> LOG_ENABLED 
+	Change File 6->LOG_ENABLED
