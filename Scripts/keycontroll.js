@@ -177,7 +177,7 @@ $(document).ready(function () {
                 setNextBreak();
             }
         } else if (document.getElementById('search') === document.activeElement) {
-            if (e.keyCode === 27 || e.keyCode === 13) { //Esc / Enter
+            if (e.keyCode === 27 || e.keyCode === 13 || e.keyCode === 40 || e.keyCode === 38) { //Esc / Enter
                 e.preventDefault();
                 focusNext(1);
             }

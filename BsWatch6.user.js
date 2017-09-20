@@ -22,13 +22,14 @@ $(document).ready(function () {
     //Get the api ticket of the mp4 file
     var elem = document.getElementById('streamurl');
     if (elem !== null) {
-        var vidLink = elem.innerHTML;
-        //Costruct the mp4 file path
-        vidLink = 'https://openload.co/stream/' + vidLink + '?mime=true';
+		if(elem.innerHTML != "HERE IS THE LINK"){
+			var vidLink = elem.innerHTML;
+			//Costruct the mp4 file path
+			vidLink = 'https://openload.co/stream/' + vidLink + '?mime=true';
 
-        window.location = vidLink;
-    } else {
-        window.location = 'https://bs.to/?error';
+			window.location = vidLink;
+			return;
+		}
     }
-
+	window.location = 'https://bs.to/?error';
 });

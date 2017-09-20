@@ -387,6 +387,7 @@ function failed(e) {
 		if (timer > 3) {
 			var canErr = getCookie("isError");
 			if (canErr == true) {
+				setCookie("isError", false);
 				window.location = 'https://bs.to/?error';
 				return;
 			} else {
@@ -398,11 +399,7 @@ function failed(e) {
 		} else if (vidDOM.paused || vidDOM.ended) {
 			vidDOM.setAttribute("autoplay", "");
 
-			document.getElementById("vid").outerHTML = vidDOM.outerHTML;
-			document.getElementById('vid').addEventListener('ended', myHandler, false);
-			function myHandler(e) {
-				closeVideo();
-			}
+			document.getElementById("vid".load();
 			onerror();
 		}
 	}, 5000);

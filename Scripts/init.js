@@ -386,6 +386,9 @@ function init() { //Black page over original
 
         //Delete blackP onload ... because the stylesheed needs to be loaded
         $(window).bind("load", function () {
+			if(getCookie('focusSearch') == true){
+				document.getElementById('search').focus()
+			}
             removeBlackPage();
             if (document.getElementById('plane') !== null) {
                 document.documentElement.style.overflow = 'hidden'; // firefox, chrome

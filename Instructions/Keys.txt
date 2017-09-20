@@ -1,45 +1,45 @@
 //On Lists
 	//List General - On all Locations
-	72	H 			- Home
-	27	Esc / Enter 		- Exit Search
-	75	K			- Enter Search
+	72	H 				- Home
+	27	Esc / Enter 	- Exit Search
+	75	K				- Enter Search
 	38	Arrow-Up		- List-Entry Up
 	40	Arrow-Down 		- List-Entry Down
 	13	Enter 			- Klick List-Entry
-	65	A 			- Toggle Autoplay
+	65	A 				- Toggle Autoplay
 	9	Tab 			- Resume Last Watched Season
-	77	M 			- Switch Between Favorite- and Series-List
-	112	F1			- Swicth to Fullkeymode 'None Mouse Controll'
+	77	M 				- Switch Between Favorite- and Series-List
+	112	F1				- Swicth to Fullkeymode 'None Mouse Controll'
 		
 	//On Favorite-List - 'M'
-	70	F 			- Favorise this Series
-	68	D 			- Defavorise Selected Series
+	70	F 				- Favorise this Series
+	68	D 				- Defavorise Selected Series
 		
 	//List Season - Season and Episode List
 	37	Arrow-Left 		- Previous Season
 	39	Arrow-Right		- Next Season
-	79	O			- Watch all Episodes
-	80	P 			- Unwatch all Episodes
-	70	F 			- Favorise this Series-List
-	68	D 			- Defavorise this Series
-	87	W 			- Watch / Unwatch Selected Series
+	79	O				- Watch all Episodes
+	80	P 				- Unwatch all Episodes
+	70	F 				- Favorise this Series-List
+	68	D 				- Defavorise this Series
+	87	W 				- Watch / Unwatch Selected Series
 		
 	//List Hoster
-	78	N			- Next Episode
+	78	N				- Next Episode
 	8 	Backspace		- Return to Season-List
 		
 //On Player
 	//Video Player
 	32	Space 			- Play / Pause
 	27	Esc 			- Close Player / Next Episode
-	81	Q 			- Mute / Unmute
+	81	Q 				- Mute / Unmute
 	37	Arrow-Left 		- Previous 10sec
-	39	Arrow-Right 		- Next 10sec
+	39	Arrow-Right 	- Next 10sec
 	38	Arrow-Up 		- Volume Up
 	40	Arrow-Down 		- Volume Down
-	107	+			- Speed Up 1% max 400%
-	109	-			- Slow Down 1% min 50%;
-	65	A			- Toggle Autoplay
+	107	+				- Speed Up 1% max 400%
+	109	-				- Slow Down 1% min 50%;
+	65	A				- Toggle Autoplay
 	
 //Log
 	Search '>log' for Log -> Default: Enabled

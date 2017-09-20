@@ -260,6 +260,28 @@ function makeConf(cp) {
 
     cp.appendChild(contPane);
 
+	//<label><input type="checkbox" name="zutat" value="salami" id="check1">Salami</label>
+	//Focus Search on start
+	var searchFocus = document.createElement('label')
+	searchFocus.setAttribute('id','checkboxLabel');
+	var searchCheck = document.createElement('input');
+	searchCheck.setAttribute('type','checkbox');
+	searchCheck.setAttribute('id','searchCheckbox');
+	
+	if(typeof getCookie('focusSearch') === 'undefined'){
+		setCookie('focusSearch',false);
+		searchCheck.checked = false;
+	} else {
+		if(getCookie('focusSearch')){
+			searchCheck.setAttribute('checked','true');
+		}
+	}
+	
+	searchFocus.appendChild(searchCheck);
+	searchFocus.innerHTML += "Suche Fokussieren";
+	
+	cp.appendChild(searchFocus);
+	
     var applyButton = document.createElement('button');
     applyButton.setAttribute("id","apply");
     applyButton.innerHTML = "Anwenden";
@@ -276,7 +298,8 @@ function makeConf(cp) {
         }
 
         setCookie('cookieSort', cook, true);
-        setInfoText("Hosterpriorität angewendet");
+		setCookie('focusSearch',document.getElementById('searchCheckbox').checked)
+        setInfoText("Einstellungen angewendet");
     });
 
     cp.appendChild(applyButton);

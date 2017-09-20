@@ -954,3 +954,15 @@ h2 small {
 	cursor:pointer;
 	opacity: 1; 
 }
+
+#checkboxLabel {
+	width:200px;
+	color:#ee4d2e;
+	display:block;
+	margin: 0px auto;
+	margin-top:10px;
+}
+
+#checkboxLabel input{
+	
+}
