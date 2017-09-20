@@ -399,7 +399,7 @@ function failed(e) {
 		} else if (vidDOM.paused || vidDOM.ended) {
 			vidDOM.setAttribute("autoplay", "");
 
-			document.getElementById("vid".load();
+			document.getElementById("vid").load();
 			onerror();
 		}
 	}, 5000);
