@@ -11,6 +11,8 @@
 // @run-at 		document-start
 // @grant		GM_setValue
 // @grant		GM_getValue
+// @grant 		GM.setValue
+// @grant 		GM.getValue
 // @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/iconcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/cookiecontroll.js
@@ -30,37 +32,40 @@ if (location.hostname === 'bs.to') {
 	});
 }
 
-function setGmVariables() {
+async function setGmVariables() {
 	var buff = location.search;
 	buff = buff.split('?');
-	
+
 	var next = null;
-	
-	for(i=1;i<buff.length;i++){
+
+	for (i = 1; i < buff.length; i++) {
 		var spl = buff[i].split('=');
 		spl[0] = decodeURI(spl[0]);
 		spl[1] = decodeURI(spl[1]);
-		
-		if(spl[0] == 'next'){
+
+		if (spl[0] == 'next') {
 			next = spl[1];
 			continue;
 		}
-		GM_setValue(spl[0],spl[1]);
+
+		if (typeof GM_setValue === "function") {
+			GM_setValue(spl[0], spl[1]);
+		} else {
+			let buff = await GM.setValue(spl[0], spl[1]);
+		}
+
 	}
-	if(next !== null){
+	if (next !== null) {
 		window.location = next;
 	} else {
 		window.history.back();
 	}
-	
+
 }
 
 function initMediaPlayer() {
 	//Scroll to top ... reasons
 	$(this).scrollTop(0);
-
-	//Chrome hidde Scrollbars
-	document.getElementsByTagName("html")[0].setAttribute("style", "");
 
 	//Stop old Video : Parallel Fix
 	var stopFrame = document.getElementsByTagName("video");
@@ -216,24 +221,44 @@ var minusTick = function (e) {
 };
 
 function setTopText() {
-	var sessvarmax = GM_getValue('max','1/1');
-	var sessvarsea = GM_getValue('sea','Season 1');
-	var sessvarser = GM_getValue('ser','Series');
-	var sessvartit = GM_getValue('tit','Episde 1');
 
-	var maxInfo = '<span id="max">' + sessvarmax + '</span>';
-	var seaInfo = '<span id="sea">' + sessvarsea + '</span>';
-	var serInfo = '<span id="ser">' + sessvarser + '</span>';
-	var titInfo = '<span id="tit">' + sessvartit + '</span>';
+	var maxInfo = '<span id="max"></span>';
+	var seaInfo = '<span id="sea"></span>';
+	var serInfo = '<span id="ser"></span>';
+	var titInfo = '<span id="tit"></span>';
 
-	var topL = '<div id="topinfo">' + maxInfo + serInfo + seaInfo + titInfo + '</div>'
+	var topL = '<div id="topinfo">' + maxInfo + serInfo + seaInfo + titInfo + '</div>';
 
-		var topLayer = '<div id="topLayer"><progress id="darkPlane" value="0" min="0" max="100"></progress>' +
+	var topLayer = '<div id="topLayer"><progress id="darkPlane" value="0" min="0" max="100"></progress>' +
 		'<span id="showPerc">0%</span></div>';
 
 	var retLay = '<div id="infoPanel" class="hide">' + topL + topLayer + '</div>';
 
 	return retLay;
+}
+
+async function fillTopText() {
+	var sessvarmax = "";
+	var sessvarsea = "";
+	var sessvarser = "";
+	var sessvartit = "";
+
+	if (typeof GM_getValue === "function") {
+		sessvarmax = GM_getValue('max', '1/1');
+		sessvarsea = GM_getValue('sea', 'Season 1');
+		sessvarser = GM_getValue('ser', 'Series');
+		sessvartit = GM_getValue('tit', 'Episde 1');
+	} else {
+		sessvarmax = await GM.getValue('max', '1/1');
+		sessvarsea = await GM.getValue('sea', 'Season 1');
+		sessvarser = await GM.getValue('ser', 'Series');
+		sessvartit = await GM.getValue('tit', 'Episde 1');
+	}
+
+	document.getElementById('max').innerHTML = sessvarmax;
+	document.getElementById('sea').innerHTML = sessvarsea;
+	document.getElementById('ser').innerHTML = sessvarser;
+	document.getElementById('tit').innerHTML = sessvartit;
 }
 
 function constructPlayer(mediaFile) {
@@ -254,6 +279,9 @@ function constructPlayer(mediaFile) {
 	document.body.innerHTML = '';
 	document.body.appendChild(container);
 
+	//Async need to be startet after everythin added.
+	fillTopText();
+	
 	document.getElementById('vid').addEventListener('ended', myHandler, false);
 	function myHandler(e) {
 		closeVideo();
