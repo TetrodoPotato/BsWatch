@@ -4,31 +4,70 @@
 // @namespace   http://www.greasespot.net/
 // @include     *oloadcdn.net*
 // @include     /^https:\/\/delivery\-\-.+$/
+// @include		/^https:\/\/bs.to(\/)data(\?[\S]*)?$/
 // @version    	1.9
 // @description	Media-Player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
+// @grant		GM_setValue
+// @grant		GM_getValue
 // @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/iconcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/cookiecontroll.js
-// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/sessvars.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/init.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch8.user.js
 // ==/UserScript==
 
 makeBlackPage();
 
-//When document loaded
-$(document).ready(function () {
+//Replace Of Sessvars
+if (location.hostname === 'bs.to') {
+	setGmVariables();
+} else {
+	//When document loaded
+	$(document).ready(function () {
+		initMediaPlayer();
+	});
+}
+
+function setGmVariables() {
+	var buff = location.search;
+	buff = buff.split('?');
+	
+	var next = null;
+	
+	for(i=1;i<buff.length;i++){
+		var spl = buff[i].split('=');
+		spl[0] = decodeURI(spl[0]);
+		spl[1] = decodeURI(spl[1]);
+		
+		if(spl[0] == 'next'){
+			next = spl[1];
+			continue;
+		}
+		GM_setValue(spl[0],spl[1]);
+	}
+	if(next !== null){
+		window.location = next;
+	} else {
+		window.history.back();
+	}
+	
+}
+
+function initMediaPlayer() {
 	//Scroll to top ... reasons
 	$(this).scrollTop(0);
 
-    //Stop old Video : Parallel Fix
-    var stopFrame = document.getElementsByTagName("video");
-    if(stopFrame.lenght != 0){
-        stopFrame[0].pause();
-    }
-    
+	//Chrome hidde Scrollbars
+	document.getElementsByTagName("html")[0].setAttribute("style", "");
+
+	//Stop old Video : Parallel Fix
+	var stopFrame = document.getElementsByTagName("video");
+	if (stopFrame.lenght != 0) {
+		stopFrame[0].pause();
+	}
+
 	//Clear body
 	document.body.innerHTML = '';
 	document.head.innerHTML = makeVidHead().innerHTML;
@@ -43,8 +82,7 @@ $(document).ready(function () {
 		checkInterval = setInterval(intervalCheck, 1000);
 		var video = document.getElementById('vid').play();
 	});
-
-});
+}
 
 var checkInterval;
 var isChecked = false;
@@ -178,10 +216,10 @@ var minusTick = function (e) {
 };
 
 function setTopText() {
-	var sessvarmax = typeof sessvars.max !== "undefined" ? sessvars.max : "1/1";
-	var sessvarsea = typeof sessvars.sea !== "undefined" ? sessvars.sea : "Season 1";
-	var sessvarser = typeof sessvars.ser !== "undefined" ? sessvars.ser : "Series";
-	var sessvartit = typeof sessvars.tit !== "undefined" ? sessvars.tit : "Episde 1";
+	var sessvarmax = GM_getValue('max','1/1');
+	var sessvarsea = GM_getValue('sea','Season 1');
+	var sessvarser = GM_getValue('ser','Series');
+	var sessvartit = GM_getValue('tit','Episde 1');
 
 	var maxInfo = '<span id="max">' + sessvarmax + '</span>';
 	var seaInfo = '<span id="sea">' + sessvarsea + '</span>';

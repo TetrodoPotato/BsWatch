@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/[^\/]+\/.+$/
-// @version    	2.0
+// @version    	2.5
 // @description	Open Hoster
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -14,7 +14,6 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/keycontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/logStorage.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/init.js
-// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/sessvars.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch5.user.js
 // ==/UserScript==
 
@@ -47,10 +46,10 @@ function logReady(cp) {
         urlPath.split('/')[5] == 'OpenLoadHD') {
 
         //Crossdomain variables
-        var set = setCrossDomainVariables();
+        var setNextLink = setCrossDomainVariables(nextDirPath);
 
         //Open the hoster
-        window.location = nextDirPath;
+        window.location = setNextLink;
     } else {
         //Fuck everything and make the leaf.
 
@@ -75,7 +74,7 @@ function logReady(cp) {
     }
 }
 
-function setCrossDomainVariables() {
+function setCrossDomainVariables(nextPath) {
     var as = document.getElementById('episodes');
     as = as.getElementsByTagName('a');
 
@@ -95,12 +94,14 @@ function setCrossDomainVariables() {
         tit = document.getElementById('titleEnglish').innerHTML.trim();
     }
 
-    sessvars.$.prefs.crossDomain = true;
+    var redirLink = "https://bs.to/data?next=" + encodeURI(nextPath);
 
-    sessvars.max = maxVal;
-    sessvars.sea = curSes;
-    sessvars.ser = curSer;
-    sessvars.tit = tit;
+	redirLink += "?max=" + encodeURI(maxVal);
+	redirLink += "?sea=" + encodeURI(curSes);
+	redirLink += "?ser=" + encodeURI(curSer);
+	redirLink += "?tit=" + encodeURI(tit);
+	
+	return redirLink;
 }
 
 function log(cp) {

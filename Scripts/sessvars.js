@@ -24,9 +24,9 @@ sessvars = function () {
         prefs: {
             memLimit: 2000,
             autoFlush: true,
-            crossDomain: false,
-            includeProtos: false,
-            includeFunctions: false
+            crossDomain: true,
+            includeProtos: true,
+            includeFunctions: true
         },
         parent: x,
         clearMem: function () {
