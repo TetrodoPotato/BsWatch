@@ -13,7 +13,7 @@
 // @grant		GM_getValue
 // @grant 		GM.setValue
 // @grant 		GM.getValue
-// @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
+// @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/iconcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/cookiecontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/init.js

@@ -7,7 +7,7 @@
 // @description	Vivo Direct-Link
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
-// @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js
+// @require 	https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/init.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch7.user.js
 // ==/UserScript==
