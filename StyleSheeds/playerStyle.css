@@ -4,7 +4,7 @@
 	z-index:0;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size:16px;
-	overflow: hidden;
+	overflow: hidden !important;
     outline: none;
 	-webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
