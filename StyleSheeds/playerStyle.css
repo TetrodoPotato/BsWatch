@@ -6,6 +6,12 @@
 	font-size:16px;
 	overflow: hidden;
     outline: none;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none;
 }
 
 .hide {
@@ -107,7 +113,7 @@
 #curProc{
 	position:absolute;
 	
-	height:14px;
+	height:16px;
 	font-weight:bold;
 	text-align:center;
 	color:#FFF;
