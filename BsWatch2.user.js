@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie-genre[^\/]*$/
-// @version    	1.9
+// @version    	2.1
 // @description	Series List
 // @author     	Kartoffeleintopf
 // @run-at 		document-start

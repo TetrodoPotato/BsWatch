@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs.to(\/)?(((home|\?next|\?error|\?back)[^\/]*)(\/)?)?$/
-// @version    	2.0
+// @version    	2.1
 // @description	Error and Next - Redirect
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
