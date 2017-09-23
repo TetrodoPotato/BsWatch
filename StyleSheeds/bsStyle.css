@@ -1,3 +1,5 @@
+/*Genral Styles*/
+
 * {
 	margin:0;
 	padding:0;
@@ -13,6 +15,9 @@ body {
 tr {
 	cursor:pointer;
 }
+
+
+/*Menu Styles*/
 
 #baseCon {
 	width:100%;
@@ -209,6 +214,121 @@ tr {
 	display:none;
 }
 
+/*Series Styles*/
+
+#seriesTable {
+	margin:0 auto;
+	margin-top:70px;
+	width:100%;
+	max-width: 1262px;
+	overflow:hidden;
+	border-collapse:separate; 
+	border-spacing:0 5px;
+}
+
+#seriesTable tr:first-child th{
+	color:#FFF;
+	background-color:#202020;
+	height:35px;
+}
+
+#seriesTable tr:first-child th:first-child{
+	border-radius:1px 0;
+}
+
+#seriesTable tr:first-child th:last-child{
+	border-radius:0 1px;
+}
+
+#seriesTable tr:first-child th:nth-child(2):hover {
+	color:#ee4d2e;
+}
+
+#seriesTable tr:first-child th:nth-child(3):hover{
+	color:#ee4d2e;
+}
+
+#seriesTable tr {
+	width:100%;
+}
+
+#seriesTable tr:focus td:first-child {
+	background:#ee4d2e !important;
+}
+
+#seriesTable tr:focus td:nth-child(2) {
+	color:#ee4d2e !important;
+	background:#121212;
+}
+
+#seriesTable tr td:first-child{
+	background:#000;
+	width:1%;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:5px 15px;
+	border:none;
+	border-radius: 1px 0 0 1px;	
+}
+
+#seriesTable tr td:nth-child(2){
+	background:#111;
+	width:99%;
+	color:#FFF;
+	font-weight: bold;
+	padding:5px 15px;
+	border:none;
+	border-radius: 0 1px 1px 0;	
+}
+
+#seriesTable tr td:nth-child(3){
+	background:#222;
+	width:1%;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:5px 15px;
+	border:none;
+}
+
+#seriesTable tr td:nth-child(4){
+	background:#000;
+	width:1%;
+	color:#FFF;
+	font-weight: bold;
+	text-align:center; 
+	vertical-align:middle;
+	padding:5px 15px;
+	border:none;
+	border-radius: 0 1px 1px 0;	
+}
+
+#seriesTable .noFav{
+	fill:#888;
+}
+
+#seriesTable .noFav:hover{
+	background-color:#ee4d2e !important;
+}
+
+#seriesTable .isFav{
+	fill:#ee4d2e !important;
+}
+
+#seriesTable .isFav:hover{
+	fill:#a0260d !important;
+	background-color:#ee4d2e !important;
+}
+
+#seriesTable tr td:nth-child(4) svg{
+	height:25px;
+}
+
+/*Episode Styles*/
+
 h2 {
 	display:block;
 	margin:0 auto;
@@ -243,109 +363,6 @@ h2 small {
 	color:#ee4d2e;
 }
 
-#seriesTable {
-	margin:0 auto;
-	margin-top:70px;
-	width:100%;
-	max-width: 1262px;
-	overflow:hidden;
-	border-collapse:separate; 
-	border-spacing:0 5px;
-}
-
-#seriesTable tr:first-child th{
-	color:#FFF;
-	background-color:#202020;
-	height:35px;
-}
-
-#seriesTable tr:first-child th:first-child{
-	border-radius:5px 0 0 0;
-}
-
-#seriesTable tr:first-child th:last-child{
-	border-radius:0 5px 0 0;
-}
-
-#seriesTable tr {
-	width:100%;
-}
-
-#seriesTable tr:focus td:first-child {
-	background:#ee4d2e !important;
-}
-
-#seriesTable tr:focus td:nth-child(2) {
-	color:#ee4d2e !important;
-	background:#121212;
-}
-
-#seriesTable tr td:first-child{
-	background:#000;
-	width:1%;
-	color:#FFF;
-	font-weight: bold;
-	text-align:center; 
-	vertical-align:middle;
-	padding:5px 15px;
-	border:none;
-	border-radius: 5px 0 0 5px;	
-}
-
-#seriesTable tr td:nth-child(2){
-	background:#111;
-	width:99%;
-	color:#FFF;
-	font-weight: bold;
-	padding:5px 15px;
-	border:none;
-	border-radius: 0 5px 5px 0;	
-}
-
-#seriesTable tr td:nth-child(3){
-	background:#222;
-	width:1%;
-	color:#FFF;
-	font-weight: bold;
-	text-align:center; 
-	vertical-align:middle;
-	padding:5px 15px;
-	border:none;
-}
-
-#seriesTable tr td:nth-child(4){
-	background:#000;
-	width:1%;
-	color:#FFF;
-	font-weight: bold;
-	text-align:center; 
-	vertical-align:middle;
-	padding:5px 15px;
-	border:none;
-	border-radius: 0 5px 5px 0;	
-}
-
-#seriesTable .noFav{
-	fill:#888;
-}
-
-#seriesTable .noFav:hover{
-	background-color:#ee4d2e !important;
-}
-
-#seriesTable .isFav{
-	fill:#ee4d2e !important;
-}
-
-#seriesTable .isFav:hover{
-	fill:#a0260d !important;
-	background-color:#ee4d2e !important;
-}
-
-#seriesTable tr td:nth-child(4) svg{
-	height:25px;
-}
-
 #seasonTable {
 	margin:0 auto;
 	margin-top:20px;
@@ -370,7 +387,7 @@ h2 small {
 	vertical-align:middle;
 	padding:5px 0px;
 	border:none;
-	border-radius: 5px 5px 5px 5px;	
+	border-radius: 1px;	
 	width:1%;
 }
 
@@ -427,10 +444,10 @@ h2 small {
 	color:#FFF;
 	font-weight: bold;
 	text-align:center; 
-  vertical-align:middle;
+    vertical-align:middle;
 	padding:5px 15px;
 	border:none;
-	border-radius: 5px 0 0 5px;	
+	border-radius: 1px 0 0 1px;	
 }
 
 #episodeTable tr td:nth-child(2){
@@ -457,7 +474,7 @@ h2 small {
 	padding:0 10px 0 10px;
 	fill:#ee4d2e;
 	stroke:#ee4d2e;
-	border-radius:0 5px 5px 0;	
+	border-radius:0 1px 1px 0;	
 }
 
 #episodeTable tr td:nth-child(3):hover{
@@ -466,7 +483,7 @@ h2 small {
 }
 
 #episodeTable tr td:last-child{
-	border-radius:0 5px 5px 0;
+	border-radius:0 1px 1px 0;
 }
 
 #allWatchTable {
@@ -493,10 +510,10 @@ h2 small {
 	width:1%;
 }
 #allWatchTable td:first-child {
-	border-radius: 5px 0 0 5px;	
+	border-radius: 1px 0 0 1px;	
 }
 #allWatchTable td:nth-child(2) {
-	border-radius: 0 5px 5px 0;	
+	border-radius: 0 1px 1px 0;	
 }
 
 #allWatchTable td:first-child:hover {
@@ -505,6 +522,8 @@ h2 small {
 #allWatchTable td:nth-child(2):hover {
 	background:#ee4d2e;	
 }
+
+/*Hostertable*/
 
 #functionTable {
 	margin:20px auto 20px auto;
@@ -530,10 +549,10 @@ h2 small {
 	width:1%;
 }
 #functionTable td:first-child {
-	border-radius: 5px 0 0 5px;	
+	border-radius: 1px 0 0 1px;	
 }
 #functionTable td:nth-child(2) {
-	border-radius: 0 5px 5px 0;	
+	border-radius: 0 1px 1px 0;	
 }
 
 #functionTable td:first-child:hover {
@@ -568,7 +587,7 @@ h2 small {
 	font-weight: bold;
 	padding:5px 15px;
 	border:none;
-	border-radius: 5px 5px 5px 5px;	
+	border-radius: 1px;	
 	text-align:center; 
 	vertical-align:middle;
 }
@@ -596,6 +615,8 @@ h2 small {
 .playHosterTr td a:link, .playHosterTr a:visited, .playHosterTr a:hover, .playHosterTr a:active, {
 	color:#FFF !important;
 }
+
+/*Favorites Style*/
 
 #favCon {
 	position:absolute;
@@ -770,15 +791,7 @@ h2 small {
 	transition: width 0.5s ease-out;
 }
 
-
-
-
-
-
-
-
-
-
+/*Log Style*/
 
 #logTable {
 	margin:0 auto;
@@ -812,7 +825,7 @@ h2 small {
 }
 
 #logTable tr td:first-child{
-	background:#ee4d2e;
+	background:#000;
 	color:#FFF;
 	font-weight: bold;
 	text-align:center; 
@@ -855,6 +868,36 @@ h2 small {
 	width:1%;
 }
 #logTable tr td:nth-child(9){
+	width:1%;
+}
+
+#logTable tr:focus td:nth-child(1){
+	width:1%;
+    background:#ee4d2e;
+}
+#logTable tr:focus td:nth-child(2){
+	width:25%;
+    color:#ee4d2e;
+}
+#logTable tr:focus td:nth-child(3){
+	width:1%;
+}
+#logTable tr:focus td:nth-child(4){
+	width:25%;
+}
+#logTable tr:focus td:nth-child(5){
+	width:25%;
+}
+#logTable tr:focus td:nth-child(6){
+	width:20%;
+}
+#logTable tr:focus td:nth-child(7){
+	width:1%;
+}
+#logTable tr:focus td:nth-child(8){
+	width:1%;
+}
+#logTable tr:focus td:nth-child(9){
 	width:1%;
 }
 
@@ -903,7 +946,7 @@ h2 small {
 #contpane {
 	margin:0 auto;
 	margin-top:60px;
-	width:200px;
+	width:400px;
 }
 
 #contpane h1 {
@@ -918,21 +961,24 @@ h2 small {
 #hosterSort li {
 	color:#FFFFFF;
 	background:#ee4d2e;
-	border-radius:5px;
+	border-radius:1px;
 	margin-bottom:3px;
 	cursor:grab;
+    text-align:center;
+    padding:10px 0;
 }
 
 #apply{
     display:block;
     margin: 0 auto;
 	background:#ee4d2e;
-	width:200px;
+	width:400px;
 	border:none;
 	color:#FFFFFF;
 	margin-top:20px;
-	border-radius:5px;
+	border-radius:1px;
 	cursor:pointer;
+    padding: 10px 0;
 }
 
 #apply:active {
@@ -967,13 +1013,31 @@ h2 small {
 }
 
 .checkboxLabel {
-	width:200px;
+    position:relative;
+	width:400px;
 	color:#ee4d2e;
 	display:block;
-	margin: 0px auto;
-	margin-top:10px;
+	margin: 10px auto 0px auto;
+    height:40px;
+    background-color:#111;
+}
+
+.checkboxLabel span {
+    display:inline-block;
+    position:absolute;
+    top:50%;
+    margin-top:-10px;
+    height:40px;
+    pointer-events: none;
 }
 
 .checkboxLabel input{
 	margin-right:10px;
+    background-color:#222;
+    color:#FFF;
+    border:none;
+    width:50px;
+    height:40px;
+    display:inline-block;
+    text-align:center;
 }

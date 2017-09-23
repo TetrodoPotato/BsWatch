@@ -148,7 +148,7 @@ function createRow(index, rowObj, favStar) {
     //Favorite Node set/rem-favorite
     var favNode = document.createElement('td');
     var toFav = rowObj.linkTo.split('/')[1];
-    favNode.setAttribute("favid",toFav);
+    favNode.setAttribute("favid", toFav);
     favNode.appendChild(favStar);
 
     var found = false;
@@ -160,7 +160,7 @@ function createRow(index, rowObj, favStar) {
         }
     }
 
-    if(!found){
+    if (!found) {
         favNode.setAttribute('class', 'noFav');
     }
 
@@ -196,16 +196,15 @@ function afterInit() {
 
         var targetDom = e.target;
         var targetParent = targetDom.parentElement;
-        
-        while(targetParent.nodeName != 'TR'){
+        while (targetParent.nodeName != 'TR') {
             targetParent = targetParent.parentElement;
         }
-        
+
         var pathName = targetParent.getAttribute('class');
         pathName = pathName.split('https://bs.to')[1];
-        
+
         var seriesName = targetParent.getElementsByTagName('td')[1].innerHTML;
-        
+
         if ($(this).attr('class') == 'isFav') {
             pathName = pathName.split('/')[2];
             console.log(pathName);
@@ -222,7 +221,7 @@ function afterInit() {
         window.scroll(0, getCookie('seriesScroll'));
         var lastSearch = getCookie('seriesSearch');
         if (typeof lastSearch != "undefined") {
-            if (lastSearch != "") {
+            if (lastSearch != "" && lastSearch.indexOf('>') == -1) {
                 document.getElementById('search').value = getCookie('seriesSearch');
                 searchEv();
             }

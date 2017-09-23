@@ -14,6 +14,7 @@
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/favoritecontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/iconcontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/logStorage.js
+// @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/keycontroll.js
 // @require		https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/Scripts/init.js
 // @require		http://rubaxa.github.io/Sortable/Sortable.js
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch9.user.js
@@ -28,17 +29,17 @@ function initPage(cp) {
 
 function makeTable(logs) {
 
-    var headLine = "<tr>" +
-        "	<th>Nr</th>" +
-        "	<th>Serie</th>" +
-        "	<th>Stf.</th>" +
-        "	<th>Epi. Deu.</th>" +
-        "	<th>Epi. Org.</th>" +
-        "	<th>Genres</th>" +
-        "	<th>Hoster</th>" +
-        "	<th>Datum</th>" +
-        "	<th>Del.</th>" +
-        "</tr>";
+    var headLine = '<tr id="headRow">' +
+        '	<th>Nr</th>' +
+        '	<th>Serie</th>' +
+        '	<th>Stf.</th>' +
+        '	<th>Epi. Deu.</th>' +
+        '	<th>Epi. Org.</th>' +
+        '	<th>Genres</th>' +
+        '	<th>Hoster</th>' +
+        '	<th>Datum</th>' +
+        '	<th>Del.</th>' +
+        '</tr>';
 
     var table = document.createElement('table');
     table.setAttribute('id', 'logTable');
@@ -47,6 +48,8 @@ function makeTable(logs) {
 
     for (i = 0; i < logs.length; i++) {
         var tr = document.createElement('tr');
+        tr.setAttribute("tabindex", -1);
+        tr.setAttribute('id', i + 1);
 
         var td = document.createElement('td');
         td.innerHTML = i + 1;
@@ -109,6 +112,15 @@ function refreshContent() {
     var cp = document.getElementById('contentContainer');
     cp.innerHTML = "";
     makeLog(getLog(), cp);
+    
+    $("#logTable tr").mouseover(function () {
+        var searchElem = document.getElementById('search');
+
+        //Prevent focus when search-textarea has it
+        if (searchElem !== document.activeElement) {
+            $(this).focus();
+        }
+    });
 }
 
 function makeLog(logs, cp) {
@@ -244,7 +256,7 @@ function makeConf(cp) {
     contPane.setAttribute('id', 'contpane');
 
     var titleSet = document.createElement('h1');
-    titleSet.innerHTML = 'Hoster Priorität';
+    titleSet.innerHTML = 'Hoster Priorität (Drag & Drop)';
     contPane.appendChild(titleSet);
 
     var listSet = document.createElement('ul');
@@ -263,6 +275,7 @@ function makeConf(cp) {
     cp.appendChild(getCheckbox('Suche Fokussieren', 'focusSearch', 'searchCheckbox', false));
     cp.appendChild(getCheckbox('Favoriten Staffel Aktualieren', 'updateSeason', 'favCheckbox', true));
     cp.appendChild(getCheckbox('Log Anschalten', 'enableLog', 'logCheckbox', true));
+    cp.appendChild(getTextField('Autoplay Wartezeit', 'playTime', 'autoWait', 5));
 
     var applyButton = document.createElement('button');
     applyButton.setAttribute("id", "apply");
@@ -283,7 +296,14 @@ function makeConf(cp) {
         setCookie('focusSearch', document.getElementById('searchCheckbox').checked, true);
         setCookie('updateSeason', document.getElementById('favCheckbox').checked, true);
         setCookie('enableLog', document.getElementById('logCheckbox').checked, true);
-        
+
+        var playTime = document.getElementById('autoWait').value;
+        if (/^\d+$/.test(playTime)) {
+            setCookie('playTime', playTime);
+        } else {
+            document.getElementById(autoWait).value = getCookie('playTime');
+        }
+
         setInfoText("Einstellungen angewendet");
     });
 
@@ -300,13 +320,13 @@ function getCheckbox(message, cookieName, checkboxId, firstState) {
 
     if (typeof getCookie(cookieName) === 'undefined') {
         setCookie(cookieName, firstState);
-        if(firstState){
+        if (firstState) {
             checkBox.checked = true;
             checkBox.setAttribute('checked', 'true');
         } else {
             checkBox.checked = false;
         }
-        
+
     } else {
         if (getCookie(cookieName)) {
             checkBox.setAttribute('checked', 'true');
@@ -314,7 +334,30 @@ function getCheckbox(message, cookieName, checkboxId, firstState) {
     }
 
     checkboxLabel.appendChild(checkBox);
-    checkboxLabel.innerHTML += message;
+    checkboxLabel.innerHTML += "<span>" + message + "</span>";
+
+    return checkboxLabel;
+}
+
+function getTextField(message, cookieName, textFieldId, firstState) {
+    //Focus Search on start
+    var checkboxLabel = document.createElement('label')
+        checkboxLabel.setAttribute('class', 'checkboxLabel');
+    var textField = document.createElement('input');
+    textField.setAttribute('type', 'number');
+    textField.setAttribute('id', textFieldId);
+
+    if (typeof getCookie(cookieName) === 'undefined') {
+        setCookie(cookieName, firstState);
+        textField.setAttribute('value', '5');
+
+    } else {
+        var number = getCookie(cookieName);
+        textField.setAttribute('value', number);
+    }
+
+    checkboxLabel.appendChild(textField);
+    checkboxLabel.innerHTML +=  "<span>" + message + "</span>";
 
     return checkboxLabel;
 }
@@ -344,4 +387,13 @@ function afterInit() {
             var sortable = Sortable.create(el);
         }
     }
+
+    $("#logTable tr").mouseover(function () {
+        var searchElem = document.getElementById('search');
+
+        //Prevent focus when search-textarea has it
+        if (searchElem !== document.activeElement) {
+            $(this).focus();
+        }
+    });
 }

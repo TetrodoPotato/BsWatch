@@ -255,7 +255,7 @@ function updateFavorites() {
 
         //Fill the add button with elements
         var addButtonTd = document.createElement('td');
-        addButtonTd.setAttribute('colspan', '3');
+        addButtonTd.setAttribute('colspan', '4');
         addButtonTd.innerHTML = 'Serie Hinzufügen';
         addButton.appendChild(addButtonTd);
 

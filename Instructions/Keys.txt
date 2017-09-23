@@ -42,5 +42,11 @@
 	65	A				- Toggle Autoplay
 	
 //Log
-	Search '>log' for Log -> Default: Enabled
-	Change File 6->LOG_ENABLED
+	Search '>log' for Log
+    Search '>conf' for Config
+    
+    82  R               - Remove Focused Logentry
+    37	Arrow-Left 		- Previous Log Page
+	39	Arrow-Right		- Next Log Page
+    
+	

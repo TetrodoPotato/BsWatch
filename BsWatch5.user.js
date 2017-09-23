@@ -81,7 +81,7 @@ function setCrossDomainVariables(nextPath) {
     as = as.getElementsByTagName('a');
 
     var maxVal = '/' + as[as.length - 1].innerHTML;
-    var curVal = window.location.pathname; // /serie/und-dann-noch-Paula/1/1-Fick-dich-Fremder-Mann/Vivo
+    var curVal = window.location.pathname;
     var curSes = "Season " + curVal.split('/')[3];
     curVal = curVal.split('/')[4].split('-')[0];
     maxVal = curVal + maxVal;

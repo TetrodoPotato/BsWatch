@@ -199,6 +199,8 @@ var searchEv = function () {
 
     if (searchTerm == '>log') {
         window.location = "https://bs.to/log";
+    } else if (searchTerm == '>conf') {
+        window.location = "https://bs.to/log?data";
     }
 
     var container = document.getElementById('contentContainer');

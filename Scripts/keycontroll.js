@@ -165,87 +165,165 @@ function favNext(value) {
 }
 
 /**
+ * Click On Focused Tablerow
+ */
+function enterClick() {
+    //When the focused element has a link click it
+    if (document.activeElement.getElementsByTagName('a').length > 0) {
+        document.activeElement.getElementsByTagName('a')[0].click();
+    } else {
+        //Click the row and first element ... never trust a dead body
+        document.activeElement.click();
+        var tds = document.activeElement.getElementsByTagName('td');
+        if (tds.length != 0) {
+            //Second shot
+            tds[0].click();
+        }
+    }
+}
+
+/**
+ * Start Next Episode From Everywhere
+ */
+function tabClick() {
+    //Permanent cookies .. hm 2.7 years
+    var lastSeriesPerm = getCookie('lastSeriesPerm');
+    var lastSeasonPerm = getCookie('lastSeasonPerm');
+    var lastEpisodePerm = getCookie('lastEpisodePerm');
+
+    if (lastSeriesPerm != undefined &&
+        lastSeasonPerm != undefined &&
+        lastEpisodePerm != undefined) {
+
+        //Set default cookies for autoplay
+        setCookie('lastSeries', lastSeriesPerm, false);
+        setCookie('lastSeason', lastSeasonPerm, false);
+        setCookie('lastEpisode', lastEpisodePerm, false);
+        setCookie('autoplay', true, false);
+
+        //Launch outside butthole
+        var loc = 'https://bs.to/serie/' + lastSeriesPerm + '/' +
+            lastSeasonPerm;
+        window.location = loc;
+    }
+}
+
+/**
+ * Defavorise [This | Focused] Series
+ */
+function defavClick() {
+    var favTab = document.getElementById('favTable');
+    if (favTab.contains(document.activeElement)) {
+        var addButton = document.getElementById('addButton');
+        if (addButton !== null) {
+            if (addButton != document.activeElement) {
+                var act = document.activeElement;
+                act.getElementsByTagName('td')[3].click();
+            }
+        } else {
+            var act = document.activeElement;
+            act.getElementsByTagName('td')[3].click();
+        }
+    } else {
+        removeThisFav();
+    }
+}
+
+/**
+ * Click On Remove Button On LogSegment
+ */
+function removeLogSegment() {
+    var focElem = document.activeElement;
+    var tds = focElem.getElementsByTagName('td');
+    if (tds.length == 9) {
+        tds[8].click();
+    }
+}
+
+/**
+ * Change Log Destination
+ */
+function nextLog(val) {
+    var path = window.location.search;
+
+    var opt = ['', '?info', '?data'];
+    for (let i = 0; i < opt.length; i++) {
+        if (opt[i] === path) {
+            i += val;
+            if (i >= opt.length) {
+                i = 0;
+            } else if (i < 0) {
+                i = opt.length - 1;
+            }
+            
+            window.location = "https://bs.to/log" + opt[i];       
+            return;
+        }
+    }
+
+}
+
+/**
  * Make key things happen.
  */
 $(document).ready(function () {
     //Fuck Key controll
     $(window).keydown(function (e) {
         var nextButton = document.getElementById('nextButton');
-        if (nextButton != null) {
-            if (e.keyCode === 27) { //ESC
+        if (nextButton != null) { // On Next Episode Window
+            if (e.keyCode === 27) { //ESC | Close Next Window
                 e.preventDefault();
                 setNextBreak();
             }
-        } else if (document.getElementById('search') === document.activeElement) {
-            if (e.keyCode === 27 || e.keyCode === 13 || e.keyCode === 40 || e.keyCode === 38) { //Esc / Enter
+        } else if (document.getElementById('search') === document.activeElement) { //On Search Focus
+            if (e.keyCode === 27 || e.keyCode === 13 || e.keyCode === 40 || e.keyCode === 38) { //Esc / Enter / Down / Up | End Search Focus
                 e.preventDefault();
+                document.activeElement.blur();
                 focusNext(1);
             }
-        } else if (document.activeElement.tagName.toLowerCase() != "input") {
-            if (e.keyCode === 75) { //K
+        } else if (document.activeElement.tagName.toLowerCase() != "input") { //Not On Search Or Login
+            if (e.keyCode === 75) { //K | Focus On Search
                 e.preventDefault();
                 document.getElementById('search').focus();
-            } else if (e.keyCode === 38) { //Arr-up
+            } else if (e.keyCode === 38) { //Arr-up | Table Row Focus Up
                 e.preventDefault();
                 if (favSwitch) {
                     favNext(-1);
                 } else {
                     focusNext(-1);
                 }
-            } else if (e.keyCode === 40) { //Arr-down
+            } else if (e.keyCode == 112) { //F1 | Toggle Keyonly State
+                e.preventDefault();
+                keyonly = !keyonly;
+                setCookie('keyonly', keyonly, false);
+
+                if (keyonly) {
+                    makeKeyOnly();
+                } else {
+                    removeKeyOnly();
+                }
+            } else if (e.keyCode === 40) { //Arr-down | Table Row Focus Down
                 e.preventDefault();
                 if (favSwitch) {
                     favNext(1);
                 } else {
                     focusNext(1);
                 }
-            } else if (e.keyCode === 13) { //Enter
+            } else if (e.keyCode === 13) { //Enter | Click
                 e.preventDefault();
-
-                //When the focused element has a link click it
-                if (document.activeElement.getElementsByTagName('a').length > 0) {
-                    document.activeElement.getElementsByTagName('a')[0].click();
-                } else {
-                    //Click the row and first element ... never trust a dead body
-                    document.activeElement.click();
-                    var tds = document.activeElement.getElementsByTagName('td');
-                    if (tds.length != 0) {
-                        //Second shot
-                        tds[0].click();
-                    }
-                }
-            } else if (e.keyCode === 65) { //A
+                enterClick();
+            } else if (e.keyCode === 65) { //A | Toggle Autoplay
                 e.preventDefault();
                 document.getElementById('auto').checked = !document.getElementById('auto').checked;
                 var auto = document.getElementById('auto');
                 setCookie('autoplay', auto.checked, false);
-            } else if (e.keyCode === 72) { //H
+            } else if (e.keyCode === 72) { //H | Back To Home
                 e.preventDefault();
                 window.location = 'https://bs.to/?back';
-            } else if (e.keyCode == 9) { //Tab
+            } else if (e.keyCode == 9) { //Tab | Play Next Episode
                 e.preventDefault();
-                //Permanent cookies .. hm 2.7 years
-                var lastSeriesPerm = getCookie('lastSeriesPerm');
-                var lastSeasonPerm = getCookie('lastSeasonPerm');
-                var lastEpisodePerm = getCookie('lastEpisodePerm');
-
-                if (lastSeriesPerm != undefined &&
-                    lastSeasonPerm != undefined &&
-                    lastEpisodePerm != undefined) {
-
-                    //Set default cookies for autoplay
-                    setCookie('lastSeries', lastSeriesPerm, false);
-                    setCookie('lastSeason', lastSeasonPerm, false);
-                    setCookie('lastEpisode', lastEpisodePerm, false);
-                    setCookie('autoplay', true, false);
-
-                    //Launch outside butthole
-                    var loc = 'https://bs.to/serie/' + lastSeriesPerm + '/' +
-                        lastSeasonPerm;
-                    window.location = loc;
-                }
-
-            } else if (e.keyCode === 8) { //Backspace
+                tabClick();
+            } else if (e.keyCode === 8) { //Backspace | Back To Last Series
                 e.preventDefault();
                 var lastSeries = getCookie('lastSeries');
                 var lastSeason = getCookie('lastSeason');
@@ -255,7 +333,7 @@ $(document).ready(function () {
                     setCookie('autoplay', false, false);
                     window.location = backFunction;
                 }
-            } else if (e.keyCode === 77) { //M
+            } else if (e.keyCode === 77) { //M | Toggle To Favorite Menu
                 e.preventDefault();
                 favSwitch = !favSwitch;
                 if (favSwitch) {
@@ -270,55 +348,38 @@ $(document).ready(function () {
                 //Check for /watch:1 or /unwatch:1
                 var watchedLink = false;
                 if (path.length > 4) {
-                    if (path[4].indexOf('watch') == 0) {
-                        watchedLink = true;
-                    } else if (path[4].indexOf('unwatch') == 0) {
+                    if (path[4].indexOf('watch') != -1 || path[4].indexOf('unwatch') != -1) {
                         watchedLink = true;
                     }
                 }
 
                 //On EpisodeTable
-                if (path.length == 3 || path.length == 4 || watchedLink) {
-                    if (e.keyCode === 37) { //Arr-left
+                if (path.length == 3 || path.length == 4 || watchedLink) { //bs.to/series/seriesName/season/episodename ?+ /watch:number
+                    if (e.keyCode === 37) { //Arr-left | Previous-Season
                         e.preventDefault();
                         openNextSeasonUser(-1);
-                    } else if (e.keyCode === 39) { //Arr-right
+                    } else if (e.keyCode === 39) { //Arr-right | Next-Season
                         e.preventDefault();
                         openNextSeasonUser(1);
-                    } else if (e.keyCode === 79) { //O
+                    } else if (e.keyCode === 79) { //O | Mark All As Watched
                         e.preventDefault();
                         var allWatch = document.getElementById('allWatchTable');
                         if (allWatch !== null) {
                             allWatch.getElementsByTagName('td')[0].click();
                         }
-                    } else if (e.keyCode === 80) { //P
+                    } else if (e.keyCode === 80) { //P | Mark All As Unwatched
                         e.preventDefault();
                         var allWatch = document.getElementById('allWatchTable');
                         if (allWatch !== null) {
                             allWatch.getElementsByTagName('td')[1].click();
                         }
-                    } else if (e.keyCode === 70) { //F
+                    } else if (e.keyCode === 70) { //F | Favorise Current Series
                         e.preventDefault();
                         addThisFav();
-
-                    } else if (e.keyCode === 68) { //D
+                    } else if (e.keyCode === 68) { //D | Defavorise [Current / Focused in FavTable ] Series
                         e.preventDefault();
-                        var favTab = document.getElementById('favTable');
-                        if (favTab.contains(document.activeElement)) {
-                            var addButton = document.getElementById('addButton');
-                            if (addButton !== null) {
-                                if (addButton != document.activeElement) {
-                                    var act = document.activeElement;
-                                    act.getElementsByTagName('td')[3].click();
-                                }
-                            } else {
-                                var act = document.activeElement;
-                                act.getElementsByTagName('td')[3].click();
-                            }
-                        } else {
-                            removeThisFav();
-                        }
-                    } else if (e.keyCode === 87) { //W
+                        defavClick();
+                    } else if (e.keyCode === 87) { //W | Toggle Watchstate Of Focused Episode
                         e.preventDefault();
                         if (isLoggedin) {
                             if (document.getElementById('episodeTable').contains(document.activeElement)) {
@@ -326,36 +387,40 @@ $(document).ready(function () {
                             }
                         }
                     }
-                } else if (path.length > 4) {
-                    if (e.keyCode === 78) { //N
+                } else if (path.length > 4) { //On HosterTable
+                    if (e.keyCode === 78) { //N | Open Next Episode
                         e.preventDefault();
                         window.location = 'https://bs.to/?next';
                     }
-                } else if (path.length == 2) {
-                    if (e.keyCode === 70) { //f
-                        e.preventDefault();
-                        var act = document.activeElement;
-                        var actFav = act.getElementsByTagName('td')[3];
-                        if (actFav !== null) {
-                            actFav.click();
+                } else if (path.length == 2) { // SeriesTable
+
+                    if (path[1] === 'log') {
+                        if (e.keyCode === 82) { //R | Remove Focused Logsement
+                            e.preventDefault();
+                            removeLogSegment()
+                        } else if (e.keyCode === 37) { //Arr-left | Previous-Season
+                            e.preventDefault();
+                            nextLog(-1)
+                        } else if (e.keyCode === 39) { //Arr-right | Next-Season
+                            e.preventDefault();
+                            nextLog(1)
+                        }
+                    } else if (path[1] === 'serie-genre') {
+                        if (e.keyCode === 70) { //F | Favorise Focused Series
+                            e.preventDefault();
+                            var act = document.activeElement;
+                            var actFav = act.getElementsByTagName('td')[3];
+                            if (actFav !== null) {
+                                actFav.click();
+                            }
                         }
                     }
+
                 }
 
             }
 
         }
 
-        if (e.keyCode == 112) {
-            e.preventDefault();
-            keyonly = !keyonly;
-            setCookie('keyonly', keyonly, false);
-
-            if (keyonly) {
-                makeKeyOnly();
-            } else {
-                removeKeyOnly();
-            }
-        }
     });
 });

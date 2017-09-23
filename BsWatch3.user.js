@@ -227,7 +227,13 @@ function afterInit() {
             //Check if autoplay is on
             if (getCookie('autoplay') == true) {
                 if (getCookie('lastEpisode') != 'next0x000001') {
-                    nextWindow(5);
+                    var playNextTime = getCookie('playTime');
+                    if (typeof playNextTime == 'undefined') {
+                        playNextTime = 5;
+                    } else {
+                        playNextTime = parseInt(playNextTime);
+                    }
+                    nextWindow(playNextTime);
                 }
             } else {
                 setCookie('autoplay', false, false);
@@ -501,6 +507,13 @@ function nextWindow(time) {
     nextTime = time;
     nextBreak = false;
 
+    if (time === 0) {
+        if (!playNextEpisode()) {
+            closeNextBreak();
+        }
+        return;
+    }
+    
     //The styles that get loaded before the actual styles get loaded
     var styleTag = document.createElement('style');
     styleTag.innerHTML = '* {margin:0;padding:0;font-family: Arial, Helvetica, sans-serif;font-size:16px;}' +
@@ -542,6 +555,7 @@ function nextWindow(time) {
     bodys.appendChild(texts);
     bodys.appendChild(butto);
     document.documentElement.appendChild(plane);
+
 
     //Start Timer ugly but work work
     for (i = 1; i < time + 1; i++) {
