@@ -394,8 +394,10 @@ function init() { //Black page over original
             afterInit();
         }
 
-        var time = new Date() - start;
-        console.log('Executiontime: ' + time);
+        if (getCookie('debug')) {
+            var time = new Date() - start;
+            console.log('Executiontime: ' + time);
+        }
 
         //New Time Messure
         start = new Date();
@@ -409,8 +411,10 @@ function init() { //Black page over original
             if (document.getElementById('plane') !== null) {
                 document.documentElement.style.overflow = 'hidden'; // firefox, chrome
             }
-            var loadTime = new Date() - start;
-            console.log('Loadingtime: ' + loadTime);
+            if (getCookie('debug')) {
+                var loadTime = new Date() - start;
+                console.log('Loadingtime: ' + loadTime);
+            }
         });
     });
 }

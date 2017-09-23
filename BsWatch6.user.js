@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/openload\.co\/embed\/.+$/
-// @version    	1.2
+// @version    	1.3
 // @description	OpenLoad Direct-Link
 // @author     	Kartoffeleintopf
 // @run-at 		document-start

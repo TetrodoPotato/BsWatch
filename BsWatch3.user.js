@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+(\/(\d+(\/((unwatch:|watch:)(\d+|all)(\/)?)?)?)?)?$/
-// @version    	1.5
+// @version    	1.6
 // @description	Episode List
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
