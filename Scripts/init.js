@@ -1,12 +1,26 @@
-var cssLink = 'https://kartoffeleintopf.github.io/BsWatch/StyleSheeds/bsStyle.css';
-//var cssLink = 'https://dl.dropbox.com/s/xpud8exmlapizrz/bsStyle.css';
-
-var cssVidLink = 'https://kartoffeleintopf.github.io/BsWatch/StyleSheeds/playerStyle.css';
-//var cssVidLink = 'https://dl.dropbox.com/s/z2evfmixktpfb9n/playerStyle.css';
+if (getCookie('debug')) {
+    var cssLink = 'https://dl.dropbox.com/s/xpud8exmlapizrz/bsStyle.css';
+    var cssVidLink = 'https://dl.dropbox.com/s/z2evfmixktpfb9n/playerStyle.css';
+} else {
+    var cssLink = 'https://kartoffeleintopf.github.io/BsWatch/StyleSheeds/bsStyle.css';
+    var cssVidLink = 'https://kartoffeleintopf.github.io/BsWatch/StyleSheeds/playerStyle.css';
+}
 
 //Global vars
 var keyonly = false; //None Mouse
 var isLoggedin = false;
+
+/**
+ * Enables debugmode
+ * @param {boolean} - On or Off
+ */
+function debugmode(on) {
+    if (on) {
+        setCookie('debug', true);
+    } else {
+        setCookie('debug', false);
+    }
+}
 
 /**
  * Provides a Menu-topbar with home, back, search, autoplay, and favorite-elements.
@@ -386,9 +400,9 @@ function init() { //Black page over original
 
         //Delete blackP onload ... because the stylesheed needs to be loaded
         $(window).bind("load", function () {
-			if(getCookie('focusSearch') == true){
-				document.getElementById('search').focus()
-			}
+            if (getCookie('focusSearch') == true) {
+                document.getElementById('search').focus()
+            }
             removeBlackPage();
             if (document.getElementById('plane') !== null) {
                 document.documentElement.style.overflow = 'hidden'; // firefox, chrome

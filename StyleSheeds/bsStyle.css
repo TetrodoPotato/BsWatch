@@ -684,14 +684,20 @@ h2 small {
 
 #favCon table tr td:nth-child(3){
 	width:0.1%;
+    background-color:#222;
+	padding: 0 20px 0 20px;
+}
+
+#favCon table tr td:nth-child(4){
+	width:0.1%;
 	padding:5px 15px 0 15px;
 }
 
-#favCon table tr td:nth-child(3) svg polygon{
+#favCon table tr td:nth-child(4) svg polygon{
 	fill:#ee4d2e;
 }
 
-#favCon table tr td:nth-child(3):hover svg polygon{
+#favCon table tr td:nth-child(4):hover svg polygon{
 	fill:#a0260d;
 }
 
@@ -701,6 +707,10 @@ h2 small {
 }
 
 #favCon table tr:focus td:nth-child(3){
+	background-color:#a0260d;
+}
+
+#favCon table tr:focus td:nth-child(4){
 	color:#ee4d2e;
 	background-color:#181818;
 }
@@ -956,7 +966,7 @@ h2 small {
 	opacity: 1; 
 }
 
-#checkboxLabel {
+.checkboxLabel {
 	width:200px;
 	color:#ee4d2e;
 	display:block;
@@ -964,6 +974,6 @@ h2 small {
 	margin-top:10px;
 }
 
-#checkboxLabel input{
+.checkboxLabel input{
 	margin-right:10px;
 }

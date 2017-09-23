@@ -299,23 +299,8 @@ $(document).ready(function () {
                         }
                     } else if (e.keyCode === 70) { //F
                         e.preventDefault();
-                        var favTab = document.getElementById('favTable');
-                        if (favTab.contains(document.activeElement)) {
-                            var addButton = document.getElementById('addButton');
-                            if (addButton !== null) {
-                                var slicePath = window.location.pathname;
-                                slicePath = slicePath.split('/');
-                                //Add the current series to favorites
-                                addFavorite(slicePath[2]);
-                                //Update favorites table
-                                updateFavorites();
-                            }
-                        } else {
-                            var addButton = document.getElementById('addButton');
-                            if (addButton !== null) {
-                                addThisFav();
-                            }
-                        }
+                        addThisFav();
+
                     } else if (e.keyCode === 68) { //D
                         e.preventDefault();
                         var favTab = document.getElementById('favTable');
@@ -324,11 +309,11 @@ $(document).ready(function () {
                             if (addButton !== null) {
                                 if (addButton != document.activeElement) {
                                     var act = document.activeElement;
-                                    act.getElementsByTagName('td')[2].click();
+                                    act.getElementsByTagName('td')[3].click();
                                 }
                             } else {
                                 var act = document.activeElement;
-                                act.getElementsByTagName('td')[2].click();
+                                act.getElementsByTagName('td')[3].click();
                             }
                         } else {
                             removeThisFav();

@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/[^\/]+\/.+$/
-// @version    	2.6
+// @version    	2.7
 // @description	Open Hoster
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -17,15 +17,17 @@
 // @downloadURL https://raw.githubusercontent.com/Kartoffeleintopf/BsWatch/master/BsWatch5.user.js
 // ==/UserScript==
 
-//Enable LOG
-var ENABLE_LOG = true;
-
 //Init page
 init();
 
 function initPage(cp) {
+
+    if (getCookie('updateSeason') != false) {
+        updateFavoritesSeason()
+    }
+
     //Check log
-    if (ENABLE_LOG) {
+    if (getCookie('enableLog') != false) {
         var get = log(cp);
     } else {
         logReady(cp);
@@ -96,12 +98,12 @@ function setCrossDomainVariables(nextPath) {
 
     var redirLink = "https://bs.to/data?next=" + encodeURI(nextPath);
 
-	redirLink += "?max=" + encodeURI(maxVal);
-	redirLink += "?sea=" + encodeURI(curSes);
-	redirLink += "?ser=" + encodeURI(curSer);
-	redirLink += "?tit=" + encodeURI(tit);
-	
-	return redirLink;
+    redirLink += "?max=" + encodeURI(maxVal);
+    redirLink += "?sea=" + encodeURI(curSes);
+    redirLink += "?ser=" + encodeURI(curSer);
+    redirLink += "?tit=" + encodeURI(tit);
+
+    return redirLink;
 }
 
 function log(cp) {
@@ -274,4 +276,35 @@ function makePage(hoster, bsout, cp) {
     cp.appendChild(getTitle());
     cp.appendChild(getHosterTable(hoster, bsout));
     cp.appendChild(getFunctionButtons());
+}
+
+function updateFavoritesSeason() {
+    var tit = document.getElementById('sp_left');
+    tit = tit.getElementsByTagName('h2')[0];
+    tit = tit.innerHTML.split(tit.getElementsByTagName('small')[0].outerHTML)[0].trim();
+
+    var found = false;
+    var rawFav = getRawFav();
+    for (let i = 0; i < rawFav.length; i++) {
+        var buffer = rawFav[i].split('|');
+        if (buffer[0] === tit) {
+            console.log(buffer[0]);
+            console.log(tit);
+            found = true;
+            break;
+        }
+    }
+
+    if (found) {
+        //Get the current url path
+        var slicePath = window.location.pathname;
+
+        var tit = document.getElementById('sp_left');
+        tit = tit.getElementsByTagName('h2')[0];
+        tit = tit.innerHTML.split(tit.getElementsByTagName('small')[0].outerHTML)[0];
+
+        //Add the current series to favorites
+        addFavorite(slicePath, tit, true);
+    }
+
 }

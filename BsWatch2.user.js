@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie-genre[^\/]*$/
-// @version    	2.1
+// @version    	2.2
 // @description	Series List
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -148,12 +148,19 @@ function createRow(index, rowObj, favStar) {
     //Favorite Node set/rem-favorite
     var favNode = document.createElement('td');
     var toFav = rowObj.linkTo.split('/')[1];
-    favNode.setAttribute('favId', toFav);
+    favNode.setAttribute("favid",toFav);
     favNode.appendChild(favStar);
 
-    if (favoritesSeries.indexOf(toFav) > -1) {
-        favNode.setAttribute('class', 'isFav');
-    } else {
+    var found = false;
+    for (var i = 0; i < favoritesSeries.length; i++) {
+        if (favoritesSeries[i].id == toFav) {
+            found = true;
+            favNode.setAttribute('class', 'isFav');
+            break;
+        }
+    }
+
+    if(!found){
         favNode.setAttribute('class', 'noFav');
     }
 
@@ -187,12 +194,25 @@ function afterInit() {
     $("#seriesTable tr td:last-child").click(function (e) {
         e.stopPropagation();
 
-        var favName = $(this).attr('favId');
+        var targetDom = e.target;
+        var targetParent = targetDom.parentElement;
+        
+        while(targetParent.nodeName != 'TR'){
+            targetParent = targetParent.parentElement;
+        }
+        
+        var pathName = targetParent.getAttribute('class');
+        pathName = pathName.split('https://bs.to')[1];
+        
+        var seriesName = targetParent.getElementsByTagName('td')[1].innerHTML;
+        
         if ($(this).attr('class') == 'isFav') {
-            removeFavorite(favName, true);
+            pathName = pathName.split('/')[2];
+            console.log(pathName);
+            removeFavorite(pathName, true)
             $(this).attr('class', 'noFav');
         } else {
-            addFavorite(favName);
+            addFavorite(pathName, seriesName)
             $(this).attr('class', 'isFav');
         }
     });

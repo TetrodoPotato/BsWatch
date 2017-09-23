@@ -1,94 +1,108 @@
 /**
- * Adds a Series to the favorites.
- * Save thru cookies.
+ * Add a Fav-segment to the Fav. Uses Local Storage.
  */
-function addFavorite(series) {
-    //Get all favorites
-    var favsSolo = getFavs();
-
-    if (favsSolo.length > 14) {
-        alert('Zu viele Favoriten!');
-        return;
+function addFavorite(path, seriesName, dontUpdate) {
+    
+    var season = 1;
+    var series = seriesName.trim();
+    var seriesPath = 'SeriesPath';
+    
+    var pathPart = path.trim().split('/');
+    var id = pathPart[2];
+     
+    if(pathPart.length == 3){
+        seriesPath = "https://bs.to" + path + "/" + season;
+    } else {
+        season = parseInt(pathPart[3]);
+        seriesPath = "https://bs.to/" + pathPart[1] + "/" + pathPart[2] + "/" + season;
     }
 
-    //When it already exist .. piss your pants
-    if ($.inArray(series, favsSolo) != -1) {
-        return;
-    }
+    var addString = series + "|" + season + "|" + seriesPath + "|" + id;
 
-    //Add all current favorites to one String
-    var newCookie = "";
-    for (i = 0; i < favsSolo.length; i++) {
-        newCookie += favsSolo[i] + ",";
-    }
-    //and at least add the new favorite
-    newCookie += series;
+    var favData = getRawFav();
 
-    //Update the cookie ... hmmm yaa ...
-    //to the new favorite string
-    setCookie('favorites', newCookie, true);
-    //Update favorites table
-    updateFavorites();
+    var found = false;
+    for(let i=0;i<favData.length;i++){
+        var buffer = favData[i].split('|');
+        if(buffer[0] === series){
+            favData[i] = addString;
+            found = true;
+            break;
+        }
+    }
+    
+    if(!found){
+        favData.push(addString);
+        favData.sort();
+    }
+    
+    localStorage.setItem('fav', JSON.stringify(favData));
+    
+    if (typeof dontUpdate === "undefined") {
+        updateFavorites();
+    }
+    
 }
 
 /**
- * Get {String-Array} rawFav with all favorised series.
- * @return Array with all favorised series.
+ * Get the Fav Log Array.
+ * @return {String-Array} the Favorites.
+ */
+function getRawFav() {
+    var fav = localStorage.getItem('fav');
+    if (!fav) {
+        fav = [];
+        localStorage.setItem('fav', JSON.stringify(fav));
+    } else {
+        fav = JSON.parse(fav);
+    }
+    return fav;
+}
+
+/**
+ * Get the Fav-sement Object.
+ * @return {Object} Fav-segment.
  */
 function getFavs() {
-    //Get the cookie-string
-    var favs = getCookie('favorites');
+    var favData = getRawFav();
 
-    //Check if the cookie is not added or empty
-    if (favs == null) {
-        return [];
-    } else if (favs.split(',')[0] == '') {
-        //When the cookie is empty remove it completly
-        removeCookie('favorites');
-        return [];
+    var favObj = [];
+    for (i = 0; i < favData.length; i++) {
+        var buf = favData[i].split('|');
+
+        bufObj = {
+            series: buf[0],
+            season: buf[1],
+            seriesPath: buf[2],
+            id: buf[3]
+        }
+
+        favObj[favObj.length] = bufObj;
     }
 
-    var rawFav = favs.split(',');
-
-    //sort
-    rawFav.sort(function (a, b) {
-        return a.localeCompare(b);
-    });
-
-    //Send the favorite array
-    return rawFav;
+    return favObj;
 }
 
 /**
- * Removes a series with a {String} name from the favorised
- * and updates the favorites.
- * @param {String} name - name of the series.
- * @param {boolean} inTable - if the series is remoced from {DOM} favTable.
+ * Removes an log-segment with given index.
  */
-function removeFavorite(name, inTable) {
-    //Get all favorites
-    var favsSolo = getFavs();
-
-    //Check if the favorite is there
-    var nameIndex = $.inArray(name, favsSolo);
-    if (nameIndex == -1) {
-        return;
+function removeFavorite(id,inTable) {
+    var raw = getRawFav();
+    var newRaw = [];
+    for (i = 0; i < raw.length; i++) {
+        if (raw[i].split('|')[3] != id) {
+            newRaw[newRaw.length] = raw[i];
+        }
     }
 
-    //Remove that thing ...
-    favsSolo = removeIndex(favsSolo, nameIndex);
-
-    setCookie('favorites', '', true);
-
-    //Add all other favorites
-    for (i = 0; i < favsSolo.length; i++) {
-        addFavorite(favsSolo[i]);
-    }
-
+    localStorage.setItem('fav', JSON.stringify(newRaw));
+    
+    console.log(id);
+    
     //check if edited in Table
     if (typeof inTable === "undefined") {
         //Edit Table
-        $("[favid=" + name + "]").attr('class', 'noFav');
+        $("[favid=" + id + "]").attr('class', 'noFav');
     }
 
     //Update favorites table
@@ -96,13 +110,52 @@ function removeFavorite(name, inTable) {
 }
 
 /**
- * Removes an index from Array.
- * @param {Array} arr - array.
- * @param {Number} index - index in {Array} arr.
+ * Add the current series to the table.
  */
-function removeIndex(arr, index) {
-    arr.splice(index, 1);
-    return arr;
+function addThisFav() {
+    //Show all elements
+    $('#favButton').addClass('favShow');
+
+    window.setTimeout(function () {
+        //Get the current url path
+        var slicePath = window.location.pathname;
+        
+        var tit = document.getElementById('contentContainer');
+        tit = tit.getElementsByTagName('h2')[0];
+        tit = tit.innerHTML.split(tit.getElementsByTagName('small')[0].outerHTML)[0];
+        
+        //Add the current series to favorites
+        addFavorite(slicePath, tit)
+        
+        window.setTimeout(function () {
+            //Hide table
+            $('#favButton').removeClass('favShow');
+        }, 500);
+
+    }, 500);
+}
+
+/**
+ * Removes the current series from the table.
+ */
+function removeThisFav() {
+    //Show all Elements
+    $('#favButton').addClass('favShow');
+
+    //Wait
+    window.setTimeout(function () {
+        //Get the current url path
+        var slicePath = window.location.pathname;
+        slicePath = slicePath.split('/');
+        //Remove the current series to favorites
+        removeFavorite(slicePath[2]);
+
+        window.setTimeout(function () {
+            //Hide table
+            $('#favButton').removeClass('favShow');
+        }, 500);
+
+    }, 500);
 }
 
 /**
@@ -135,31 +188,36 @@ function updateFavorites() {
             var td1 = document.createElement('td');
             var td2 = document.createElement('td');
             var td3 = document.createElement('td');
-
+            var td4 = document.createElement('td');
+            
             //Index
             td1.innerHTML = (i + 1);
-            td1.setAttribute('val', favs[i]);
+            td1.setAttribute('val', favs[i].seriesPath);
+            
             //Name
-            td2.innerHTML = favs[i].split('-').join(' ');
-            td2.setAttribute('val', favs[i]);
-            //Remove icon
+            td2.innerHTML = favs[i].series;
+            td2.setAttribute('val', favs[i].seriesPath);
 
+            //Season
+            td3.innerHTML = favs[i].season;
+            td3.setAttribute('val', favs[i].seriesPath);
+            
             //Svg image in button
-            td3.appendChild(getCross());
-            td3.setAttribute('val', favs[i]);
+            td4.appendChild(getCross());
+            td4.setAttribute('val', favs[i].id);
 
+            var clickFav = function () {
+                var val = this.getAttribute('val');
+                window.location = val;
+            }
+            
             //Change location to the favorite series on click
-            td1.addEventListener('click', function () {
-                var val = this.getAttribute('val');
-                window.location = 'https://bs.to/serie/' + val;
-            });
-            td2.addEventListener('click', function () {
-                var val = this.getAttribute('val');
-                window.location = 'https://bs.to/serie/' + val;
-            });
+            td1.addEventListener('click', clickFav);
+            td2.addEventListener('click', clickFav);
+            td3.addEventListener('click', clickFav);
 
             //Remove the favorite and update the table on click
-            td3.addEventListener('click', function () {
+            td4.addEventListener('click', function () {
                 var val = this.getAttribute('val');
                 removeFavorite(val);
                 updateFavorites();
@@ -169,6 +227,7 @@ function updateFavorites() {
             tr.appendChild(td1);
             tr.appendChild(td2);
             tr.appendChild(td3);
+            tr.appendChild(td4);
 
             //add row to the table
             favTbody.appendChild(tr);
@@ -214,49 +273,4 @@ function updateFavorites() {
     document.getElementById('favCon').innerHTML = '';
     //Update the new content
     document.getElementById('favCon').appendChild(favTable);
-}
-
-/**
- * Add the current series to the table.
- */
-function addThisFav() {
-    //Show all elements
-    $('#favButton').addClass('favShow');
-
-    window.setTimeout(function () {
-        //Get the current url path
-        var slicePath = window.location.pathname;
-        slicePath = slicePath.split('/');
-        //Add the current series to favorites
-        addFavorite(slicePath[2]);
-
-        window.setTimeout(function () {
-            //Hide table
-            $('#favButton').removeClass('favShow');
-        }, 500);
-
-    }, 500);
-}
-
-/**
- * Removes the current series from the table.
- */
-function removeThisFav() {
-    //Show all Elements
-    $('#favButton').addClass('favShow');
-
-    //Wait
-    window.setTimeout(function () {
-        //Get the current url path
-        var slicePath = window.location.pathname;
-        slicePath = slicePath.split('/');
-        //Remove the current series to favorites
-        removeFavorite(slicePath[2]);
-
-        window.setTimeout(function () {
-            //Hide table
-            $('#favButton').removeClass('favShow');
-        }, 500);
-
-    }, 500);
 }
