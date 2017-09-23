@@ -2,15 +2,15 @@
  * Add a Fav-segment to the Fav. Uses Local Storage.
  */
 function addFavorite(path, seriesName, dontUpdate) {
-    
+
     var season = 1;
     var series = seriesName.trim();
     var seriesPath = 'SeriesPath';
-    
+
     var pathPart = path.trim().split('/');
     var id = pathPart[2];
-     
-    if(pathPart.length == 3){
+
+    if (pathPart.length == 3) {
         seriesPath = "https://bs.to" + path + "/" + season;
     } else {
         season = parseInt(pathPart[3]);
@@ -22,26 +22,26 @@ function addFavorite(path, seriesName, dontUpdate) {
     var favData = getRawFav();
 
     var found = false;
-    for(let i=0;i<favData.length;i++){
+    for (let i = 0; i < favData.length; i++) {
         var buffer = favData[i].split('|');
-        if(buffer[0] === series){
+        if (buffer[0] === series) {
             favData[i] = addString;
             found = true;
             break;
         }
     }
-    
-    if(!found){
+
+    if (!found) {
         favData.push(addString);
         favData.sort();
     }
-    
+
     localStorage.setItem('fav', JSON.stringify(favData));
-    
+
     if (typeof dontUpdate === "undefined") {
         updateFavorites();
     }
-    
+
 }
 
 /**
@@ -86,7 +86,7 @@ function getFavs() {
 /**
  * Removes an log-segment with given index.
  */
-function removeFavorite(id,inTable) {
+function removeFavorite(id, inTable) {
     var raw = getRawFav();
     var newRaw = [];
     for (i = 0; i < raw.length; i++) {
@@ -96,9 +96,9 @@ function removeFavorite(id,inTable) {
     }
 
     localStorage.setItem('fav', JSON.stringify(newRaw));
-    
+
     console.log(id);
-    
+
     //check if edited in Table
     if (typeof inTable === "undefined") {
         //Edit Table
@@ -119,14 +119,14 @@ function addThisFav() {
     window.setTimeout(function () {
         //Get the current url path
         var slicePath = window.location.pathname;
-        
+
         var tit = document.getElementById('contentContainer');
         tit = tit.getElementsByTagName('h2')[0];
         tit = tit.innerHTML.split(tit.getElementsByTagName('small')[0].outerHTML)[0];
-        
+
         //Add the current series to favorites
         addFavorite(slicePath, tit)
-        
+
         window.setTimeout(function () {
             //Hide table
             $('#favButton').removeClass('favShow');
@@ -189,11 +189,11 @@ function updateFavorites() {
             var td2 = document.createElement('td');
             var td3 = document.createElement('td');
             var td4 = document.createElement('td');
-            
+
             //Index
             td1.innerHTML = (i + 1);
             td1.setAttribute('val', favs[i].seriesPath);
-            
+
             //Name
             td2.innerHTML = favs[i].series;
             td2.setAttribute('val', favs[i].seriesPath);
@@ -201,7 +201,7 @@ function updateFavorites() {
             //Season
             td3.innerHTML = favs[i].season;
             td3.setAttribute('val', favs[i].seriesPath);
-            
+
             //Svg image in button
             td4.appendChild(getCross());
             td4.setAttribute('val', favs[i].id);
@@ -210,7 +210,7 @@ function updateFavorites() {
                 var val = this.getAttribute('val');
                 window.location = val;
             }
-            
+
             //Change location to the favorite series on click
             td1.addEventListener('click', clickFav);
             td2.addEventListener('click', clickFav);

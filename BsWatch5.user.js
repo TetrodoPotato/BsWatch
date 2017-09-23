@@ -288,8 +288,6 @@ function updateFavoritesSeason() {
     for (let i = 0; i < rawFav.length; i++) {
         var buffer = rawFav[i].split('|');
         if (buffer[0] === tit) {
-            console.log(buffer[0]);
-            console.log(tit);
             found = true;
             break;
         }
