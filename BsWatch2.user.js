@@ -232,7 +232,7 @@ function afterInit() {
         setCookie('seriesSearch', document.getElementById('search').value, false);
     }, 1000)
 
-    if (getDefault(getCookie(focusSearch), false)) {
+    if (getDefault(getCookie('focusSearch'), false)) {
         document.getElementById('search').focus()
     }
 }
