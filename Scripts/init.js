@@ -247,7 +247,7 @@ var searchEv = function () {
  * @return {boolean} if {DOM} child has {DOM} parent.
  */
 function isDescendant(parent, child) {
-    if (child === null) {
+    if (child !== null) {
         var node = child.parentNode;
         while (node != null) {
             if (node == parent) {
