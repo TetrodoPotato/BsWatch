@@ -269,6 +269,11 @@ function nextLog(val) {
 $(document).ready(function () {
     //Fuck Key controll
     $(window).keydown(function (e) {
+        
+        if(e.shiftKey || e.ctrlKey) {
+            return;
+        }
+        
         var nextButton = document.getElementById('nextButton');
         if (nextButton != null) { // On Next Episode Window
             if (e.keyCode === 27) { //ESC | Close Next Window
