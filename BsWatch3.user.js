@@ -227,13 +227,7 @@ function afterInit() {
             //Check if autoplay is on
             if (getCookie('autoplay') == true) {
                 if (getCookie('lastEpisode') != 'next0x000001') {
-                    var playNextTime = getCookie('playTime');
-                    if (typeof playNextTime == 'undefined') {
-                        playNextTime = 5;
-                    } else {
-                        playNextTime = parseInt(playNextTime);
-                    }
-                    nextWindow(playNextTime);
+                    nextWindow(parseInt(getDefault(getCookie('playTime'), 5)));
                 }
             } else {
                 setCookie('autoplay', false, false);
@@ -260,6 +254,23 @@ function afterInit() {
             this.focus();
         }
     });
+
+    if (getCookie('focusEpisode')) {
+        var episodeTable = document.getElementById('episodeTable');
+        var episodeRows = episodeTable.getElementsByTagName('tr');
+        var selected = null;
+        for (let i = episodeRows.length - 1; i > -1; i--) {
+            if (episodeRows[i].getAttribute('class') == 'watched') {
+                if (selected !== null) {
+                    selected.focus();
+                    scrollToFocus();
+                    break;
+                }
+            } else {
+                selected = episodeRows[i];
+            }
+        }
+    }
 }
 
 function createNode(index, nameDE, nameOr, linkTo, watched, linkWatched) {
@@ -513,7 +524,7 @@ function nextWindow(time) {
         }
         return;
     }
-    
+
     //The styles that get loaded before the actual styles get loaded
     var styleTag = document.createElement('style');
     styleTag.innerHTML = '* {margin:0;padding:0;font-family: Arial, Helvetica, sans-serif;font-size:16px;}' +
@@ -555,7 +566,6 @@ function nextWindow(time) {
     bodys.appendChild(texts);
     bodys.appendChild(butto);
     document.documentElement.appendChild(plane);
-
 
     //Start Timer ugly but work work
     for (i = 1; i < time + 1; i++) {

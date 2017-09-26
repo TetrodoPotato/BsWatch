@@ -112,7 +112,7 @@ function refreshContent() {
     var cp = document.getElementById('contentContainer');
     cp.innerHTML = "";
     makeLog(getLog(), cp);
-    
+
     $("#logTable tr").mouseover(function () {
         var searchElem = document.getElementById('search');
 
@@ -245,12 +245,7 @@ function mode(array) {
 
 function makeConf(cp) {
     //Hoster Sort
-    var hosterSort = getCookie('cookieSort');
-    if (hosterSort != undefined) {
-        hosterSort = hosterSort.split('|');
-    } else {
-        hosterSort = ["Vivo", "OpenLoadHD", "OpenLoad"];
-    }
+    var hosterSort = getDefault(getCookie('cookieSort'),"Vivo|OpenLoadHD|OpenLoad").split('|');
 
     var contPane = document.createElement('div');
     contPane.setAttribute('id', 'contpane');
@@ -272,10 +267,27 @@ function makeConf(cp) {
 
     cp.appendChild(contPane);
 
-    cp.appendChild(getCheckbox('Suche Fokussieren', 'focusSearch', 'searchCheckbox', false));
+    cp.appendChild(getCheckbox('Seriensuche Beim Start Fokussieren', 'focusSearch', 'searchCheckbox', false));
     cp.appendChild(getCheckbox('Favoriten Staffel Aktualieren', 'updateSeason', 'favCheckbox', true));
     cp.appendChild(getCheckbox('Log Anschalten', 'enableLog', 'logCheckbox', true));
     cp.appendChild(getTextField('Autoplay Wartezeit', 'playTime', 'autoWait', 5));
+    cp.appendChild(getCheckbox('Letzte Nicht Geschaute Episode Fokussieren', 'focusEpisode', 'seriesCheckbox', false));
+    cp.appendChild(getCheckbox('Automatisches Anschalten des Autoplays', 'autoAutoplay', 'autoautoCheckbox', false));
+
+    var clearButton = document.createElement('button');
+    clearButton.setAttribute("id", "clear");
+    clearButton.innerHTML = "Einstellungen Zurücksetzen";
+    clearButton.addEventListener('click', function () {
+        removeCookie('cookieSort');
+        removeCookie('focusSearch');
+        removeCookie('updateSeason');
+        removeCookie('enableLog');
+        removeCookie('focusEpisode');
+        removeCookie('playTime');
+        window.location.reload();
+    });
+
+    cp.appendChild(clearButton);
 
     var applyButton = document.createElement('button');
     applyButton.setAttribute("id", "apply");
@@ -296,12 +308,14 @@ function makeConf(cp) {
         setCookie('focusSearch', document.getElementById('searchCheckbox').checked, true);
         setCookie('updateSeason', document.getElementById('favCheckbox').checked, true);
         setCookie('enableLog', document.getElementById('logCheckbox').checked, true);
+        setCookie('focusEpisode', document.getElementById('seriesCheckbox').checked, true);
+        setCookie('autoAutoplay', document.getElementById('autoautoCheckbox').checked, true);
 
         var playTime = document.getElementById('autoWait').value;
         if (/^\d+$/.test(playTime)) {
             setCookie('playTime', playTime);
         } else {
-            document.getElementById(autoWait).value = getCookie('playTime');
+            document.getElementById('autoWait').value = getCookie('playTime');
         }
 
         setInfoText("Einstellungen angewendet");
@@ -318,20 +332,11 @@ function getCheckbox(message, cookieName, checkboxId, firstState) {
     checkBox.setAttribute('type', 'checkbox');
     checkBox.setAttribute('id', checkboxId);
 
-    if (typeof getCookie(cookieName) === 'undefined') {
-        setCookie(cookieName, firstState);
-        if (firstState) {
-            checkBox.checked = true;
-            checkBox.setAttribute('checked', 'true');
-        } else {
-            checkBox.checked = false;
-        }
-
-    } else {
-        if (getCookie(cookieName)) {
-            checkBox.setAttribute('checked', 'true');
-        }
+    var checkedState = getDefault(getCookie(cookieName), firstState);
+    if (checkedState) {
+        checkBox.setAttribute('checked', 'true');
     }
+    setCookie(cookieName,checkedState);
 
     checkboxLabel.appendChild(checkBox);
     checkboxLabel.innerHTML += "<span>" + message + "</span>";
@@ -341,23 +346,18 @@ function getCheckbox(message, cookieName, checkboxId, firstState) {
 
 function getTextField(message, cookieName, textFieldId, firstState) {
     //Focus Search on start
-    var checkboxLabel = document.createElement('label')
-        checkboxLabel.setAttribute('class', 'checkboxLabel');
+    var checkboxLabel = document.createElement('label');
+    checkboxLabel.setAttribute('class', 'checkboxLabel');
     var textField = document.createElement('input');
     textField.setAttribute('type', 'number');
     textField.setAttribute('id', textFieldId);
 
-    if (typeof getCookie(cookieName) === 'undefined') {
-        setCookie(cookieName, firstState);
-        textField.setAttribute('value', '5');
-
-    } else {
-        var number = getCookie(cookieName);
-        textField.setAttribute('value', number);
-    }
+    var number = getDefault(getCookie(cookieName), 5);
+    setCookie(cookieName, number);
+    textField.setAttribute('value', number);
 
     checkboxLabel.appendChild(textField);
-    checkboxLabel.innerHTML +=  "<span>" + message + "</span>";
+    checkboxLabel.innerHTML += "<span>" + message + "</span>";
 
     return checkboxLabel;
 }

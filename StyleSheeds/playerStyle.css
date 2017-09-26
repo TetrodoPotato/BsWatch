@@ -68,10 +68,10 @@
 #progress::-moz-progress-bar { background: rgba(196,52,28,0.8); }
 #progress {background: rgba(0,0,0,0);}
 
-#volume::-webkit-progress-bar { background: rgba(0,0,0,0); }
+#volume::-webkit-progress-bar { background: rgba(150,150,150,0.5); }
 #volume::-webkit-progress-value { background: #ee4d2e; }
 #volume::-moz-progress-bar { background: #ee4d2e; }
-#volume {background: rgba(0,0,0,0);}
+#volume {background: rgba(150,150,150,0.5);}
 
 #mediaPlayer {
 	width:100%;
@@ -188,6 +188,7 @@
 	height:35px;
 	width:35px;
 	vertical-align:top;
+    padding-right:5px;
 }
 
 #playcontrols td:nth-child(3):hover{
@@ -212,8 +213,6 @@
 #volume {
 	background-clip: content-box;
 	height:5px;
-	padding-top:15px;
-	padding-bottom:15px;
 	border:none;
 	width:0px;
 	transition: width 0.2s linear 0s;
@@ -270,6 +269,17 @@
 }
 
 #playcontrols td:nth-child(9):hover{
+	fill:#a0260d;
+}
+
+#playcontrols td:nth-child(10){
+	fill:#ee4d2e;
+	height:35px;
+	width:35px;
+	vertical-align:top;
+}
+
+#playcontrols td:nth-child(10):hover{
 	fill:#a0260d;
 }
 

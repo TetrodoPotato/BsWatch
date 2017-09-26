@@ -74,7 +74,20 @@ function getCookie(cname) {
  * Remove a cookie.
  * @param {String} name - name of cookie.
  */
-function removeCookie(name) {
-    //Set the cookie to a expired date
-    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+function removeCookie(name) {    
+    var expires = ';expires=Thu, 01 Jan 1970 00:00:00 UTC';
+
+    //For subdomains
+    var website_host;
+    var website_host_buff = window.location.hostname;
+
+    if (website_host_buff.split('.').length > 2) {
+        var buffHost = website_host_buff.split('.');
+        website_host = buffHost[buffHost.length - 2] + '.' + buffHost[buffHost.length - 1];
+    } else {
+        website_host = website_host_buff;
+    }
+
+    //Create new cookie
+    document.cookie = name + "=" + expires + ";path=/;domain=." + website_host;
 }

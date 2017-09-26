@@ -119,8 +119,21 @@ function createHeadRow() {
     return row;
 }
 
+/**
+ * Returns only the favorite-ids in an array
+ * @return {String-Array} favorite-ids
+ */
+function getOldFavs() {
+    var newFav = getFavs();
+    var oldFav = [];
+    for (let i = 0; i < newFav.length; i++) {
+        oldFav[oldFav.length] = newFav[i].id;
+    }
+    return oldFav;
+}
+
 //For performance
-var favoritesSeries = getFavs();
+var favoritesSeries = getOldFavs();
 
 function createRow(index, rowObj, favStar) {
     var tableRow = document.createElement('tr');
@@ -151,16 +164,9 @@ function createRow(index, rowObj, favStar) {
     favNode.setAttribute("favid", toFav);
     favNode.appendChild(favStar);
 
-    var found = false;
-    for (var i = 0; i < favoritesSeries.length; i++) {
-        if (favoritesSeries[i].id == toFav) {
-            found = true;
-            favNode.setAttribute('class', 'isFav');
-            break;
-        }
-    }
-
-    if (!found) {
+    if (favoritesSeries.indexOf(toFav) > -1) {
+        favNode.setAttribute('class', 'isFav');
+    } else {
         favNode.setAttribute('class', 'noFav');
     }
 
@@ -216,21 +222,17 @@ function afterInit() {
         }
     });
 
-    if (getCookie('seriesScroll') != undefined) {
-        //Scroll to LastPos
-        window.scroll(0, getCookie('seriesScroll'));
-        var lastSearch = getCookie('seriesSearch');
-        if (typeof lastSearch != "undefined") {
-            if (lastSearch != "" && lastSearch.indexOf('>') == -1) {
-                document.getElementById('search').value = getCookie('seriesSearch');
-                searchEv();
-            }
-        }
+    var lastSearch = getDefault(getCookie('seriesSearch'), '');
+    if (lastSearch != "" && lastSearch.indexOf('>') == -1) {
+        document.getElementById('search').value = getCookie('seriesSearch');
+        searchEv();
     }
 
     setInterval(function () {
-        var doc = document.documentElement;
-        setCookie('seriesScroll', (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0), false);
         setCookie('seriesSearch', document.getElementById('search').value, false);
     }, 1000)
+
+    if (getDefault(getCookie(focusSearch), false)) {
+        document.getElementById('search').focus()
+    }
 }

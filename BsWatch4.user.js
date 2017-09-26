@@ -21,12 +21,7 @@ init();
 
 function initPage(cp) {
     //Hoster Sort
-    var hosterSort = getCookie('cookieSort');
-    if (hosterSort != undefined) {
-        hosterSort = hosterSort.split('|');
-    } else {
-        hosterSort = ["Vivo", "OpenLoadHD", "OpenLoad"];
-    }
+    var hosterSort = getDefault(getCookie('cookieSort'), "Vivo|OpenLoadHD|OpenLoad").split('|');
 
     var hoster = getHoster();
 
@@ -69,7 +64,7 @@ function getHoster() {
 function getErrorCode() {
     //Set the errorcode if it wasn't
     var errorCode = getCookie('errorCode');
-    if (errorCode == undefined) {
+    if (typeof errorCode === 'undefined') {
         setCookie('errorCode', 0, false);
         errorCode = 0;
     } else {

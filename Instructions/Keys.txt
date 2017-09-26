@@ -31,7 +31,7 @@
 //On Player
 	//Video Player
 	32	Space 			- Play / Pause
-	27	Esc 			- Close Player / Next Episode
+	9	Tab 			- Close Player / Next Episode
 	81	Q 				- Mute / Unmute
 	37	Arrow-Left 		- Previous 10sec
 	39	Arrow-Right 	- Next 10sec
@@ -40,6 +40,7 @@
 	107	+				- Speed Up 1% max 400%
 	109	-				- Slow Down 1% min 50%;
 	65	A				- Toggle Autoplay
+    211 F11             - Toggle Fullscreen
 	
 //Log
 	Search '>log' for Log

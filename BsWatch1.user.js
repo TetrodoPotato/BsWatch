@@ -29,9 +29,9 @@ if (/^https:\/\/bs.to(\/home)?\/?$/.test(window.location.href)) {
     setCookie('seriesScroll', 0);
     setCookie('seriesSearch', "");
     window.location = 'https://bs.to/serie-genre';
-} else if (series == undefined ||
-    season == undefined ||
-    episode == undefined) {
+} else if (typeof series === 'undefined' ||
+    typeof season === 'undefined' ||
+    typeof episode === 'undefined') {
 
     alert('Enable cookies!!!');
     window.location = 'https://bs.to/';

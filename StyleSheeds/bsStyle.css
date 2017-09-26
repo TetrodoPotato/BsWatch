@@ -990,8 +990,30 @@ h2 small {
 	background:#a0260d;
 }
 
+#clear{
+    display:block;
+    margin: 0 auto;
+	background:#ee4d2e;
+	width:400px;
+	border:none;
+	color:#FFFFFF;
+	margin-top:20px;
+	border-radius:1px;
+	cursor:pointer;
+    padding: 10px 0;
+}
+
+#clear:active {
+	background:#FFF !important;
+	color:#000;
+}
+
+#clear:hover {
+	background:#a0260d;
+}
+
 #infotext {
-	position:absolute;
+	position:fixed;
 	z-index:30;
 	margin:auto;
 	display:block;

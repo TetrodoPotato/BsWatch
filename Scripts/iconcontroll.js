@@ -257,3 +257,48 @@ function getWatchIcon() {
 
     return svg;
 }
+
+/**
+ *
+ */
+function getFullscreen(ison) {
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('height', '35');
+    svg.setAttribute('width', '35');
+
+    if (ison) {
+        var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        pol1.setAttribute('points', '7,15 15,15 15,7 12,7 12,12 7,12');
+        svg.appendChild(pol1);
+
+        var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        pol2.setAttribute('points', '7,20 15,20 15,28 12,28 12,23 7,23');
+        svg.appendChild(pol2);
+
+        var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        pol3.setAttribute('points', '20,28 20,20 28,20 28,23 23,23 23,28');
+        svg.appendChild(pol3);
+
+        var pol4 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        pol4.setAttribute('points', '20,7 20,15 28,15 28,12 23,12 23,7');
+        svg.appendChild(pol4);
+    } else {
+        var pol1 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        pol1.setAttribute('points', '10,15 10,10 15,10 15,7 7,7 7,15');
+        svg.appendChild(pol1);
+
+        var pol2 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        pol2.setAttribute('points', '10,20 10,25 15,25 15,28 7,28 7,20');
+        svg.appendChild(pol2);
+
+        var pol3 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        pol3.setAttribute('points', '20,25 25,25 25,20 28,20 28,28 20,28');
+        svg.appendChild(pol3);
+
+        var pol4 = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        pol4.setAttribute('points', '20,10 25,10 25,15 28,15 28,7 20,7');
+        svg.appendChild(pol4);
+    }
+
+    return svg;
+}

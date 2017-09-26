@@ -22,12 +22,12 @@ init();
 
 function initPage(cp) {
 
-    if (getCookie('updateSeason') != false) {
+    if (getDefault(getCookie('updateSeason'), true)) {
         updateFavoritesSeason()
     }
 
     //Check log
-    if (getCookie('enableLog') != false) {
+    if (getDefault(getCookie('enableLog'), true)) {
         var get = log(cp);
     } else {
         logReady(cp);
@@ -49,6 +49,11 @@ function logReady(cp) {
 
         //Crossdomain variables
         var setNextLink = setCrossDomainVariables(nextDirPath);
+
+        //Config Auto-Autoplay
+        if (getDefault(getCookie('autoAutoplay'), false)) {
+            setCookie('autoplay', true);
+        }
 
         //Open the hoster
         window.location = setNextLink;

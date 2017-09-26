@@ -247,12 +247,15 @@ var searchEv = function () {
  * @return {boolean} if {DOM} child has {DOM} parent.
  */
 function isDescendant(parent, child) {
-    var node = child.parentNode;
-    while (node != null) {
-        if (node == parent) {
-            return true;
+    if (child === null) {
+        var node = child.parentNode;
+        while (node != null) {
+            if (node == parent) {
+                return true;
+            }
+            node = node.parentNode;
         }
-        node = node.parentNode;
+        return false;
     }
     return false;
 }
@@ -341,6 +344,20 @@ function removeBlackPage() {
 }
 
 /**
+ * If variable is Undefined the Deafult value get returned
+ * @param variable - Variable
+ * @param defaultValue - Got returned if Variable is Undefined
+ * @return not undefined
+ */
+function getDefault(variable, defaultValue){
+    if(typeof variable === 'undefined' || variable === null){
+        return defaultValue
+    } else {
+        return variable;
+    }
+}
+
+/**
  * Inits a basepage with Menu and content-container.
  * Adds the {DOM} blackP over the rebuilding page and remove it after everything
  * is done.
@@ -404,9 +421,6 @@ function init() { //Black page over original
 
         //Delete blackP onload ... because the stylesheed needs to be loaded
         $(window).bind("load", function () {
-            if (getCookie('focusSearch') == true) {
-                document.getElementById('search').focus()
-            }
             removeBlackPage();
             if (document.getElementById('plane') !== null) {
                 document.documentElement.style.overflow = 'hidden'; // firefox, chrome
