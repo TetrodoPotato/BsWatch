@@ -89,7 +89,7 @@ function makeEpisodeTable() {
 
     for (i = 0; i < info.length; i++) {
         //Create node and append it to the body
-        var contentNode = createNode((i + 1), info[i].nameDE, info[i].nameOr, info[i].linkTo, info[i].watched, info[i].linkWatched);
+        var contentNode = createNode((i + 1), info[i]);
         tbody.appendChild(contentNode);
     }
 
@@ -139,14 +139,30 @@ function getEpisodeInfo() {
             linkWatched = linkWatched.getAttribute('href');
         }
 
+        //Get useable Hoster
+        var supHoster = ['Vivo','OpenLoad','OpenLoadHD'];
+        var hosterLinks = episodeNodes[i].getElementsByClassName('nowrap')[0];
+        hosterLinks = hosterLinks.getElementsByTagName('a');
+        
+        var availHoster = [];
+        for(let i=0;i<hosterLinks.length;i++){
+            var titleHoster = hosterLinks[i].getAttribute('title');
+            for(let x=0;x<supHoster.length;x++){
+                if(titleHoster == supHoster[x]){
+                    availHoster[availHoster.length] = supHoster[x];
+                }
+            }
+        }
+        
         var infoBlock = {
             nameDE: nameDE,
             nameOr: nameOr,
             linkTo: linkTo,
             watched: watched,
-            linkWatched: linkWatched
+            linkWatched: linkWatched,
+            hoster: availHoster
         };
-
+        
         info[info.length] = infoBlock;
     }
 
@@ -273,18 +289,22 @@ function afterInit() {
     }
 }
 
-function createNode(index, nameDE, nameOr, linkTo, watched, linkWatched) {
+var vivoIcon = 'https://vivo.sx/favicon.ico';
+var openIcon = 'https://openload.co/favicon.ico';
+var opHdIcon = 'https://i.imgur.com/HqTQ9on.png';
+
+function createNode(index, info) {
     //Make a table row that links to the Series
     var tableRow = document.createElement('tr');
 
     //The link to the Series
-    linkTo = 'https://bs.to/' + linkTo;
+    var linkTo = 'https://bs.to/' + info.linkTo;
     //On click change dir
     var clickFunc = 'window.location = \'' + linkTo + '\'';
 
     tableRow.setAttribute('tabindex', -1);
     tableRow.setAttribute('id', index);
-    if (watched) {
+    if (info.watched) {
         tableRow.setAttribute('class', 'watched');
     }
 
@@ -296,24 +316,38 @@ function createNode(index, nameDE, nameOr, linkTo, watched, linkWatched) {
     //Node with the name in it
     var nameNode = document.createElement('td');
     nameNode.setAttribute('onclick', clickFunc);
-    nameNode.innerHTML = '<strong>' + nameDE + '</strong><i>' + nameOr + '</i>';
+    nameNode.innerHTML = '<strong>' + info.nameDE + '</strong><i>' + info.nameOr + '</i>';
 
     //Construct the row
     tableRow.appendChild(indexNode);
     tableRow.appendChild(nameNode);
 
+    //HosterNode
+    var hosterNode = document.createElement('td');
+    hosterNode.setAttribute('onclick', clickFunc);
+    for(let i=0;i<info.hoster.length;i++){
+        if(info.hoster[i] === 'Vivo') {
+            hosterNode.appendChild(getImgTag(vivoIcon));
+        } else if(info.hoster[i] === 'OpenLoad') {
+            hosterNode.appendChild(getImgTag(openIcon));
+        } else if(info.hoster[i] === 'OpenLoadHD') {
+            hosterNode.appendChild(getImgTag(opHdIcon));
+        }
+    }
+    tableRow.appendChild(hosterNode);
+    
     if (isLoggedin) {
         var watchUnwatch = document.createElement('td');
         watchUnwatch.setAttribute('class', 'watchUnwatch');
 
         //The link to the Episode watchmark
-        linkToWatch = 'https://bs.to/' + linkWatched;
+        linkToWatch = 'https://bs.to/' + info.linkWatched;
         //On click change dir
         var clickFuncWatch = 'window.location = \'' + linkToWatch + '\'';
         watchUnwatch.setAttribute('onclick', clickFuncWatch);
 
         var watchIcon;
-        if (watched) {
+        if (info.watched) {
             watchIcon = getWatchIcon();
         } else {
             watchIcon = getUnwatchIcon();
@@ -334,6 +368,12 @@ function createNode(index, nameDE, nameOr, linkTo, watched, linkWatched) {
     });
 
     return tableRow;
+}
+
+function getImgTag(src){
+    var img = document.createElement('img');
+    img.setAttribute('src',src);
+    return img;
 }
 
 function createSeasonNode(index, linkTo, onSeason) {
@@ -528,7 +568,7 @@ function nextWindow(time) {
     //The styles that get loaded before the actual styles get loaded
     var styleTag = document.createElement('style');
     styleTag.innerHTML = '* {margin:0;padding:0;font-family: Arial, Helvetica, sans-serif;font-size:16px;}' +
-        '#plane { z-index:999; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8);}' +
+        '#plane { z-index:999; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8);}' +
         '#nextBody {overflow:hidden; border-radius:5px; position:absolute; z-index:1000; height:120px; width:200px; background:#161616; left:0; right:0; top:0; bottom:0; margin:auto;}' +
         '#texts{width:100%; margin:13px auto; color:#FFF; text-align:center; font-size:18px; font-weight:bold;}' +
         '#texts span{font-size:10px; font-style: italic;}' +
@@ -565,7 +605,7 @@ function nextWindow(time) {
     plane.appendChild(styleTag);
     bodys.appendChild(texts);
     bodys.appendChild(butto);
-    document.documentElement.appendChild(plane);
+    document.body.appendChild(plane);
 
     //Start Timer ugly but work work
     for (i = 1; i < time + 1; i++) {

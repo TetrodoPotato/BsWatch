@@ -27,6 +27,18 @@ function focusNext(value) {
         if (lastFocus != 0) {
             //Get last Focus
             elem = document.getElementById('' + lastFocus);
+            while (elem === null && lastFocus > 0) {
+                elem = document.getElementById('' + --lastFocus);
+            }
+
+            if (elem === null) {
+                elem = document.getElementById('1');
+                if (elem === null) {
+                    return;
+                }
+                return;
+            }
+
             lastFoc = lastFocus;
         } else {
             //Get first element
@@ -255,8 +267,8 @@ function nextLog(val) {
             } else if (i < 0) {
                 i = opt.length - 1;
             }
-            
-            window.location = "https://bs.to/log" + opt[i];       
+
+            window.location = "https://bs.to/log" + opt[i];
             return;
         }
     }
@@ -269,11 +281,10 @@ function nextLog(val) {
 $(document).ready(function () {
     //Fuck Key controll
     $(window).keydown(function (e) {
-        
-        if(e.shiftKey || e.ctrlKey) {
+        if (e.shiftKey || e.ctrlKey) {
             return;
         }
-        
+
         var nextButton = document.getElementById('nextButton');
         if (nextButton != null) { // On Next Episode Window
             if (e.keyCode === 27) { //ESC | Close Next Window
@@ -388,7 +399,7 @@ $(document).ready(function () {
                         e.preventDefault();
                         if (isLoggedin) {
                             if (document.getElementById('episodeTable').contains(document.activeElement)) {
-                                document.activeElement.getElementsByTagName('td')[2].click();
+                                document.activeElement.getElementsByTagName('td')[3].click();
                             }
                         }
                     }
@@ -402,7 +413,8 @@ $(document).ready(function () {
                     if (path[1] === 'log') {
                         if (e.keyCode === 82) { //R | Remove Focused Logsement
                             e.preventDefault();
-                            removeLogSegment()
+                            removeLogSegment();
+                            focusNext(-1);
                         } else if (e.keyCode === 37) { //Arr-left | Previous-Season
                             e.preventDefault();
                             nextLog(-1)

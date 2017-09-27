@@ -469,6 +469,26 @@ h2 small {
 }
 
 #episodeTable tr td:nth-child(3){
+	background:#222;
+	width:99%;
+	color:#FFF;
+	font-weight: bold;
+	padding:5px 15px;
+	border:none;
+    white-space: nowrap;
+}
+
+#episodeTable .watched td:nth-child(3){
+	background:#222;
+}
+
+#episodeTable tr td:nth-child(3) img{
+	height:15px;
+    width:15px;
+    margin: 0 5px;
+}
+
+#episodeTable tr td:nth-child(4){
 	background:#000;
 	width:35px;
 	padding:0 10px 0 10px;
@@ -477,7 +497,7 @@ h2 small {
 	border-radius:0 1px 1px 0;	
 }
 
-#episodeTable tr td:nth-child(3):hover{
+#episodeTable tr td:nth-child(4):hover{
 	fill:#a0260d;
 	stroke:#a0260d;
 }

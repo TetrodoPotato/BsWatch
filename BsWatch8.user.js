@@ -412,10 +412,11 @@ async function addInterfaceEventhandler() {
         showCur(x, clickedValue);
         document.getElementById('curProc').style.display = "inline";
     };
-    $('#progress').bind('mousedown', function (e) {
+    $('#bars').bind('mousedown', function (e) {
+        var proElem = document.getElementById('progress');
         var x = e.pageX - this.offsetLeft, // or e.offsetX (less support, though)
         y = e.pageY - this.offsetTop, // or e.offsetY
-        clickedValue = x * this.max / this.offsetWidth;
+        clickedValue = x * proElem.max / this.offsetWidth;
         updateTime(clickedValue);
 
         document.getElementById('vid').pause();
@@ -436,14 +437,15 @@ async function addInterfaceEventhandler() {
             window.isDrag = false;
         });
     });
-    $('#progress').bind("mousemove", function (e) {
+    $('#bars').bind("mousemove", function (e) {
+        var proElem = document.getElementById('progress');
         var x = e.pageX - this.offsetLeft, // or e.offsetX (less support, though)
         y = e.pageY - this.offsetTop, // or e.offsetY
-        clickedValue = x * this.max / this.offsetWidth;
+        clickedValue = x * proElem .max / this.offsetWidth;
         showCur(x, clickedValue);
         document.getElementById('curProc').style.display = "inline";
     });
-    $('#progress').bind("mouseleave", function (e) {
+    $('#bars').bind("mouseleave", function (e) {
         document.getElementById('curProc').style.display = "none";
     });
 

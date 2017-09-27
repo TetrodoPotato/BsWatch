@@ -128,7 +128,7 @@ function log(cp) {
 
     //Get SeasonName
     var urlName = window.location.pathname;
-    seasonName = urlName.split('/')[3].trim();
+    seasonName = getEpisodeInfo(urlName);
 
     //Get EpisodeName
     var episodeDom = document.getElementById('titleGerman');
@@ -167,14 +167,31 @@ function log(cp) {
 
     dataName = day + "," + month + "," + year + " " + hour + ":" + min + ":" + sec;
 
-    var output = "[" + seriesName + " " + seasonName + " " + episodNameGer + "|" + episodNameOri;
-    output += "(" + genresName + ")" + hosterName + " " + dataName + "]";
-    console.log(output);
+    if (getCookie('debug')) {
+        var output = "[" + seriesName + " " + seasonName + " " + episodNameGer + "|" + episodNameOri;
+        output += "(" + genresName + ")" + hosterName + " " + dataName + "]";
+        console.log(output);
+    }
 
     addLog(seriesName, seasonName, episodNameGer, episodNameOri, genresName, hosterName, dataName);
 
     logReady(cp);
 }
+
+function getEpisodeInfo(url){
+    //Get SeasonName
+    seasonName = url.split('/')[3].trim();
+    
+    var currentEpisode = url.split('/')[3].trim();
+    currentEpisode = currentEpisode.split('-')[0];
+    
+    var maxEpisodes = document.getElementById('episodes');
+    maxEpisodes = maxEpisodes.getElementsByTagName('a');
+    maxEpisodes = maxEpisodes[maxEpisodes.length -1 ].innerHTML;
+    
+    return 'Staffel⠀' + seasonName + ' Folge⠀' + currentEpisode + '/' + maxEpisodes
+}
+
 
 function getTitle() {
     //Get The Title

@@ -32,7 +32,7 @@ function makeTable(logs) {
     var headLine = '<tr id="headRow">' +
         '	<th>Nr</th>' +
         '	<th>Serie</th>' +
-        '	<th>Stf.</th>' +
+        '	<th>Info</th>' +
         '	<th>Epi. Deu.</th>' +
         '	<th>Epi. Org.</th>' +
         '	<th>Genres</th>' +
@@ -313,7 +313,7 @@ function makeConf(cp) {
 
         var playTime = document.getElementById('autoWait').value;
         if (/^\d+$/.test(playTime)) {
-            setCookie('playTime', playTime);
+            setCookie('playTime', playTime,true);
         } else {
             document.getElementById('autoWait').value = getCookie('playTime');
         }

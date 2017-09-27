@@ -349,8 +349,8 @@ function removeBlackPage() {
  * @param defaultValue - Got returned if Variable is Undefined
  * @return not undefined
  */
-function getDefault(variable, defaultValue){
-    if(typeof variable === 'undefined' || variable === null){
+function getDefault(variable, defaultValue) {
+    if (typeof variable === 'undefined' || variable === null) {
         return defaultValue
     } else {
         return variable;
@@ -384,7 +384,9 @@ function init() { //Black page over original
     //When document loaded
     $(document).ready(function () {
         //Change head
-        document.head.innerHTML = createHead().innerHTML;
+        var headElement = document.head;
+        headElement.setAttribute('class', 'mainElement');
+        headElement.innerHTML = createHead().innerHTML;
 
         //Body and Menu
         var newBody = document.createElement('body');
@@ -402,6 +404,7 @@ function init() { //Black page over original
         initPage(contantContainer);
 
         //Change body
+        newBody.setAttribute('class', 'mainElement');
         document.body = newBody;
 
         //Write fav. Table

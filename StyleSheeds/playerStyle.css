@@ -104,7 +104,6 @@
 	position:absolute;
 	bottom: 0;
     vertical-align:bottom;
-	height:50px;
 	width:100%;
 	z-index:4;
 	background-color:transparent;
@@ -138,13 +137,18 @@
 	background-color:rgba(22,22,22,0.8);
 }
 
+#video-controls table tr:first-child {
+    height:30px;
+    position:relative;
+}
+
 #progress {
-	position:relative;
+	position:absolute;
 	height:5px;
 	border:none;
 	width: 100%;
-	padding-top:10px;
 	z-index:10;
+    bottom:0;
 }
 
 #buffer {
@@ -153,7 +157,7 @@
 	border:none;
 	width: 100%;
 	z-index:9;
-	top:10px;
+    bottom:0;
 }
 #playcontrols {
 	height:35px;
@@ -373,14 +377,10 @@
 
 @supports (-webkit-appearance:none) {
     #progress {
-		position:absolute;
-		height:20px;
+		height:5px;
 		border:none;
-		width: 100%;
-		padding-top:0px;
-		z-index:10;
 		background:rgba(100,100,100,0);
-		top:5px;
+		bottom:35px;
 	}
     #progress::-webkit-progress-bar {
     	background-color: rgba(0,255,0,0) !important;
@@ -389,7 +389,8 @@
     }
     #progress::-webkit-progress-value {
     	 background: rgba(196,52,28,0.8);
-    	 height:5px;
-    	 margin-top:5px;
+	}
+	#buffer {
+		bottom:35px;
 	}
 }
