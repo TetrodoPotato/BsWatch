@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie-genre[^\/]*$/
-// @version    	2.3
+// @version    	2.4
 // @description	Series List
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -21,7 +21,6 @@ init();
 
 function initPage(cp) {
     //Reset last connection
-    setCookie('autoplay', false, false);
     removeCookie('lastSeries');
     removeCookie('lastSeason');
     removeCookie('lastEpisode');

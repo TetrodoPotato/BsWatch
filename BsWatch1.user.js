@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs.to(\/)?(((home|\?next|\?error|\?back)[^\/]*)(\/)?)?$/
-// @version    	2.3
+// @version    	2.4
 // @description	Error and Next - Redirect
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
@@ -23,6 +23,7 @@ var episode = getCookie('lastEpisode');
 //Check error on cookies and fuck you
 if (/^https:\/\/bs.to(\/home)?\/?$/.test(window.location.href)) {
     //You know ?!
+    setCookie('autoplay', false, false);
     window.location = 'https://bs.to/serie-genre';
 } else if (window.location.href == 'https://bs.to/?back') {
     //Reset last scroll and search
@@ -34,6 +35,7 @@ if (/^https:\/\/bs.to(\/home)?\/?$/.test(window.location.href)) {
     typeof episode === 'undefined') {
 
     alert('Enable cookies!!!');
+    setCookie('autoplay', false, false);
     window.location = 'https://bs.to/';
 } else if (window.location.href == 'https://bs.to/?error') {
     //if the error code isn't set.. set it.
