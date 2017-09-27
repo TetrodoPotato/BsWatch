@@ -231,7 +231,7 @@ function getControllPanel() {
 
     playcontrols.appendChild(getControlPanelItem('', ''));
     playcontrols.appendChild(getControlPanelItem('plus', '+'));
-    playcontrols.appendChild(getControlPanelItem('speed', ''));
+    playcontrols.appendChild(getControlPanelItem('speed', '100%'));
     playcontrols.appendChild(getControlPanelItem('minus', '-'));
     playcontrols.appendChild(getControlPanelItem('fullscreen', getFullscreen(false)));
     playcontrols.appendChild(getControlPanelItem('close', getClose()));

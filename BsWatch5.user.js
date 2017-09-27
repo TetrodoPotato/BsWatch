@@ -182,7 +182,7 @@ function getEpisodeInfo(url){
     //Get SeasonName
     seasonName = url.split('/')[3].trim();
     
-    var currentEpisode = url.split('/')[3].trim();
+    var currentEpisode = url.split('/')[4].trim();
     currentEpisode = currentEpisode.split('-')[0];
     
     var maxEpisodes = document.getElementById('episodes');
