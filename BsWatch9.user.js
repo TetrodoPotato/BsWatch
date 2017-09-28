@@ -5,7 +5,7 @@
 // @include     https://bs.to/log
 // @include     https://bs.to/log?data
 // @include     https://bs.to/log?info
-// @version    	2.7
+// @version    	2.8
 // @description	Log Page
 // @author     	Kartoffeleintopf
 // @run-at 		document-start

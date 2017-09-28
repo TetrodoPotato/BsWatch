@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/vivo\.sx\/.+$/
-// @version    	1.4
+// @version    	1.5
 // @description	Vivo Direct-Link
 // @author     	Kartoffeleintopf
 // @run-at 		document-start

@@ -3,7 +3,7 @@
 // @icon 		https://bs.to/opengraph.jpg
 // @namespace   http://www.greasespot.net/
 // @include     /^https:\/\/bs\.to\/serie\/[^\/]+\/\d+\/[^\/]+\/.+$/
-// @version    	2.9
+// @version    	3.0
 // @description	Open Hoster
 // @author     	Kartoffeleintopf
 // @run-at 		document-start

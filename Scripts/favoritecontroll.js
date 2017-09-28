@@ -235,6 +235,9 @@ function updateFavorites() {
 
     //get the current url path
     var path = window.location.pathname;
+    
+    //Scrollbars
+    var add = 0;
 
     //check if the user is on a series
     if (path.split('/').length > 2) {
@@ -266,6 +269,7 @@ function updateFavorites() {
 
         //Add button to the table
         favTbody.appendChild(addButton);
+        add--;
     }
 
     favTable.appendChild(favTbody);
@@ -273,7 +277,7 @@ function updateFavorites() {
     document.getElementById('favCon').innerHTML = '';
     //Update the new content
     document.getElementById('favCon').appendChild(favTable);
-    if (favs.length > 16) {
+    if (favs.length > (17 + add)) {
         document.getElementById('favCon').style.overflowX = "hidden";
         document.getElementById('favCon').style.overflowY  = "scroll";
     } else {

@@ -5,7 +5,7 @@
 // @include     *oloadcdn.net*
 // @include     /^https:\/\/delivery\-\-.+$/
 // @include		/^https:\/\/bs.to(\/)data(\?[\S]*)?$/
-// @version    	2.4
+// @version    	2.5
 // @description	Media-Player
 // @author     	Kartoffeleintopf
 // @run-at 		document-start
