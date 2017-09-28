@@ -169,72 +169,72 @@ function updateFavorites() {
 
     //Get all favorites and create the rows
     var favs = getFavs();
-    var i = 0
-        for (; i < favs.length; i++) {
-            //create rows and elements
-            var tr = document.createElement('tr');
-            tr.setAttribute('tabindex', -1);
-            tr.addEventListener('mouseover', function () {
-                this.focus();
-            });
-            tr.addEventListener('focus', function () {
-                $('#favButton').addClass('favShow');
-            });
-            tr.addEventListener('blur', function () {
-                $('#favButton').removeClass('favShow');
-            });
-            tr.setAttribute('class', i + 1);
+    var i = 0;
+    for (; i < favs.length; i++) {
+        //create rows and elements
+        var tr = document.createElement('tr');
+        tr.setAttribute('tabindex', -1);
+        tr.addEventListener('mouseover', function () {
+            this.focus();
+        });
+        tr.addEventListener('focus', function () {
+            $('#favButton').addClass('favShow');
+        });
+        tr.addEventListener('blur', function () {
+            $('#favButton').removeClass('favShow');
+        });
+        tr.setAttribute('class', i + 1);
 
-            var td1 = document.createElement('td');
-            var td2 = document.createElement('td');
-            var td3 = document.createElement('td');
-            var td4 = document.createElement('td');
+        var td1 = document.createElement('td');
+        var td2 = document.createElement('td');
+        var td3 = document.createElement('td');
+        var td4 = document.createElement('td');
 
-            //Index
-            td1.innerHTML = (i + 1);
-            td1.setAttribute('val', favs[i].seriesPath);
+        //Index
+        td1.innerHTML = (i + 1);
+        td1.setAttribute('val', favs[i].seriesPath);
 
-            //Name
-            td2.innerHTML = favs[i].series;
-            td2.setAttribute('val', favs[i].seriesPath);
+        //Name
+        td2.innerHTML = favs[i].series;
+        td2.setAttribute('val', favs[i].seriesPath);
 
-            //Season
-            td3.innerHTML = favs[i].season;
-            td3.setAttribute('val', favs[i].seriesPath);
+        //Season
+        td3.innerHTML = favs[i].season;
+        td3.setAttribute('val', favs[i].seriesPath);
 
-            //Svg image in button
-            td4.appendChild(getCross());
-            td4.setAttribute('val', favs[i].id);
+        //Svg image in button
+        td4.appendChild(getCross());
+        td4.setAttribute('val', favs[i].id);
 
-            var clickFav = function () {
-                var val = this.getAttribute('val');
-                window.location = val;
-            }
-
-            //Change location to the favorite series on click
-            td1.addEventListener('click', clickFav);
-            td2.addEventListener('click', clickFav);
-            td3.addEventListener('click', clickFav);
-
-            //Remove the favorite and update the table on click
-            td4.addEventListener('click', function () {
-                var val = this.getAttribute('val');
-                removeFavorite(val);
-                updateFavorites();
-            });
-
-            //add elements to row
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-            tr.appendChild(td3);
-            tr.appendChild(td4);
-
-            //add row to the table
-            favTbody.appendChild(tr);
+        var clickFav = function () {
+            var val = this.getAttribute('val');
+            window.location = val;
         }
 
-        //get the current url path
-        var path = window.location.pathname;
+        //Change location to the favorite series on click
+        td1.addEventListener('click', clickFav);
+        td2.addEventListener('click', clickFav);
+        td3.addEventListener('click', clickFav);
+
+        //Remove the favorite and update the table on click
+        td4.addEventListener('click', function () {
+            var val = this.getAttribute('val');
+            removeFavorite(val);
+            updateFavorites();
+        });
+
+        //add elements to row
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+
+        //add row to the table
+        favTbody.appendChild(tr);
+    }
+
+    //get the current url path
+    var path = window.location.pathname;
 
     //check if the user is on a series
     if (path.split('/').length > 2) {
@@ -273,4 +273,11 @@ function updateFavorites() {
     document.getElementById('favCon').innerHTML = '';
     //Update the new content
     document.getElementById('favCon').appendChild(favTable);
+    if (favs.length > 16) {
+        document.getElementById('favCon').style.overflowX = "hidden";
+        document.getElementById('favCon').style.overflowY  = "scroll";
+    } else {
+        document.getElementById('favCon').style.overflowX = "hidden";
+        document.getElementById('favCon').style.overflowY = "hidden";
+    }
 }
