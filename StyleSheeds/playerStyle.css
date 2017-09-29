@@ -134,7 +134,7 @@
 }
 
 #video-controls table tr:last-child {
-	background-color:rgba(22,22,22,0.8);
+	background-color:rgba(22,22,24,0.8);
 }
 
 #video-controls table tr:first-child {
@@ -325,7 +325,7 @@
 	position:absolute;
 	top:0;
 	left:0;
-	background-color:rgba(22,22,22,0.8);
+	background-color:rgba(22,22,24,0.8);
 	text-align:center;
 	z-index:20;
 	color:#CCC;
@@ -345,7 +345,7 @@
 #topLayer {
 	height:10px;
 	width:100%;
-	background-color:#161616;
+	background-color:#161618;
 	text-align:center;
 	color:#CCC;
 	font-weight:bold;

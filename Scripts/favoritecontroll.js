@@ -107,6 +107,8 @@ function removeFavorite(id, inTable) {
 
     //Update favorites table
     updateFavorites();
+    
+    favNext(1);
 }
 
 /**
