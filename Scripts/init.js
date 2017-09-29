@@ -1,9 +1,9 @@
 if (getCookie('debug')) {
-    var cssLink = 'https://dl.dropbox.com/s/xpud8exmlapizrz/bsStyle.css';
-    var cssVidLink = 'https://dl.dropbox.com/s/z2evfmixktpfb9n/playerStyle.css';
+    var cssLink = 'https://dl.dropbox.com/s/xgsyu0kdtth6lri/bsStyle.css';
+    var cssVidLink = 'https://dl.dropbox.com/s/dpyeye0wr8xf92d/playerStyle.css';
 } else {
-    var cssLink = 'https://kartoffeleintopf.github.io/BsWatch/StyleSheeds/bsStyle.css';
-    var cssVidLink = 'https://kartoffeleintopf.github.io/BsWatch/StyleSheeds/playerStyle.css';
+    var cssLink = 'https://kartoffeleintopf.github.io/BsWatch/StyleSheets/bsStyle.css';
+    var cssVidLink = 'https://kartoffeleintopf.github.io/BsWatch/StyleSheets/playerStyle.css';
 }
 
 //Global vars
