@@ -1,2 +1,2 @@
 # BsWatch
-Outdated use Pr0jectWatch
+discontinued
